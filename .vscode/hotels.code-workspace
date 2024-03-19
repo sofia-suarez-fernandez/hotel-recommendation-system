@@ -1,0 +1,38 @@
+{
+  "folders": [
+    {
+      "path": "./.."
+    }
+  ],
+  "settings": {
+    "workbench.colorCustomizations": {
+      "activityBar.background": "#284B63",
+      "activityBar.foreground": "#ffffff",
+      "activityBar.inactiveForeground": "#d9d9d9ab"
+    },
+    "python.linting.enabled": true,
+    "python.linting.lintOnSave": true,
+    // Disable missing module, class, function docstring
+    // Disable arguments renamed
+    "python.linting.pylintArgs": [
+      "--disable=C0114",
+      "--disable=C0115",
+      "--disable=C0116",
+      "--disable=W0237"
+    ],
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true,
+      "source.addMissingImports": true,
+      "source.organizeImports": true
+    },
+    "[python]": {
+      "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "codeTemplateTool.templatesPath": "{workspace}/.vscode/templates",
+    "python.defaultInterpreterPath": "~/Documents/TFM/TFM_2022-23/hotels-recommender-system/backend/.venv/bin/python3.8"
+  }
+}

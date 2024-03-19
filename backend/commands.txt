@@ -1,0 +1,37 @@
+***************************
+******** COMMANDS *********
+***************************
+
+django-admin startproject <name> .
+python manage.py startapp <name>
+python manage.py runserver
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+pip freeze -> To see all my dependencies
+
+# If I delete by any chance the migrations folder:
+python3 manage.py flush -> Removes all data from the database and re-executes any post-synchronization handlers
+Create the migrations folders with an empty __init__.py file iniside
+
+# Activate virtual environment
+source .venv/bin/activate
+
+# Run builder
+python -m builder.builder
+
+# SQL
+## Delete all rows 
+Select "truncate cascade" in the table from pgadmin
+
+## Get reviews of specific hotel id
+SELECT * 
+FROM public.hotels_review 
+WHERE hotel_id = '1790442035081826978';
+
+http://127.0.0.1:8000/recommendations/users/597ebd356991bc7f0bc9dbc6/
+http://127.0.0.1:8000/recommendations/users/55503ec148a272af2b6ddd61/
+
+SELECT * 
+FROM public.hotes_hotel
+WHERE id = '115253';
