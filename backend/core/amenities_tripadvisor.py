@@ -1,9 +1,8 @@
 import pandas as pd
 import numpy as np
 
-df = pd.read_csv('hotel_reviews_all_destinations.csv')
+df = pd.read_csv('hotels_data.csv')
 
-# df['aux'] = np.random.random(len(df))
 
 # df['parking'] = 0
 prob_bajo_parking = 0.7
@@ -240,7 +239,7 @@ prob_bajo_24h_check_in = 0.8
 prob_medio_24h_check_in = 0.9
 prob_alto_24h_check_in = 0.95
 df['aux'] = np.random.random(len(df))
-df['24h_check_in'] = ((df['price_range'] == '$ (Based on Average Nightly Rates for a Standard Room from our Partners)') & (df['aux'] < prob_bajo_24h_check_in)) | ((df['price_range'] == '$$ (Based on Average Nightly Rates for a Standard Room from our Partners)') & (df['aux'] < prob_medio_24h_check_in)) | ((df['price_range'] == '$$$ (Based on Average Nightly Rates for a Standard Room from our Partners)') & (df['aux'] < prob_alto_24h_check_in))
+df['check_in_24h'] = ((df['price_range'] == '$ (Based on Average Nightly Rates for a Standard Room from our Partners)') & (df['aux'] < prob_bajo_24h_check_in)) | ((df['price_range'] == '$$ (Based on Average Nightly Rates for a Standard Room from our Partners)') & (df['aux'] < prob_medio_24h_check_in)) | ((df['price_range'] == '$$$ (Based on Average Nightly Rates for a Standard Room from our Partners)') & (df['aux'] < prob_alto_24h_check_in))
 
 
 # df['24h_front_desk']=0
@@ -248,7 +247,7 @@ prob_bajo_24h_front_desk = 0.8
 prob_medio_24h_front_desk = 0.9
 prob_alto_24h_front_desk = 0.95
 df['aux'] = np.random.random(len(df))
-df['24h_front_desk'] = ((df['price_range'] == '$ (Based on Average Nightly Rates for a Standard Room from our Partners)') & (df['aux'] < prob_bajo_24h_front_desk)) | ((df['price_range'] == '$$ (Based on Average Nightly Rates for a Standard Room from our Partners)') & (df['aux'] < prob_medio_24h_front_desk)) | ((df['price_range'] == '$$$ (Based on Average Nightly Rates for a Standard Room from our Partners)') & (df['aux'] < prob_alto_24h_front_desk))
+df['front_desk_24h'] = ((df['price_range'] == '$ (Based on Average Nightly Rates for a Standard Room from our Partners)') & (df['aux'] < prob_bajo_24h_front_desk)) | ((df['price_range'] == '$$ (Based on Average Nightly Rates for a Standard Room from our Partners)') & (df['aux'] < prob_medio_24h_front_desk)) | ((df['price_range'] == '$$$ (Based on Average Nightly Rates for a Standard Room from our Partners)') & (df['aux'] < prob_alto_24h_front_desk))
 
 
 # df['private_check_in_out']=0
@@ -283,4 +282,4 @@ df['laundry_service'] = ((df['price_range'] == '$ (Based on Average Nightly Rate
 # df.loc[df['price_range'] == '$ (Based on Average Nightly Rates for a Standard Room from our Partners)', '<columna_a_cambiar>'] = '<valor_para_la_columna>'
 
 # df.to_csv('hotel_amenities_all_destinations.csv')
-df.to_csv('hotel_amenities_with_values_all_destinations.csv')
+df.to_csv('hotels_data_with_amenities.csv', index=False)
