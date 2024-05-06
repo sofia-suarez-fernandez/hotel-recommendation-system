@@ -60,12 +60,12 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         return str(self.username)
 
 
-class UserTwitter(models.Model):
-    id = models.CharField(max_length=150, unique=True, primary_key=True)
-    username = models.CharField(max_length=150, unique=True)
-    first_name = models.CharField(max_length=150, blank=True, null=True)
+# class UserTwitter(models.Model):
+#     id = models.CharField(max_length=150, unique=True, primary_key=True)
+#     username = models.CharField(max_length=150, unique=True)
+#     first_name = models.CharField(max_length=150, blank=True, null=True)
 
-    objects = models.Manager()
+#     objects = models.Manager()
 
-    def __str__(self):
-        return str(self.username)
+#     def __str__(self):
+#         return str(self.username)

@@ -6,20 +6,20 @@ from hotels.models import Hotel, Review
 class HotelAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "name",
-        "city",
+        "hotel_name",
+        "locality",
     )
-    search_fields = ("hotel__name",)
-    list_filter = ("name",)
+    search_fields = ("hotel__hotel_name",)
+    list_filter = ("hotel_name",)
     fieldsets = (
         (
             None,
             {
                 "fields": (
                     "id",
-                    "name",
-                    "city",
-                    "address",
+                    "hotel_name",
+                    "locality",
+                    "street_address",
                 )
             },
         ),
@@ -30,15 +30,13 @@ class HotelAdmin(admin.ModelAdmin):
 class ReviewAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "hotel",
-        "rating",
-        "user_twitter",
+        "hotel_name",
+        "rate",
         "user_account",
     )
     search_fields = (
         "rating",
-        "hotel__name",
-        "user_twitter__username",
+        "hotel__hotel_name",
         "user_account__username",
     )
-    list_filter = ("rating", "user_account", "user_twitter", "hotel")
+    list_filter = ("rate", "user_account", "hotel_name")

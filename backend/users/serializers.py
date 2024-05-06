@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from djoser.serializers import UserCreateSerializer as UserCreateSerializerDjoser
 from rest_framework import serializers
-from users.models import UserAccount, UserTwitter
+from users.models import UserAccount #, UserTwitter
 
 UserAccount = get_user_model()
 
@@ -12,7 +12,7 @@ class UserAccountSerializer(UserCreateSerializerDjoser):
         fields = "__all__"
 
 
-class UserTwitterSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserTwitter
-        fields = "__all__"
+# class UserTwitterSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = UserTwitter
+#         fields = "__all__"

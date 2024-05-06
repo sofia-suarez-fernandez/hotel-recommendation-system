@@ -19,7 +19,7 @@ class HotelDetail(generics.RetrieveAPIView):
 
 class CityList(generics.ListAPIView):
     serializer_class = CitySerializer
-    queryset = Hotel.objects.all().values("city", "country").distinct()
+    queryset = Hotel.objects.all().values("locality", "country").distinct()
 
 
 # Reviews

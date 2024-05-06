@@ -1,55 +1,48 @@
 from django.db import models
 from django.db.models import Avg
-from users.models import UserAccount, UserTwitter
+from users.models import UserAccount
+
 
 class Hotel(models.Model):
+    CHAR_DEFAULT = ""
+
     id = models.CharField(max_length=150, unique=True, primary_key=True)
-    country = models.CharField(max_length=250, null=True)
-    city = models.CharField(max_length=250)
-    address = models.CharField(max_length=250)
-    name = models.CharField(max_length=250)
-    latitude = models.FloatField(null=True)
-    longitude = models.FloatField(null=True)
-    price = models.IntegerField(null=True)
-    facilities = models.CharField(max_length=4000, null=True)
-    images = models.CharField(max_length=4000, null=True)
+    hotel_name = models.CharField(max_length=250)
+    hotel_description = models.CharField(max_length=4000, default=CHAR_DEFAULT)
+    hotel_url = models.CharField(max_length=250, default=CHAR_DEFAULT)
+    hotel_image = models.CharField(max_length=4000, default=CHAR_DEFAULT)
+    prince_range = models.CharField(max_length=250, default=CHAR_DEFAULT)
+    street_address = models.CharField(max_length=250, default=CHAR_DEFAULT)
+    locality = models.CharField(max_length=250, default=CHAR_DEFAULT)
+    country = models.CharField(max_length=250, default=CHAR_DEFAULT)
+    review_count = models.IntegerField(null=True)
+    rating_value = models.FloatField(null=True)
     objects = models.Manager()
-
-    def num_reviews(self):
-        return Review.objects.filter(hotel=self).count()
-
-    def rating_avg(self):
-        return Review.objects.filter(hotel=self).aggregate(Avg("rating"))
-
-    def __str__(self):
-        return str(self.name)
 
 
 class City(models.Model):
     country = models.CharField(max_length=250, null=True)
-    city = models.CharField(max_length=250)
+    locality = models.CharField(max_length=250)
 
 
 class Review(models.Model):
     RATING_CHOICES = ((1, "Negative"), (2, "Neutral"), (3, "Positive"))
+    CHAR_DEFAULT = ""
 
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
-    user_twitter = models.ForeignKey(
-        UserTwitter, on_delete=models.CASCADE, null=True, blank=True
-    )
+    hotel_name = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    review_title = models.CharField(max_length=250, default=CHAR_DEFAULT)
+    review_text = models.CharField(max_length=4000, default=CHAR_DEFAULT)
+    rate = models.IntegerField(choices=RATING_CHOICES, null=True, default=2)
+    sentiment=models.IntegerField(choices=RATING_CHOICES, null=True, default=2)
+    tripdate = models.CharField(max_length=250, default=CHAR_DEFAULT)
+    included = models.BooleanField(default=True)
     user_account = models.ForeignKey(
         UserAccount, on_delete=models.CASCADE, null=True, blank=True
     )
-    rating = models.IntegerField(choices=RATING_CHOICES, null=True, default=2)
-    sentiment = models.IntegerField(choices=RATING_CHOICES, null=True, default=2)
-    review = models.CharField(max_length=1000, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    updated_at = models.DateTimeField(null=True, blank=True)
-    included = models.BooleanField(default=True)
     objects = models.Manager()
 
     def __str__(self):
-        return f"{self.hotel}__{self.rating}__{self.user_twitter}/{self.user_account}"
+        return f"{self.hotel_name}__{self.rate}__/{self.user_account}"
 
 
 class Similarity(models.Model):

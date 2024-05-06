@@ -1,5 +1,5 @@
 [tool.poetry]
-authors = ["Lucía <lucia.blanco.rguez@gmail.com>"]
+authors = ["Sofía <sofiasuarezfdez@gmail.com>"]
 description = ""
 name = "backend"
 packages = [

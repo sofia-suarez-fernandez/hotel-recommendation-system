@@ -1,13 +1,13 @@
 from django.urls import path  # , re_path
 
-from .views import UserAccountDetail, UserTwitterDetail  # , recs_cf
+from .views import UserAccountDetail #, UserTwitterDetail  # , recs_cf
 
 app_name = "users_api"
 
 urlpatterns = [
-    path(
-        "users/twitter/<str:pk>/", UserTwitterDetail.as_view(), name="usertwitterdetail"
-    ),
+    # path(
+    #     "users/twitter/<str:pk>/", UserTwitterDetail.as_view(), name="usertwitterdetail"
+    # ),
     path(
         "users/account/<int:pk>/", UserAccountDetail.as_view(), name="useraccountdetail"
     ),
