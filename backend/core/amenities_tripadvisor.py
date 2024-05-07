@@ -282,4 +282,6 @@ df['laundry_service'] = ((df['price_range'] == '$ (Based on Average Nightly Rate
 # df.loc[df['price_range'] == '$ (Based on Average Nightly Rates for a Standard Room from our Partners)', '<columna_a_cambiar>'] = '<valor_para_la_columna>'
 
 # df.to_csv('hotel_amenities_all_destinations.csv')
-df.to_csv('hotels_data_with_amenities.csv', index=False)
+# df.to_csv('hotels_data_with_amenities.csv', index=False)
+df['id'] = df.index
+df.to_csv('hotels_data_with_amenities_index_2.csv', index=False)

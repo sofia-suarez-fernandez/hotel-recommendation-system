@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Avg
 from users.models import UserAccount
+import decimal
 
 
 class Hotel(models.Model):
@@ -68,12 +69,12 @@ class Review(models.Model):
     CHAR_DEFAULT = ""
 
     hotel_name = models.ForeignKey(Hotel, on_delete=models.CASCADE)
-    review_title = models.CharField(max_length=250, default=CHAR_DEFAULT)
-    review_text = models.CharField(max_length=4000, default=CHAR_DEFAULT)
-    rate = models.IntegerField(choices=RATING_CHOICES, null=True, default=2)
+    review_title = models.CharField(max_length=250, default=CHAR_DEFAULT, null=True)
+    review_text = models.CharField(max_length=4000, default=CHAR_DEFAULT, null=True)
+    rate = models.DecimalField(max_digits=8, decimal_places=7, default=decimal.Decimal('3.0'))
     sentiment=models.IntegerField(choices=RATING_CHOICES, null=True, default=2)
-    tripdate = models.CharField(max_length=250, default=CHAR_DEFAULT)
-    included = models.BooleanField(default=True)
+    tripdate = models.CharField(max_length=250, default=CHAR_DEFAULT, null=True)
+    included = models.BooleanField(default=True, null=True)
     user_account = models.ForeignKey(
         UserAccount, on_delete=models.CASCADE, null=True, blank=True
     )
