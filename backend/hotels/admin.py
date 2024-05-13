@@ -5,7 +5,7 @@ from hotels.models import Hotel, Review
 @admin.register(Hotel)
 class HotelAdmin(admin.ModelAdmin):
     list_display = (
-        "id",
+        # "id",
         "hotel_name",
         "locality",
     )
@@ -16,7 +16,7 @@ class HotelAdmin(admin.ModelAdmin):
             None,
             {
                 "fields": (
-                    "id",
+                    # "id",
                     "hotel_name",
                     "locality",
                     "street_address",
@@ -29,13 +29,13 @@ class HotelAdmin(admin.ModelAdmin):
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = (
-        "id",
+        # "id",
         "hotel_name",
         "rate",
         "user_account",
     )
     search_fields = (
-        "rating",
+        "rate",
         "hotel__hotel_name",
         "user_account__username",
     )

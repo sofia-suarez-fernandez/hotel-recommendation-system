@@ -7,8 +7,8 @@ import decimal
 class Hotel(models.Model):
     CHAR_DEFAULT = ""
 
-    id = models.CharField(max_length=150, unique=True, primary_key=True)
-    hotel_name = models.CharField(max_length=250)
+    # id = models.CharField(max_length=150, unique=True, primary_key=True)
+    hotel_name = models.CharField(max_length=250, unique=True, primary_key=True)
     hotel_description = models.CharField(max_length=4000, default=CHAR_DEFAULT)
     hotel_url = models.CharField(max_length=250, default=CHAR_DEFAULT)
     hotel_image = models.CharField(max_length=4000, default=CHAR_DEFAULT)
@@ -27,7 +27,7 @@ class Amenity(models.Model):
     pool = models.BooleanField()
     gym = models.BooleanField()
     bar = models.BooleanField()
-    evening_entertainment = models.BooleanField()
+    # evening_entertainment = models.BooleanField()
     pets_allowed = models.BooleanField()
     pool_towels = models.BooleanField()
     coffee_shop = models.BooleanField()
@@ -71,7 +71,7 @@ class Review(models.Model):
     hotel_name = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     review_title = models.CharField(max_length=250, default=CHAR_DEFAULT, null=True)
     review_text = models.CharField(max_length=4000, default=CHAR_DEFAULT, null=True)
-    rate = models.DecimalField(max_digits=8, decimal_places=7, default=decimal.Decimal('3.0'))
+    rate = models.DecimalField(max_digits=8, decimal_places=7, default=decimal.Decimal('3.0'), null=True)
     sentiment=models.IntegerField(choices=RATING_CHOICES, null=True, default=2)
     tripdate = models.CharField(max_length=250, default=CHAR_DEFAULT, null=True)
     included = models.BooleanField(default=True, null=True)
