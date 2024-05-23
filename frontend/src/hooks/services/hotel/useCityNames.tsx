@@ -1,4 +1,5 @@
-import { CountryCity } from "../../../interfaces/hotel";
+// import { CountryCity } from "../../../interfaces/hotel";
+import { City } from "../../../interfaces/hotel";
 import useAxios from "../useAxios";
 
 const useCountryCity = () => {
@@ -10,7 +11,8 @@ const useCountryCity = () => {
     },
   });
 
-  const countryCitySorted: CountryCity[] =
+  // const countryCitySorted: CountryCity[] =
+  const countryCitySorted: City[] =
     response &&
     response.sort(
       (a, b) =>

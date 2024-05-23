@@ -46,11 +46,11 @@ export const Home = (): JSX.Element => {
     getPopularHotels(selectedCity).then((hotels) => {
       setPopularHotels(hotels);
     });
-    userId &&
-      getRecommendedHotelsByUserId(selectedCity, userId).then((hotels) => {
-        setRecommendedHotels(hotels);
-      });
-  }, [selectedCity, userId]);
+    // userId &&
+    //   getRecommendedHotelsByUserId(selectedCity, userId).then((hotels) => {
+    //     setRecommendedHotels(hotels);
+    //   });
+  }, [selectedCity/*, userId*/]);
 
   // Popular or recommended hotels
   const hotels: Hotel[] | undefined = useMemo(
@@ -60,6 +60,7 @@ export const Home = (): JSX.Element => {
 
   const countries =
     loading === false &&
+    Array.isArray(response) &&
     response
       .map((item) => item.country)
       .filter((value, index, self) => self.indexOf(value) === index);
@@ -96,14 +97,18 @@ export const Home = (): JSX.Element => {
                   </ListSubheader>
                 )}
                 {loading === false &&
+                  response &&
                   response.map((data) => {
                     return (
                       <MenuItem
-                        key={data.city}
-                        value={data.city}
+                        // key={data.city}
+                        key={data.locality}
+                        // value={data.city}
+                        value={data.locality}
                         style={{ paddingLeft: "2rem" }}
                       >
-                        {data.city}
+                        {/* {data.city} */}
+                        {data.locality}
                       </MenuItem>
                     );
                   })}

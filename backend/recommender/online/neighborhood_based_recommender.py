@@ -49,7 +49,7 @@ class NeighborhoodBasedRecs:
             return {}
 
         hotel_ids = {
-            hotel["hotel_id"]: hotel["sentiment"] for hotel in active_user_reviews
+            hotel["hotel_name_id"]: hotel["sentiment"] for hotel in active_user_reviews
         }
         user_mean = sum(hotel_ids.values()) / len(hotel_ids)
 

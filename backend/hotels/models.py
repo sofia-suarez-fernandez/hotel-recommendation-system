@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models import Avg
-from users.models import UserAccount
+from ..users.models import UserAccount
 import decimal
 
 
@@ -68,7 +68,7 @@ class Review(models.Model):
     RATING_CHOICES = ((1, "Negative"), (2, "Neutral"), (3, "Positive"))
     CHAR_DEFAULT = ""
 
-    hotel_name = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    hotel_name_id = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     review_title = models.CharField(max_length=250, default=CHAR_DEFAULT, null=True)
     review_text = models.CharField(max_length=4000, default=CHAR_DEFAULT, null=True)
     rate = models.DecimalField(max_digits=8, decimal_places=7, default=decimal.Decimal('3.0'), null=True)
@@ -81,7 +81,7 @@ class Review(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return f"{self.hotel_name}__{self.rate}__/{self.user_account}"
+        return f"{self.hotel_name_id}__{self.rate}__/{self.user_account}"
 
 
 class Similarity(models.Model):

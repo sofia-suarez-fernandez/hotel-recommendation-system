@@ -2,7 +2,8 @@ from django.db.models import Q
 from hotels.models import Hotel, Review
 from hotels.serializers import CitySerializer, HotelSerializer, ReviewSerializer
 from recommender.online.neighborhood_based_recommender import NeighborhoodBasedRecs
-from recommender.online.popularity_recommender import PopularityBasedRecs
+from backend.recommender.online.popularity_recommender_original import PopularityBasedRecs
+# from backend.recommender.online.popularity_recommender import PopularityBasedRecs
 from rest_framework import generics  # , permissions
 
 
@@ -43,7 +44,8 @@ class HotelReviewsList(generics.ListAPIView):
 
     def get_queryset(self):
         hotel = self.kwargs["id"]
-        return Review.objects.filter(hotel__id=hotel).order_by("-created_at")
+        return Review.objects.filter(hotel__id=hotel)
+    # .order_by("-created_at")
 
 
 class CreateReview(generics.CreateAPIView):
@@ -62,7 +64,8 @@ class CollaborativeFilteringRecList(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.kwargs["user_id"]
-        current_city = self.kwargs["city"]
+        # current_city = self.kwargs["city"]
+        current_city = self.kwargs["locality"]
         min_sim = 0.0
         max_candidates = 10
         neighborhood_size = 1
@@ -91,7 +94,7 @@ class CollaborativeFilteringRecList(generics.ListAPIView):
             popular_hotels = PopularityBasedRecs().popular_hotels_for_user(
                 user_id=user, num=num_popular_hotels, current_city=current_city
             )
-            popular_hotels_ids = [item["hotel_id"] for item in popular_hotels]
+            popular_hotels_ids = [item["hotel_name_id"] for item in popular_hotels]
             num_popular_hotels = len(popular_hotels_ids)
             print("Recommendations from popular hotels:", num_popular_hotels)
             recommended_hotels_ids.extend(popular_hotels_ids)
@@ -114,7 +117,7 @@ class PopularRecList(generics.ListAPIView):
         popular_hotels = PopularityBasedRecs().popular_hotels(
             num=num, current_city=current_city
         )
-        popular_hotels_ids = [item["hotel_id"] for item in popular_hotels]
+        popular_hotels_ids = [item["hotel_name_id"] for item in popular_hotels]
 
         recommended_popular_hotels = Hotel.objects.filter(id__in=popular_hotels_ids)
 
