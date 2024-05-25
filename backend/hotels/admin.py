@@ -1,9 +1,13 @@
+"""Admin module for hotels app"""
+
 from django.contrib import admin
-from hotels.models import Hotel, Review
+from .models import Hotel, Review
 
 
 @admin.register(Hotel)
 class HotelAdmin(admin.ModelAdmin):
+    """Hotel Admin"""
+
     list_display = (
         # "id",
         "hotel_name",
@@ -28,6 +32,8 @@ class HotelAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
+    """ReviewAdmin"""
+
     list_display = (
         # "id",
         "hotel_name",

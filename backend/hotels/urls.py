@@ -1,3 +1,4 @@
+"""urls for the hotels app"""
 from django.urls import path
 
 from .views import (
@@ -13,7 +14,7 @@ from .views import (
     UserReviewsList,
 )
 
-app_name = "hotels_api"
+APP_NAME = "hotels_api"
 
 urlpatterns = [
     # Hotels
@@ -30,12 +31,12 @@ urlpatterns = [
     path("reviews/", ReviewsList.as_view(), name="reviewsList"),
     # Recommendations
     path(
-        "recommendations/<str:id>/",
+        "recommendations/<str:locality>/",
         PopularRecList.as_view(),
         name="popularRecList",
     ),
     path(
-        "recommendations/<str:city>/users/<str:user_id>/",
+        "recommendations/<str:locality>/users/<str:user_account_id>/",
         CollaborativeFilteringRecList.as_view(),
         name="collaborativeFilteringRecList",
     ),

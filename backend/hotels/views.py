@@ -1,3 +1,5 @@
+"""This module contains the views for the hotels app."""
+
 from rest_framework import generics  # , permissions
 from django.db.models import Q
 from backend.recommender.online.popularity_recommender import PopularityBasedRecs
@@ -8,27 +10,37 @@ from ..recommender.online.neighborhood_based_recommender import NeighborhoodBase
 
 # Hotel
 class HotelList(generics.ListAPIView):
+    """Class representing a HotelList object. Lists all hotels."""
+
     queryset = Hotel.objects.all()
     serializer_class = HotelSerializer
 
 
 class HotelDetail(generics.RetrieveAPIView):
+    """Class representing a HotelDetail object. Retrieves a hotel."""
+
     queryset = Hotel.objects.all()
     serializer_class = HotelSerializer
 
 
 class CityList(generics.ListAPIView):
+    """Class representing a CityList object. Lists all cities."""
+
     serializer_class = CitySerializer
     queryset = Hotel.objects.all().values("locality", "country").distinct()
 
 
 # Reviews
 class ReviewsList(generics.ListAPIView):
+    """Class representing a ReviewsList object. Lists all reviews."""
+
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
 
 class UserReviewsList(generics.ListAPIView):
+    """Class representing a UserReviewsList object. Lists all reviews of a user."""
+
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
@@ -39,6 +51,8 @@ class UserReviewsList(generics.ListAPIView):
 
 
 class HotelReviewsList(generics.ListAPIView):
+    """Class representing a HotelReviewsList object. Lists all reviews of a hotel."""
+
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
@@ -49,11 +63,15 @@ class HotelReviewsList(generics.ListAPIView):
 
 
 class CreateReview(generics.CreateAPIView):
+    """Class representing a CreateReview object. Creates a review."""
+
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
 
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
+    """Class representing a ReviewDetail object. Retrieves, updates, or deletes a review."""
+
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 

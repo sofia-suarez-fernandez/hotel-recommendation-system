@@ -1,6 +1,8 @@
+"""This module contains the views for the users app."""
+
 from rest_framework import generics
-from users.models import UserAccount #, UserTwitter
-from users.serializers import UserAccountSerializer #, UserTwitterSerializer
+from .models import UserAccount  # , UserTwitter
+from .serializers import UserAccountSerializer  # , UserTwitterSerializer
 
 
 # class UserTwitterDetail(generics.RetrieveAPIView):
@@ -9,5 +11,7 @@ from users.serializers import UserAccountSerializer #, UserTwitterSerializer
 
 
 class UserAccountDetail(generics.RetrieveAPIView):
+    """Class representing a UserAccountDetail object. Retrieves a user account."""
+
     serializer_class = UserAccountSerializer
     queryset = UserAccount.objects.all()

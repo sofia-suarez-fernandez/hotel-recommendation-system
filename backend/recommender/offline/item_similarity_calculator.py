@@ -1,3 +1,5 @@
+"""Calculate the item similarity matrix"""
+
 import logging
 import os
 from datetime import datetime
@@ -8,11 +10,11 @@ import psycopg2
 from scipy.sparse import coo_matrix
 from sklearn.metrics.pairwise import cosine_similarity
 
+from backend.hotels.models import Review, Similarity
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django.setup()
 
-
-from hotels.models import Review, Similarity
 
 logging.basicConfig(
     format="%(asctime)s : %(levelname)s : %(message)s", level=logging.DEBUG
@@ -21,6 +23,7 @@ logger = logging.getLogger("Item similarity calculator")
 
 
 def normalize(x):
+    """Normalize the data"""
     x = x.astype(float)
     x_sum = x.sum()
     x_num = x.astype(bool).sum()
@@ -32,27 +35,31 @@ def normalize(x):
 
 
 class ItemSimilarityMatrixBuilder(object):
+    """Build the item similarity matrix"""
+
     def __init__(self, min_overlap, min_sim):
+        """Initialize the class"""
         self.min_overlap = min_overlap
         self.min_sim = min_sim
         self.db = "django.db.backends.postgresql_psycopg2"
 
     def build(self, reviews, save=True):
+        """Build the item similarity matrix"""
         logger.debug("Calculating similarities ... using %s ratings", len(reviews))
         start_time = datetime.now()
 
         logger.debug("Creating ratings matrix")
 
         reviews["sentiment"] = reviews["sentiment"].astype(float)
-        reviews["user_id"] = reviews["user_id"].astype("category")
-        reviews["hotel_id"] = reviews["hotel_id"].astype("category")
+        reviews["user_account_id"] = reviews["user__account_id"].astype("category")
+        reviews["hotel_name_id"] = reviews["hotel_name_id"].astype("category")
 
         coo = coo_matrix(
             (
                 reviews["sentiment"],
                 (
-                    reviews["hotel_id"].cat.codes.copy(),
-                    reviews["user_id"].cat.codes.copy(),
+                    reviews["hotel_name_id"].cat.codes.copy(),
+                    reviews["user_account_id"].cat.codes.copy(),
                 ),
             )
         )
@@ -90,7 +97,7 @@ class ItemSimilarityMatrixBuilder(object):
         cor = cor.multiply(cor >= self.min_sim)
         cor = cor.multiply(overlap_matrix >= self.min_overlap)
 
-        hotels = dict(enumerate(reviews["hotel_id"].cat.categories))
+        hotels = dict(enumerate(reviews["hotel_name_id"].cat.categories))
         logger.debug(
             "Correlation is finished, done in %s seconds", datetime.now() - start_time
         )
@@ -107,6 +114,7 @@ class ItemSimilarityMatrixBuilder(object):
 
     @staticmethod
     def _get_conn():
+        """Get the connection to the database"""
         conn = psycopg2.connect(
             host="localhost",
             database="hotelsrecommendersystem",
@@ -116,6 +124,7 @@ class ItemSimilarityMatrixBuilder(object):
         return conn
 
     def _save_with_django(self, sm, index, created=datetime.now()):
+        """Save the similarity matrix"""
         start_time = datetime.now()
         Similarity.objects.all().delete()
         logger.info("truncating table in %s seconds", datetime.now() - start_time)
@@ -161,6 +170,7 @@ class ItemSimilarityMatrixBuilder(object):
 
 
 def main():
+    """Main function to calculate the item similarity matrix"""
     logger.info("Calculation of item similarity")
 
     all_reviews = load_all_reviews()
@@ -168,7 +178,8 @@ def main():
 
 
 def load_all_reviews(min_reviews=1):
-    columns = ["user_account_id", "hotel_id", "sentiment"]
+    """Load all reviews"""
+    columns = ["user_account_id", "hotel_name_id", "sentiment"]
 
     reviews_data = Review.objects.all().values(*columns)
 
@@ -183,10 +194,10 @@ def load_all_reviews(min_reviews=1):
     #     ~df_review["user_id"].isin(num_reviews_by_user[num_reviews_by_user < 2].index)
     # ]
 
-    user_count = df_review[["user_id", "hotel_id"]].groupby("user_id").count()
+    user_count = df_review[["user_account_id", "hotel_name_id"]].groupby("user_id").count()
     user_count = user_count.reset_index()
-    user_ids = user_count[user_count["hotel_id"] > min_reviews]["user_id"]
-    df_review = df_review[df_review["user_id"].isin(user_ids)]
+    user_ids = user_count[user_count["hotel_name_id"] > min_reviews]["user_id"]
+    df_review = df_review[df_review["user_account_id"].isin(user_ids)]
     df_review["sentiment"] = df_review["sentiment"].astype(float)
 
     return df_review

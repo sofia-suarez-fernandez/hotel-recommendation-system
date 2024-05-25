@@ -25,25 +25,26 @@ export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
 
-  const imagesArray =
-    hotel?.images &&
-    hotel.images !== null &&
-    hotel.images.replace("{", "").replace("}", "").split(",");
+  // const imagesArray =
+  //   hotel?.images &&
+  //   hotel.images !== null &&
+  //   hotel.images.replace("{", "").replace("}", "").split(",");
+  const image = hotel?.hotel_image;
 
   const hotelImages = [
     {
-      img: imagesArray ? imagesArray[0] : undefined,
+      img: image ? image : undefined,
       title: "Hotel first image",
       rows: 2,
       cols: 2,
     },
     {
-      img: imagesArray ? imagesArray[1] : undefined,
+      img: image ? image : undefined,
       title: "Hotel second image",
       rows: 1,
     },
     {
-      img: imagesArray ? imagesArray[2] : undefined,
+      img: image ? image : undefined,
       title: "Hotel third image",
       rows: 1,
     },
@@ -58,23 +59,23 @@ export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
     };
   }
 
-  const address = hotel?.address ? hotel.address : "";
-  const city = hotel?.city ? hotel.city : "";
+  const address = hotel?.street_address ? hotel.street_address : "";
+  const city = hotel?.locality ? hotel.locality : "";
   const country = hotel?.country ? hotel.country : "";
-  const facilities = hotel?.facilities;
+  // const facilities = hotel?.facilities;
 
-  const facilitiesArray = (facilities) => {
-    const facilitiesArray = facilities
-      .replace("[", "")
-      .replace("]", "")
-      .split(", ");
+  // const facilitiesArray = (facilities) => {
+  //   const facilitiesArray = facilities
+  //     .replace("[", "")
+  //     .replace("]", "")
+  //     .split(", ");
 
-    const facilitiesArrayCleaned = facilitiesArray.map((value) =>
-      value.slice(1, -1)
-    );
+  //   const facilitiesArrayCleaned = facilitiesArray.map((value) =>
+  //     value.slice(1, -1)
+  //   );
 
-    return facilitiesArrayCleaned;
-  };
+  //   return facilitiesArrayCleaned;
+  // };
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY || "",
@@ -83,10 +84,10 @@ export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
   return (
     <Grid container className={classes.wrapper}>
       <Box className={classes.ratingTitleWrapper}>
-        <RatingNumber rating={hotel?.rating?.rating__avg} />
+        <RatingNumber rating={hotel?.rating_value} />
 
         <Typography variant="h1" className={classes.title}>
-          {hotel?.name}
+          {hotel?.hotel_name}
         </Typography>
       </Box>
 
@@ -131,7 +132,7 @@ export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
         ))}
       </ImageList>
 
-      <Accordion>
+      {/* <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -151,7 +152,7 @@ export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
             })}
           </Grid>
         </AccordionDetails>
-      </Accordion>
+      </Accordion> */}
 
       <Accordion className={classes.accordionMap}>
         <AccordionSummary

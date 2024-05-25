@@ -23,9 +23,7 @@ export interface Hotel {
   // };
   // num_reviews: number;
 }
-
-// export interface CountryCity {
-export interface City {
+export interface CountryCity {
   country?: string;
   // city: string;
   locality?: string;

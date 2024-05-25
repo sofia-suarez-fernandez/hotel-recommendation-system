@@ -1,8 +1,9 @@
+"""urls for users_api app"""
 from django.urls import path  # , re_path
 
 from .views import UserAccountDetail #, UserTwitterDetail  # , recs_cf
 
-app_name = "users_api"
+APP_NAME = "users_api"
 
 urlpatterns = [
     # path(

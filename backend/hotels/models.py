@@ -1,3 +1,5 @@
+"""This module contains the models for the hotels app."""
+
 import decimal
 from django.db import models
 from ..users.models import UserAccount
@@ -20,6 +22,14 @@ class Hotel(models.Model):
     review_count = models.IntegerField(null=True)
     rating_value = models.FloatField(null=True)
     objects = models.Manager()
+
+    def num_reviews(self):
+        """Return the number of reviews for the hotel."""
+        return self.review_count
+
+    def rating_avg(self):
+        """Return the average rating for the hotel."""
+        return self.rating_value
 
 
 class Amenity(models.Model):

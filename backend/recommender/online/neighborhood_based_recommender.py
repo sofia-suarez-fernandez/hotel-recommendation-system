@@ -1,3 +1,5 @@
+"""Module to recommend hotels based on the ratings of the user."""
+
 from decimal import Decimal
 
 from django.db.models import Q
@@ -60,8 +62,8 @@ class NeighborhoodBasedRecs:
         candidate_hotels = []
 
         if current_city != "Everywhere":
-            hotels_current_city = Hotel.objects.filter(city=current_city).values("id")
-            current_city_ids = [item["id"] for item in hotels_current_city]
+            hotels_current_city = Hotel.objects.filter(locality=current_city).values("hotel_name")
+            current_city_ids = [item["hotel_name"] for item in hotels_current_city]
 
             candidate_hotels = Similarity.objects.filter(
                 Q(source__in=hotel_ids.keys())

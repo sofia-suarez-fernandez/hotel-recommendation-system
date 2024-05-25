@@ -23,16 +23,18 @@ export const HotelCard = ({
 }: HotelCardProps): JSX.Element => {
   const { classes } = useHotelCardStyles();
 
-  const hotelSlug = useHotelSlug(hotel.id, hotel.name);
+  const hotelSlug = useHotelSlug(hotel.id, hotel.hotel_name);
   const urlHotel = `/hotel/${hotelSlug}`;
   const urlHotelReviews = `/hotel/${hotelSlug}#reviews`;
 
-  const imagesArray =
-    hotel.images &&
-    hotel.images !== null &&
-    hotel.images.replace("{", "").replace("}", "").split(",");
+  // const imagesArray =
+  //   hotel.images &&
+  //   hotel.images !== null &&
+  //   hotel.images.replace("{", "").replace("}", "").split(",");
+  const imageURL = hotel.hotel_image;
 
-  const priceEuros = useRupeeToEuros(hotel.price);
+  // const priceEuros = useRupeeToEuros(hotel.price);
+  const priceRange = hotel.price_range?.replace(/[^$]/g, "") ?? "";
 
   return (
     <Card className={classes.card}>
@@ -44,8 +46,8 @@ export const HotelCard = ({
             width="100%"
             effect="blur"
             src={
-              imagesArray
-                ? imagesArray[0]
+              imageURL
+                ? imageURL
                 : require("../../../static/images/no-image-found.jpeg")
             }
             className={classes.image}
@@ -60,22 +62,23 @@ export const HotelCard = ({
           <Grid container className={classes.infoWrapper}>
             <Box className={classes.titleAndCity}>
               <Typography variant="h2" className={classes.title}>
-                {hotel.name}
+                {hotel.hotel_name}
               </Typography>
 
-              {hotel.city && hotel.country && (
+              {hotel.locality && hotel.country && (
                 <Typography variant="body2" className={classes.hotelCity}>
                   <LocationOn className={classes.icon} />
-                  {hotel.city}
+                  {hotel.locality}
                   {", "}
                   {hotel.country}
                 </Typography>
               )}
             </Box>
 
-            {hotel.price && (
+            {hotel.price_range && (
               <Typography variant="body2">
-                From <b>{priceEuros}€</b>
+                {/* From <b>{priceEuros}€</b> */}
+                <b>{priceRange}</b>
               </Typography>
             )}
           </Grid>
@@ -84,11 +87,11 @@ export const HotelCard = ({
 
       <CardActions className={classes.reviewsWrapper}>
         <Box className={classes.reviewsInfoWrapper}>
-          <RatingNumber rating={hotel.rating?.rating__avg} />
+          <RatingNumber rating={hotel.rating_value} />
 
-          {hotel.num_reviews && (
+          {hotel.review_count && (
             <Typography variant="body2" className={classes.numberOfReviews}>
-              {hotel.num_reviews} reviews
+              {hotel.review_count} reviews
             </Typography>
           )}
         </Box>

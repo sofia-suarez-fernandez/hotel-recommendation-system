@@ -11,10 +11,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
 import useCountryCity from "../../../hooks/services/hotel/useCityNames";
 import { Hotel } from "../../../interfaces/hotel";
-import {
-  getPopularHotels,
-  getRecommendedHotelsByUserId,
-} from "../../../services/recommendations";
+// import {
+//   getPopularHotels,
+//   getRecommendedHotelsByUserId,
+// } from "../../../services/recommendations";
+import { getPopularHotels } from "../../../services/recommendations";
 import { Section } from "../../1_atoms/Section/Section";
 import { HotelsPagination } from "../../3_organisms/sections/HotelsPagination/HotelsPagination";
 import Layout from "../../4_templates/Layout/Layout";
@@ -43,14 +44,23 @@ export const Home = (): JSX.Element => {
 
   // Recommended hotels
   useEffect(() => {
-    getPopularHotels(selectedCity).then((hotels) => {
-      setPopularHotels(hotels);
-    });
-    // userId &&
-    //   getRecommendedHotelsByUserId(selectedCity, userId).then((hotels) => {
-    //     setRecommendedHotels(hotels);
-    //   });
-  }, [selectedCity /*, userId*/]);
+    getPopularHotels(selectedCity)
+      .then((hotels) => {
+        setPopularHotels(hotels);
+      })
+      .catch((error) => {
+        console.error("Error fetching popular hotels: ", error);
+      });
+  }, [selectedCity]);
+  // useEffect(() => {
+  //   getPopularHotels(selectedCity).then((hotels) => {
+  //     setPopularHotels(hotels);
+  //   });
+  //   userId &&
+  //     getRecommendedHotelsByUserId(selectedCity, userId).then((hotels) => {
+  //       setRecommendedHotels(hotels);
+  //     });
+  // }, [selectedCity , userId]);
 
   // Popular or recommended hotels
   const hotels: Hotel[] | undefined = useMemo(
@@ -62,7 +72,7 @@ export const Home = (): JSX.Element => {
     loading === false &&
     Array.isArray(response) &&
     response
-      .map((item) => item.country)
+      .map((item) => item?.country)
       .filter((value, index, self) => self.indexOf(value) === index);
 
   return (

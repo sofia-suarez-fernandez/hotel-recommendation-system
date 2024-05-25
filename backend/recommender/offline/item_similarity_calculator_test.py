@@ -3,17 +3,20 @@ import os
 import unittest
 from datetime import datetime
 
+from sklearn.metrics.pairwise import cosine_similarity
+from scipy.sparse import coo_matrix
+from tqdm import tqdm
+
 import django
 import pandas as pd
 import psycopg2
-from scipy.sparse import coo_matrix
-from sklearn.metrics.pairwise import cosine_similarity
-from tqdm import tqdm
+
+from backend.hotels.models import Similarity
+
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django.setup()
 
-from hotels.models import Similarity
 
 logging.basicConfig(
     format="%(asctime)s : %(levelname)s : %(message)s", level=logging.DEBUG
@@ -55,13 +58,13 @@ class ItemSimilarityMatrixBuilder(object):
 
         ratings["avg"] = ratings["avg"].astype(float)
         ratings["user_twitter_id"] = ratings["user_twitter_id"].astype("category")
-        ratings["hotel_id"] = ratings["hotel_id"].astype("category")
+        ratings["hotel_name_id"] = ratings["hotel_name_id"].astype("category")
 
         coo = coo_matrix(
             (
                 ratings["avg"].astype(float),
                 (
-                    ratings["hotel_id"].cat.codes.copy(),
+                    ratings["hotel_name_id"].cat.codes.copy(),
                     ratings["user_twitter_id"].cat.codes.copy(),
                 ),
             )
@@ -96,7 +99,7 @@ class ItemSimilarityMatrixBuilder(object):
         cor = cor.multiply(cor > self.min_sim)
         cor = cor.multiply(overlap_matrix > self.min_overlap)
 
-        hotels = dict(enumerate(ratings["hotel_id"].cat.categories))
+        hotels = dict(enumerate(ratings["hotel_name_id"].cat.categories))
         logger.debug(
             "Correlation is finished, done in %s seconds", datetime.now() - start_time
         )
@@ -232,13 +235,13 @@ class TestItemSimilarityMatrixBuilder(unittest.TestCase):
                 [3, MYSORE, 6, "2013-10-12 23:21:27+00:00"],
                 [3, OOTY, 3, "2013-10-12 23:21:27+00:00"],
             ],
-            columns=["user_twitter_id", "hotel_id", "rating", "rating_timestamp"],
+            columns=["user_twitter_id", "hotel_name_id", "rating", "rating_timestamp"],
         )
 
     def test_simple_similarity(self):
         builder = ItemSimilarityMatrixBuilder(0)
 
-        no_items = len(set(self.ratings["hotel_id"]))
+        no_items = len(set(self.ratings["hotel_name_id"]))
         cor, hotels = builder.build(ratings=self.ratings, save=False)
         df = pd.DataFrame(cor.toarray(), columns=hotels.values(), index=hotels.values())
         self.assertIsNotNone(df)

@@ -1,22 +1,20 @@
-// import { CountryCity } from "../../../interfaces/hotel";
-import { City } from "../../../interfaces/hotel";
+import { CountryCity } from "../../../interfaces/hotel";
 import useAxios from "../useAxios";
 
 const useCountryCity = () => {
   const { response, loading } = useAxios({
     method: "GET",
-    url: `/hotels/cities`,
+    url: '/hotels/cities/',
     headers: {
       "Content-Type": "application/json",
     },
   });
 
-  // const countryCitySorted: CountryCity[] =
-  const countryCitySorted: City[] =
+  const countryCitySorted: CountryCity[] =
     response &&
     response.sort(
       (a, b) =>
-        a.country.localeCompare(b.country) || a.city.localeCompare(b.city)
+        a?.country.localeCompare(b?.country) || a?.locality.localeCompare(b?.locality)
     );
 
   return { response: countryCitySorted, loading };
