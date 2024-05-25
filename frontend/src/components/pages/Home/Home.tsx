@@ -50,7 +50,7 @@ export const Home = (): JSX.Element => {
     //   getRecommendedHotelsByUserId(selectedCity, userId).then((hotels) => {
     //     setRecommendedHotels(hotels);
     //   });
-  }, [selectedCity/*, userId*/]);
+  }, [selectedCity /*, userId*/]);
 
   // Popular or recommended hotels
   const hotels: Hotel[] | undefined = useMemo(

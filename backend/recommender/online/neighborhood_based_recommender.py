@@ -1,13 +1,16 @@
 from decimal import Decimal
 
 from django.db.models import Q
-from hotels.models import Hotel, Review, Similarity
+from backend.hotels.models import Hotel, Review, Similarity
 
 
 class NeighborhoodBasedRecs:
+    """Class representing a NeighborhoodBasedRecs object. Recommends other hotels based on the ratings of the user."""
+
     def recommend_hotels(
         self, user_id, num, current_city, min_sim, max_candidates, neighborhood_size
     ):
+        """Function to recommend hotels based on the ratings of the user."""
         is_user_account = user_id.isnumeric()
 
         active_user_reviews = []
@@ -45,6 +48,7 @@ class NeighborhoodBasedRecs:
         neighborhood_size,
         active_user_reviews,
     ):
+        """Function to recommend hotels based on the ratings of the user."""
         if len(active_user_reviews) == 0:
             return {}
 

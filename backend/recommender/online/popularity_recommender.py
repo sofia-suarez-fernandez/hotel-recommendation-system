@@ -1,4 +1,4 @@
-from ...hotels.models import Hotel, Review
+from backend.hotels.models import Hotel, Review
 
 class PopularityBasedRecs:
     # Popular hotels for everyone

@@ -9,17 +9,17 @@ class PopularityBasedRecs:
         popular_hotels = []
 
         if is_user_account:
-            user_hotels_reviewed = Review.objects.filter(user_account=user_id).values(
-                "hotel_id"
-            )
+            user_hotels_reviewed = Review.objects.filter(
+                user_account_id=user_id
+            ).values("hotel_name_id")
             user_hotels_ids_reviewed = [
-                item["hotel_id"] for item in user_hotels_reviewed
+                item["hotel_name_id"] for item in user_hotels_reviewed
             ]
 
             if current_city != "Everywhere":
-                hotels_current_city = Hotel.objects.filter(city=current_city).values(
-                    "id"
-                )
+                hotels_current_city = Hotel.objects.filter(
+                    locality=current_city
+                ).values("id")
                 current_city_ids = [item["id"] for item in hotels_current_city]
 
                 popular_hotels = (

@@ -1,10 +1,9 @@
-from django.db.models import Q
-from hotels.models import Hotel, Review
-from hotels.serializers import CitySerializer, HotelSerializer, ReviewSerializer
-from recommender.online.neighborhood_based_recommender import NeighborhoodBasedRecs
-from backend.recommender.online.popularity_recommender_original import PopularityBasedRecs
-# from backend.recommender.online.popularity_recommender import PopularityBasedRecs
 from rest_framework import generics  # , permissions
+from django.db.models import Q
+from backend.recommender.online.popularity_recommender import PopularityBasedRecs
+from .models import Hotel, Review
+from .serializers import CitySerializer, HotelSerializer, ReviewSerializer
+from ..recommender.online.neighborhood_based_recommender import NeighborhoodBasedRecs
 
 
 # Hotel
@@ -45,6 +44,7 @@ class HotelReviewsList(generics.ListAPIView):
     def get_queryset(self):
         hotel = self.kwargs["id"]
         return Review.objects.filter(hotel__id=hotel)
+
     # .order_by("-created_at")
 
 
@@ -60,6 +60,8 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
 
 # Recommender
 class CollaborativeFilteringRecList(generics.ListAPIView):
+    """Class representing a CollaborativeFilteringRecList object. Recommends hotels to a user based on collaborative filtering."""
+
     serializer_class = HotelSerializer
 
     def get_queryset(self):
@@ -108,6 +110,8 @@ class CollaborativeFilteringRecList(generics.ListAPIView):
 
 
 class PopularRecList(generics.ListAPIView):
+    """Class representing a PopularRecList object. Recommends popular hotels to a user."""
+
     serializer_class = HotelSerializer
 
     def get_queryset(self):

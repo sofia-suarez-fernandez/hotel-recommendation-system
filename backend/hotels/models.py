@@ -1,10 +1,11 @@
-from django.db import models
-from django.db.models import Avg
-from ..users.models import UserAccount
 import decimal
+from django.db import models
+from ..users.models import UserAccount
 
 
 class Hotel(models.Model):
+    """Class representing a Hotel object."""
+
     CHAR_DEFAULT = ""
 
     # id = models.CharField(max_length=150, unique=True, primary_key=True)
@@ -20,7 +21,10 @@ class Hotel(models.Model):
     rating_value = models.FloatField(null=True)
     objects = models.Manager()
 
+
 class Amenity(models.Model):
+    """Class representing an Amenity object."""
+
     hotel_name = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     parking = models.BooleanField()
     wifi = models.BooleanField()
@@ -60,19 +64,25 @@ class Amenity(models.Model):
 
 
 class City(models.Model):
+    """Class representing a City object."""
+
     country = models.CharField(max_length=250, null=True)
     locality = models.CharField(max_length=250)
 
 
 class Review(models.Model):
+    """Class representing a Review object."""
+
     RATING_CHOICES = ((1, "Negative"), (2, "Neutral"), (3, "Positive"))
     CHAR_DEFAULT = ""
 
     hotel_name_id = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     review_title = models.CharField(max_length=250, default=CHAR_DEFAULT, null=True)
     review_text = models.CharField(max_length=4000, default=CHAR_DEFAULT, null=True)
-    rate = models.DecimalField(max_digits=8, decimal_places=7, default=decimal.Decimal('3.0'), null=True)
-    sentiment=models.IntegerField(choices=RATING_CHOICES, null=True, default=2)
+    rate = models.DecimalField(
+        max_digits=8, decimal_places=7, default=decimal.Decimal("3.0"), null=True
+    )
+    sentiment = models.IntegerField(choices=RATING_CHOICES, null=True, default=2)
     tripdate = models.CharField(max_length=250, default=CHAR_DEFAULT, null=True)
     included = models.BooleanField(default=True, null=True)
     user_account = models.ForeignKey(
@@ -85,6 +95,8 @@ class Review(models.Model):
 
 
 class Similarity(models.Model):
+    """Class representing a Similarity object."""
+
     created = models.DateField()
     source = models.CharField(max_length=150, db_index=True)
     target = models.CharField(max_length=150)
@@ -92,6 +104,8 @@ class Similarity(models.Model):
     objects = models.Manager()
 
     class Meta:
+        """Class representing a Meta object."""
+
         db_table = "similarity"
 
     def __str__(self):
