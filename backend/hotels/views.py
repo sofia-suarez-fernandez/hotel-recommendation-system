@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import generics  # , permissions
 from django.db.models import Q
 from recommender.online.popularity_recommender import PopularityBasedRecs
-from .models import Hotel, Review
+from .models import City, Hotel, Review
 from .serializers import CitySerializer, HotelSerializer, ReviewSerializer
 
 # from recommender.online.neighborhood_based_recommender import NeighborhoodBasedRecs
@@ -38,7 +38,8 @@ class CityList(generics.ListAPIView):
     """Class representing a CityList object. Lists all cities."""
 
     serializer_class = CitySerializer
-    queryset = Hotel.objects.all().values("locality", "country").distinct()
+    # queryset = Hotel.objects.all().values("locality", "country").distinct()
+    queryset = City.objects.all().values("locality", "country").distinct()
 
 
 # Reviews

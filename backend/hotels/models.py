@@ -79,6 +79,8 @@ class City(models.Model):
     country = models.CharField(max_length=250, null=True)
     locality = models.CharField(max_length=250)
 
+    objects = models.Manager()
+
 
 class Review(models.Model):
     """Class representing a Review object."""

@@ -8,6 +8,7 @@ import { UpdateReviewDialog } from "../UpdateReviewDialog/UpdateReviewDialog";
 import { ReviewProps } from "./ReviewInterfaces";
 import { useReviewStyles } from "./ReviewStyles";
 import { useReviewViewModel } from "./ReviewViewModel";
+import { RatingNumber } from "../../1_atoms/RatingNumber/RatingNumber";
 
 export const Review = ({ review }: ReviewProps): JSX.Element => {
   const { classes } = useReviewStyles();
@@ -30,17 +31,21 @@ export const Review = ({ review }: ReviewProps): JSX.Element => {
             </Avatar>
 
             <Box className={classes.dateNameWrapper}>
-              <Typography className={classes.typography}>{username}</Typography>
-
+              {/* <Typography className={classes.typography}>{username}</Typography> */}
+              <Typography className={classes.typography}>
+                {username ? username : "Anonymous"}
+              </Typography>
               <Typography variant="body2">
                 {updatedAt === null ? createdAt : updatedAt}
               </Typography>
             </Box>
           </Box>
 
-          <CustomRating value={review.rate} readOnly={true} />
+          <RatingNumber rating={review.rate} />
+          {/* <CustomRating value={review.rate} readOnly={true} /> */}
         </Box>
 
+        <Typography className={classes.typography}>{review.review_title}</Typography>
         <Typography className={classes.review}>{review.review_text}</Typography>
       </Grid>
 

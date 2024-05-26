@@ -21,11 +21,17 @@ export const useReviewViewModel = ({ review }: ReviewViewModel) => {
   >();
 
   useEffect(() => {
-    review.user_account_id !== null &&
+    // review.user_account_id !== null &&
+    //   getAccountUserById(review.user_account_id).then((userAccount) => {
+    //     setUserAccountUsername(userAccount?.username);
+    //     setUserTwitterUsername(null);
+    //   });
+    if (review.user_account_id !== null && review.user_account_id !== undefined) {
       getAccountUserById(review.user_account_id).then((userAccount) => {
-        setUserAccountUsername(userAccount.username);
+        setUserAccountUsername(userAccount?.username);
         setUserTwitterUsername(null);
       });
+    }
     // review.user_twitter !== null &&
     //   getTwitterUserById(review.user_twitter).then((userTwitter) => {
     //     setUserAccountUsername(null);

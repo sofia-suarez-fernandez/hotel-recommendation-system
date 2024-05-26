@@ -1,9 +1,10 @@
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import axios from 'axios';
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import {
-  Accordion,
+  // Accordion,
   // AccordionDetails,
-  AccordionSummary,
+  // AccordionSummary,
   Box,
   Grid,
   ImageList,
@@ -154,7 +155,7 @@ export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
         </AccordionDetails>
       </Accordion> */}
 
-      <Accordion className={classes.accordionMap}>
+      {/* <Accordion className={classes.accordionMap}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -163,7 +164,7 @@ export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
           <Typography variant="body1">Location</Typography>
         </AccordionSummary>
 
-        {/* <AccordionDetails>
+        <AccordionDetails>
           {!isLoaded ? (
             <Loading />
           ) : (
@@ -180,8 +181,8 @@ export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
               </GoogleMap>
             )
           )}
-        </AccordionDetails> */}
-      </Accordion>
+        </AccordionDetails>
+      </Accordion> */}
     </Grid>
   );
 };
