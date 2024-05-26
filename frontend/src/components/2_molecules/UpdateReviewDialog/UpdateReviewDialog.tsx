@@ -67,7 +67,7 @@ export const UpdateReviewDialog = ({
 
           <CustomRating
             onChange={onChangeRating}
-            defaultValue={review.rating}
+            defaultValue={review.rate}
           />
 
           <TextField
@@ -75,7 +75,7 @@ export const UpdateReviewDialog = ({
             maxRows={5}
             className={classes.reviewWrapper}
             onChange={onChangeReview}
-            defaultValue={review.review}
+            defaultValue={review.review_text}
           />
         </DialogContent>
 

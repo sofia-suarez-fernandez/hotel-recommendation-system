@@ -11,7 +11,7 @@ import {
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import useHotelSlug from "../../../hooks/useHotelSlug";
-import useRupeeToEuros from "../../../hooks/useRupeeToEuros";
+// import useRupeeToEuros from "../../../hooks/useRupeeToEuros";
 import { RatingNumber } from "../../1_atoms/RatingNumber/RatingNumber";
 import { HotelCardProps } from "./HotelCardInterfaces";
 import { useHotelCardStyles } from "./HotelCardStyles";
@@ -23,7 +23,8 @@ export const HotelCard = ({
 }: HotelCardProps): JSX.Element => {
   const { classes } = useHotelCardStyles();
 
-  const hotelSlug = useHotelSlug(hotel.id, hotel.hotel_name);
+  // const hotelSlug = useHotelSlug(hotel.id, hotel.hotel_name);
+  const hotelSlug = useHotelSlug(hotel.hotel_name);
   const urlHotel = `/hotel/${hotelSlug}`;
   const urlHotelReviews = `/hotel/${hotelSlug}#reviews`;
 

@@ -2,7 +2,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import {
   Accordion,
-  AccordionDetails,
+  // AccordionDetails,
   AccordionSummary,
   Box,
   Grid,
@@ -12,10 +12,10 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { GoogleMap, MarkerF, useLoadScript } from "@react-google-maps/api";
+import { /*GoogleMap, MarkerF,*/ useLoadScript } from "@react-google-maps/api";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import { Loading } from "../../../1_atoms/Loading";
+// import { Loading } from "../../../1_atoms/Loading";
 import { RatingNumber } from "../../../1_atoms/RatingNumber/RatingNumber";
 import { HotelHeroProps } from "./HotelHeroInterfaces";
 import { useHotelHeroStyles } from "./HotelHeroStyles";
@@ -163,7 +163,7 @@ export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
           <Typography variant="body1">Location</Typography>
         </AccordionSummary>
 
-        <AccordionDetails>
+        {/* <AccordionDetails>
           {!isLoaded ? (
             <Loading />
           ) : (
@@ -180,7 +180,7 @@ export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
               </GoogleMap>
             )
           )}
-        </AccordionDetails>
+        </AccordionDetails> */}
       </Accordion>
     </Grid>
   );

@@ -82,14 +82,14 @@ export function NOTWORKINGAdminPanel() {
     () => [
       {
         id: "rating",
-        accessorFn: (row) => row.rating,
+        accessorFn: (row) => row.rate,
         cell: (info) => info.getValue(),
         header: () => <span>Rating</span>,
         footer: (props) => props.column.id,
       },
       {
         id: "review",
-        accessorFn: (row) => row.review,
+        accessorFn: (row) => row.review_text,
         cell: (info) => info.getValue(),
         header: () => <span>Review</span>,
         footer: (props) => props.column.id,

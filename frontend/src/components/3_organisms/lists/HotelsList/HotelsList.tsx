@@ -14,7 +14,7 @@ export const HotelsList = ({
     <Grid container className={classes.wrapper}>
       {hotels.map((hotel: Hotel, id) => (
         <HotelCard
-          key={hotel.id}
+          key={hotel.hotel_name}
           hotel={hotel}
           rankingNumber={itemOffset + 1 + id}
         />

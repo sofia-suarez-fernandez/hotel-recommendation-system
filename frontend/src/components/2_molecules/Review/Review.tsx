@@ -38,10 +38,10 @@ export const Review = ({ review }: ReviewProps): JSX.Element => {
             </Box>
           </Box>
 
-          <CustomRating value={review.rating} readOnly={true} />
+          <CustomRating value={review.rate} readOnly={true} />
         </Box>
 
-        <Typography className={classes.review}>{review.review}</Typography>
+        <Typography className={classes.review}>{review.review_text}</Typography>
       </Grid>
 
       {activeUser === username && (

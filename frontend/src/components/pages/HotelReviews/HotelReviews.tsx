@@ -9,7 +9,8 @@ import Layout from "../../4_templates/Layout/Layout";
 
 export const HotelReviews = (): JSX.Element => {
   const routeParams = useParams();
-  const hotelId = routeParams.slug_id?.split("-").pop();
+  // const hotelId = routeParams.slug_id?.split("-").pop();
+  const hotelId = routeParams.slug_id;
 
   const { response: hotel } = useHotelById(hotelId);
   const { response: reviews, loading: reviewsLoading } =

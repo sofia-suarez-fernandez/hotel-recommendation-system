@@ -19,7 +19,8 @@ export const useCreateReviewDialogViewModel = () => {
   };
 
   const routeParams = useParams();
-  const hotelId = routeParams.slug_id?.split("-").pop();
+  // const hotelId = routeParams.slug_id?.split("-").pop();
+  const hotelId = routeParams.slug_id?.split("-").slice(0, -1).join("-");
 
   const userId = useSelector((state: RootState) => state.user.user?.id);
 

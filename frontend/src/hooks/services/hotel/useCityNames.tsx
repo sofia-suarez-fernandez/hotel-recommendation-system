@@ -4,7 +4,7 @@ import useAxios from "../useAxios";
 const useCountryCity = () => {
   const { response, loading } = useAxios({
     method: "GET",
-    url: '/hotels/cities/',
+    url: "/hotels/cities/",
     headers: {
       "Content-Type": "application/json",
     },
@@ -14,7 +14,8 @@ const useCountryCity = () => {
     response &&
     response.sort(
       (a, b) =>
-        a?.country.localeCompare(b?.country) || a?.locality.localeCompare(b?.locality)
+        a?.country.localeCompare(b?.country) ||
+        a?.locality.localeCompare(b?.locality)
     );
 
   return { response: countryCitySorted, loading };

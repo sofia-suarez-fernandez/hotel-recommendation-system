@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getHotelById } from "../../../services/hotels";
 import {
   getAccountUserById,
-  getTwitterUserById,
+  // getTwitterUserById,
 } from "../../../services/users";
 import { ReviewUserViewModel } from "./ReviewUserInterfaces";
 
@@ -27,22 +27,22 @@ export const useReviewUserViewModel = ({ review }: ReviewUserViewModel) => {
   const [hotelLink, setHotelLink] = useState<string | null>();
 
   useEffect(() => {
-    review.user_account !== null &&
-      getAccountUserById(review.user_account).then((userAccount) => {
+    review.user_account_id !== null &&
+      getAccountUserById(review.user_account_id).then((userAccount) => {
         setUserAccountUsername(userAccount.username);
         setUserTwitterUsername(null);
       });
-    review.user_twitter !== null &&
-      getTwitterUserById(review.user_twitter).then((userTwitter) => {
-        setUserAccountUsername(null);
-        setUserTwitterUsername(userTwitter.username);
-      });
-    getHotelById(review.hotel).then((hotel) => {
-      setHotelName(hotel.name);
-      const hotelSlug = hotel.name.replace(/ /g, "-") + "-" + hotel.id;
+    // review.user_twitter !== null &&
+    //   getTwitterUserById(review.user_twitter).then((userTwitter) => {
+    //     setUserAccountUsername(null);
+    //     setUserTwitterUsername(userTwitter.username);
+    //   });
+    getHotelById(review.hotel_name_id).then((hotel) => {
+      setHotelName(hotel.hotel_name);
+      const hotelSlug = hotel.hotel_name.replace(/ /g, "-"); //+ "-" + hotel.id;
       setHotelLink("/hotel/" + hotelSlug);
     });
-  }, [hotelName, review.hotel, review.user_account, review.user_twitter]);
+  }, [hotelName, review.hotel_name_id, review.user_account_id, /*review.user_twitter*/]);
 
   const avatarLetter = username && username.charAt(0);
 

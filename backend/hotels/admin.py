@@ -13,7 +13,7 @@ class HotelAdmin(admin.ModelAdmin):
         "hotel_name",
         "locality",
     )
-    search_fields = ("hotel__hotel_name",)
+    search_fields = ("hotel_name",)
     list_filter = ("hotel_name",)
     fieldsets = (
         (
@@ -42,7 +42,7 @@ class ReviewAdmin(admin.ModelAdmin):
     )
     search_fields = (
         "rate",
-        "hotel__hotel_name",
-        "user_account__username",
+        "hotel_name",
+        "user_account",
     )
     list_filter = ("rate", "user_account", "hotel_name")

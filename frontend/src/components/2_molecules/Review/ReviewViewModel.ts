@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import {
   getAccountUserById,
-  getTwitterUserById,
+  // getTwitterUserById,
 } from "../../../services/users";
 import { ReviewViewModel } from "./ReviewInterfaces";
 
@@ -21,16 +21,16 @@ export const useReviewViewModel = ({ review }: ReviewViewModel) => {
   >();
 
   useEffect(() => {
-    review.user_account !== null &&
-      getAccountUserById(review.user_account).then((userAccount) => {
+    review.user_account_id !== null &&
+      getAccountUserById(review.user_account_id).then((userAccount) => {
         setUserAccountUsername(userAccount.username);
         setUserTwitterUsername(null);
       });
-    review.user_twitter !== null &&
-      getTwitterUserById(review.user_twitter).then((userTwitter) => {
-        setUserAccountUsername(null);
-        setUserTwitterUsername(userTwitter.username);
-      });
+    // review.user_twitter !== null &&
+    //   getTwitterUserById(review.user_twitter).then((userTwitter) => {
+    //     setUserAccountUsername(null);
+    //     setUserTwitterUsername(userTwitter.username);
+    //   });
   }, [review]);
 
   const username =

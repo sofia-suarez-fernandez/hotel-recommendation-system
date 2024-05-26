@@ -20,8 +20,8 @@ export const useUpdateReviewDialogViewModel = ({
 
   const { fetch } = useUpdateReview(
     review.id,
-    review.hotel,
-    review.user_account,
+    review.hotel_name_id,
+    review.user_account_id,
     newRating,
     newRating,
     newReview,

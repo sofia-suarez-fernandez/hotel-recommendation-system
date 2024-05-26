@@ -31,7 +31,7 @@ export const ReviewUser = ({ review }: ReviewUserProps): JSX.Element => {
             </Link>
           </Grid>
           <Grid item xs={2}>
-            <CustomRating value={review.rating} readOnly={true} />
+            <CustomRating value={review.rate} readOnly={true} />
           </Grid>
         </Grid>
         <Grid container spacing={1} alignItems="center">
@@ -46,7 +46,7 @@ export const ReviewUser = ({ review }: ReviewUserProps): JSX.Element => {
         </Grid>
       </Grid>
       <Grid container item xs={12}>
-        <Typography className={classes.review}>{review.review}</Typography>
+        <Typography className={classes.review}>{review.review_text}</Typography>
       </Grid>
     </Grid>
   );

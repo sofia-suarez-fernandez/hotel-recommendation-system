@@ -15,7 +15,7 @@ export interface Review {
   // rating: number;
   // sentiment: number;
   // review: string;
-  // created_at: any;
-  // updated_at: any;
+  created_at: any;
+  updated_at: any;
   // included: boolean;
 }

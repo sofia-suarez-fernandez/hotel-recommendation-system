@@ -3,7 +3,7 @@ from django.urls import path  # , re_path
 
 from .views import UserAccountDetail #, UserTwitterDetail  # , recs_cf
 
-APP_NAME = "users_api"
+app_name = "users_api"
 
 urlpatterns = [
     # path(

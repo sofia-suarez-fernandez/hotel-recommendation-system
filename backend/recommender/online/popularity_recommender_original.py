@@ -25,7 +25,7 @@ class PopularityBasedRecs:
                 popular_hotels = (
                     # Ignore the reviews of hotels that are not in the current city
                     # Ignore the reviews made by the user itself
-                    Review.objects.filter(hotel_name_id__in=current_city_ids)
+                    Review.objects.filter(hotel_name__in=current_city_ids)
                     .exclude(hotel_name_id__in=user_hotels_ids_reviewed)
                     .values("hotel_name_id")
                     .annotate(Count("user_twitter"), Avg("rating"))

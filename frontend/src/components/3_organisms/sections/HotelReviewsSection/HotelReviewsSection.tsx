@@ -34,11 +34,11 @@ export const HotelReviewsSection = ({
         setSortedReviews(reviews);
       }
       if (selectedSort === 2) {
-        const highestRating = [...reviews].sort((a, b) => b.rating - a.rating);
+        const highestRating = [...reviews].sort((a, b) => b.rate - a.rate);
         setSortedReviews(highestRating);
       }
       if (selectedSort === 3) {
-        const lowestRating = [...reviews].sort((a, b) => a.rating - b.rating);
+        const lowestRating = [...reviews].sort((a, b) => a.rate - b.rate);
         setSortedReviews(lowestRating);
       }
     }

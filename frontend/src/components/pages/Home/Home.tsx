@@ -29,7 +29,7 @@ export const Home = (): JSX.Element => {
   const isAdmin = useSelector((state: RootState) => state.user.user?.is_staff);
   const user = useSelector((state: RootState) => state.user.user);
 
-  const [recommendedHotels, setRecommendedHotels] = useState<Hotel[]>([]);
+  // const [recommendedHotels, setRecommendedHotels] = useState<Hotel[]>([]);
   const [popularHotels, setPopularHotels] = useState<Hotel[]>([]);
 
   const { response, loading } = useCountryCity();
@@ -63,9 +63,13 @@ export const Home = (): JSX.Element => {
   // }, [selectedCity , userId]);
 
   // Popular or recommended hotels
+  // const hotels: Hotel[] | undefined = useMemo(
+  //   () => (recommendedHotels.length < 1 ? popularHotels : recommendedHotels),
+  //   [popularHotels, recommendedHotels]
+  // );
+
   const hotels: Hotel[] | undefined = useMemo(
-    () => (recommendedHotels.length < 1 ? popularHotels : recommendedHotels),
-    [popularHotels, recommendedHotels]
+    ()  => popularHotels, [popularHotels]
   );
 
   const countries =
