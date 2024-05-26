@@ -67,8 +67,14 @@ class HotelReviewsList(generics.ListAPIView):
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
-        hotel = self.kwargs["id"]
-        return Review.objects.filter(hotel_name=hotel).order_by("-created_at")
+        # hotel = self.kwargs["id"]
+        # return Review.objects.filter(hotel_name=hotel).order_by("-created_at")
+        id = self.kwargs["id"].replace('-', ' ').lower()
+        try:
+            reviews = Review.objects.filter(hotel_name__hotel_name__iexact=id).order_by("-created_at")
+            return reviews
+        except ObjectDoesNotExist:
+            raise Http404
 
 
 class CreateReview(generics.CreateAPIView):
