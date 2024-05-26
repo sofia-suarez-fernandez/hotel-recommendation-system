@@ -27,13 +27,10 @@ class HotelDetail(generics.RetrieveAPIView):
     def get_object(self):
         """Retrieve the hotel object, replacing hyphens in the pk with spaces."""
         pk = self.kwargs.get('pk').replace('-', ' ').lower()
-        print(f"Modified pk: {pk}")  # Print the modified pk
         try:
             hotel = self.queryset.get(hotel_name__iexact=pk)
-            print(f"Found hotel: {hotel}")  # Print the found hotel
             return hotel
         except ObjectDoesNotExist:
-            print(f"No hotel found with pk: {pk}")  # Print a message if no hotel is found
             raise Http404
 
 
