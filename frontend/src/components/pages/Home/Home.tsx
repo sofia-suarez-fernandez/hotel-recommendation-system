@@ -107,7 +107,7 @@ export const Home = (): JSX.Element => {
                 <MenuItem value="Everywhere">Everywhere</MenuItem>∑
                 {loading === false && (
                   <ListSubheader className={classes.listSubHeader}>
-                    {countries[0]}
+                    Cities
                   </ListSubheader>
                 )}
                 {loading === false &&
