@@ -20,8 +20,8 @@ urlpatterns = [
     # Hotels
     path("hotels/", HotelList.as_view(), name="hotelList"),
     # path("hotels/<int:pk>/", HotelDetail.as_view(), name="hotelDetail"),
-    path("hotels/<str:pk>/", HotelDetail.as_view(), name="hotelDetail"),
     path("hotels/cities/", CityList.as_view(), name="cityList"),
+    path("hotels/<str:pk>/", HotelDetail.as_view(), name="hotelDetail"),
     # Reviews
     # path(
     #     "hotels/<int:id>/reviews/", HotelReviewsList.as_view(), name="hotelReviewsList"
