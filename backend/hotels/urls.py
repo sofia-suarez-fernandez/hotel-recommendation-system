@@ -3,7 +3,7 @@ from django.urls import path
 
 from .views import (
     CityList,
-    # CollaborativeFilteringRecList,
+    CollaborativeFilteringRecList,
     CreateReview,
     HotelDetail,
     HotelList,
@@ -39,9 +39,9 @@ urlpatterns = [
         PopularRecList.as_view(),
         name="popularRecList",
     ),
-    # path(
-    #     "recommendations/<str:locality>/users/<str:user_account_id>/",
-    #     CollaborativeFilteringRecList.as_view(),
-    #     name="collaborativeFilteringRecList",
-    # ),
+    path(
+        "recommendations/<str:locality>/users/<str:user_account_id>/",
+        CollaborativeFilteringRecList.as_view(),
+        name="collaborativeFilteringRecList",
+    ),
 ]
