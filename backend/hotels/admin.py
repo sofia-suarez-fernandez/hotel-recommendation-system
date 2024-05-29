@@ -36,13 +36,13 @@ class ReviewAdmin(admin.ModelAdmin):
 
     list_display = (
         # "id",
-        "hotel_name",
+        "hotel_name_id",
         "rate",
-        "user_account",
+        "user_account_id",
     )
     search_fields = (
         "rate",
-        "hotel_name",
-        "user_account",
+        "hotel_name_id",
+        "user_account_id",
     )
-    list_filter = ("rate", "user_account", "hotel_name")
+    list_filter = ("rate", "user_account_id", "hotel_name_id")

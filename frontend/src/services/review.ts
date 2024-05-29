@@ -88,10 +88,11 @@ export const getReviewsByUserId = (userId) => {
 };
 
 export const createReview = (
-  userId?: string,
+  userId?: number,
   hotelId?: string,
   rating?: number | null,
-  review?: string
+  review_title?: string,
+  review_text?: string
 ) => {
   const current_date = new Date();
 
@@ -106,11 +107,13 @@ export const createReview = (
   };
 
   const body = {
-    user_account: userId,
-    hotel: hotelId,
-    rating: rating,
-    sentiment: rating,
-    review: review,
+    user_account_id: userId,
+    hotel_name_id: hotelId?.replace(/-/g, " "),
+    rate: parseFloat(((rating ?? 0) / 3 * 5).toFixed(2)),
+    sentiment: rating === null ? null : Number(rating),
+    review_title: review_title,
+    review_text: review_text,
+    tripdate: null,
     created_at: current_date,
     updated_at: null,
     included: rating === null ? false : true,

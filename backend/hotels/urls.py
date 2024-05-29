@@ -19,15 +19,11 @@ app_name = "hotels_api"
 urlpatterns = [
     # Hotels
     path("hotels/", HotelList.as_view(), name="hotelList"),
-    # path("hotels/<int:pk>/", HotelDetail.as_view(), name="hotelDetail"),
     path("hotels/cities/", CityList.as_view(), name="cityList"),
-    path("hotels/<str:pk>/", HotelDetail.as_view(), name="hotelDetail"),
+    path("hotels/<str:pk>/", HotelDetail.as_view(), name="hotelDetail"), # str:pk is the hotel's primary key (hotel_name)
     # Reviews
-    # path(
-    #     "hotels/<int:id>/reviews/", HotelReviewsList.as_view(), name="hotelReviewsList"
-    # ),
     path(
-        "hotels/<str:id>/reviews/", HotelReviewsList.as_view(), name="hotelReviewsList"
+        "hotels/<str:id>/reviews/", HotelReviewsList.as_view(), name="hotelReviewsList" # str:id is the hotel's primary key (hotel_name)
     ),
     path("users/<int:id>/reviews/", UserReviewsList.as_view(), name="userReviewsList"),
     path("reviews/<int:pk>/", ReviewDetail.as_view(), name="reviewDetail"),

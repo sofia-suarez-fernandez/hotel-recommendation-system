@@ -88,7 +88,7 @@ class Review(models.Model):
     RATING_CHOICES = ((1, "Negative"), (2, "Neutral"), (3, "Positive"))
     CHAR_DEFAULT = ""
 
-    hotel_name = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    hotel_name_id = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     review_title = models.CharField(max_length=250, default=CHAR_DEFAULT, null=True)
     review_text = models.CharField(max_length=4000, default=CHAR_DEFAULT, null=True)
     rate = models.DecimalField(
@@ -97,7 +97,7 @@ class Review(models.Model):
     sentiment = models.IntegerField(choices=RATING_CHOICES, null=True, default=2)
     tripdate = models.CharField(max_length=250, default=CHAR_DEFAULT, null=True)
     included = models.BooleanField(default=True, null=True)
-    user_account = models.ForeignKey(
+    user_account_id = models.ForeignKey(
         UserAccount, on_delete=models.CASCADE, null=True, blank=True
     )
     created_at = models.DateTimeField(auto_now_add=True, null=True)
@@ -105,7 +105,7 @@ class Review(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return f"{self.hotel_name}__{self.rate}__/{self.user_account}"
+        return f"{self.hotel_name_id}__{self.rate}__/{self.user_account_id}"
 
 
 class Similarity(models.Model):

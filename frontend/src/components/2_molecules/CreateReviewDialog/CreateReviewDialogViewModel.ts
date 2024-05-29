@@ -19,13 +19,13 @@ export const useCreateReviewDialogViewModel = () => {
   };
 
   const routeParams = useParams();
-  // const hotelId = routeParams.slug_id?.split("-").pop();
-  const hotelId = routeParams.slug_id?.split("-").slice(0, -1).join("-");
+
+  const hotelId = routeParams.slug_id;
 
   const userId = useSelector((state: RootState) => state.user.user?.id);
 
   const handleSubmit = () => {
-    createReview(userId, hotelId, rating, review);
+    createReview(Number(userId), hotelId, rating, review, review);
     handleClose();
   };
 

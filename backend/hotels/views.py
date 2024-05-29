@@ -57,9 +57,7 @@ class UserReviewsList(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.kwargs["id"]
-        return Review.objects.filter(
-            Q(user_account__id=user) | Q(user_twitter__id=user)
-        )
+        return Review.objects.filter(user_account_id__id=user)
 
 
 class HotelReviewsList(generics.ListAPIView):
@@ -68,11 +66,9 @@ class HotelReviewsList(generics.ListAPIView):
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
-        # hotel = self.kwargs["id"]
-        # return Review.objects.filter(hotel_name=hotel).order_by("-created_at")
         id = self.kwargs["id"].replace("-", " ").lower()
         try:
-            reviews = Review.objects.filter(hotel_name__hotel_name__iexact=id).order_by(
+            reviews = Review.objects.filter(hotel_name_id__hotel_name__iexact=id).order_by(
                 "-created_at"
             )
             return reviews
