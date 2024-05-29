@@ -90,26 +90,23 @@ WSGI_APPLICATION = "core.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        # "ENGINE": os.getenv("ENGINE"),
         "NAME": "hotelsrecommendersystem",
-        # "NAME": os.getenv("NAME"),
         "USER": "postgres",
-        # "USER": os.getenv("USER"),
         "PASSWORD": "Gorrion2000!",
-        # "PASSWORD": os.getenv("PASSWORD"),
         "HOST": "localhost",
-        # "HOST": os.getenv("HOST"),
         "DATABASE_PORT": "5432",
-        # "DATABASE_PORT": os.getenv("DATABASE_PORT"),
     }
 }
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend" #os.getenv("EMAIL_BACKEND")
-EMAIL_HOST = "localhost" #os.getenv("EMAIL_HOST")
-EMAIL_PORT = "25" #os.getenv("EMAIL_PORT")
-EMAIL_HOST_USER = "" #os.getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = "" #os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = "localhost"
+EMAIL_HOST = "smtp.gmail.com"
+# EMAIL_PORT = "25"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "sofiasuarezfdez@gmail.com"
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD") #"clntpjptohkxcadi" #contraseña de Google para la verficacion en 2 pasos
 EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 # Password validation
