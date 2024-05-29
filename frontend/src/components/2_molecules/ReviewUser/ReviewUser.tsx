@@ -1,9 +1,10 @@
 import { Grid, Link, Typography } from "@mui/material";
-import { CustomRating } from "../CustomRating/CustomRating";
+// import { CustomRating } from "../CustomRating/CustomRating";
 import { ReviewUserProps } from "./ReviewUserInterfaces";
 import { useReviewUserStyles } from "./ReviewUserStyles";
 import { useReviewUserViewModel } from "./ReviewUserViewModel";
 import { Hotel, DateRange } from "@mui/icons-material";
+import { RatingNumber } from "../../1_atoms/RatingNumber/RatingNumber";
 
 export const ReviewUser = ({ review }: ReviewUserProps): JSX.Element => {
   const { classes } = useReviewUserStyles();
@@ -31,7 +32,8 @@ export const ReviewUser = ({ review }: ReviewUserProps): JSX.Element => {
             </Link>
           </Grid>
           <Grid item xs={2}>
-            <CustomRating value={review.rate} readOnly={true} />
+            {/* <CustomRating value={Number(review.rate)} readOnly={true} /> */}
+            <RatingNumber rating={review.rate} />
           </Grid>
         </Grid>
         <Grid container spacing={1} alignItems="center">

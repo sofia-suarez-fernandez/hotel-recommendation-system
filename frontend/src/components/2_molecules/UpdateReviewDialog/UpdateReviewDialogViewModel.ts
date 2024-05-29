@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../app/store";
 import useUpdateReview from "../../../hooks/services/review/useUpdateReview";
 import { UpdateReviewDialogProps } from "./UpdateReviewDialogInterfaces";
+// import { is } from "date-fns/locale";
 
 export const useUpdateReviewDialogViewModel = ({
   review,
@@ -11,8 +14,9 @@ export const useUpdateReviewDialogViewModel = ({
     setOpen(true);
   };
 
-  const [newRating, setNewRating] = useState<number>();
+  const [newRating, setNewRating] = useState<number>(Math.round(review.rate) || 1);
   const [newReview, setNewReview] = useState<string>();
+  const [newReviewTitle, setNewReviewTitle] = useState<string>();
 
   const handleClose = () => {
     setOpen(false);
@@ -25,6 +29,7 @@ export const useUpdateReviewDialogViewModel = ({
     newRating,
     newRating,
     newReview,
+    newReviewTitle,
     review.created_at,
     review.included
   );
@@ -38,6 +43,10 @@ export const useUpdateReviewDialogViewModel = ({
     });
   };
 
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.user.isAuthenticated
+  );
+
   const onChangeRating = (e) => {
     const newRating = e.target.value;
     setNewRating(newRating);
@@ -48,6 +57,11 @@ export const useUpdateReviewDialogViewModel = ({
     setNewReview(newReview);
   };
 
+  const onChangeReviewTitle = (e) => {
+    const newReviewTitle = e.target.value;
+    setNewReviewTitle(newReviewTitle);
+  };
+
   return {
     open,
     handleOpen,
@@ -55,5 +69,8 @@ export const useUpdateReviewDialogViewModel = ({
     handleSubmit,
     onChangeRating,
     onChangeReview,
+    onChangeReviewTitle,
+    newRating,
+    isAuthenticated,
   };
 };

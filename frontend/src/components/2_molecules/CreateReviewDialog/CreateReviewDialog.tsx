@@ -10,8 +10,12 @@ import {
   Link,
   TextField,
   Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
-import { CustomRating } from "../CustomRating/CustomRating";
+// import { CustomRating } from "../CustomRating/CustomRating";
 import { useCreateReviewDialogStyles } from "./CreateReviewDialogStyles";
 import { useCreateReviewDialogViewModel } from "./CreateReviewDialogViewModel";
 
@@ -25,8 +29,10 @@ export const CreateReviewDialog = (): JSX.Element => {
     handleSubmit,
     onChangeRating,
     onChangeReview,
+    onChangeReviewTitle,
     isAuthenticated,
-    review,
+    review_text,
+    rating,
   } = useCreateReviewDialogViewModel();
 
   return (
@@ -64,7 +70,7 @@ export const CreateReviewDialog = (): JSX.Element => {
 
         <DialogContent className={classes.dialogContent}>
           <Typography variant="h2" className={classes.title}>
-            Write a review
+            Write your review
           </Typography>
 
           {isAuthenticated === false && (
@@ -78,7 +84,32 @@ export const CreateReviewDialog = (): JSX.Element => {
           )}
 
           {isAuthenticated === true && (
-            <CustomRating onChange={onChangeRating} defaultValue={0} />
+            // <CustomRating onChange={onChangeRating} defaultValue={0} />
+            <FormControl>
+              <InputLabel id="rating-label">Rating</InputLabel>
+              <Select
+                labelId="rating-label"
+                value={rating}
+                onChange={onChangeRating}
+                label="Rating"
+              >
+                <MenuItem value={1}>1</MenuItem>
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={3}>3</MenuItem>
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+              </Select>
+            </FormControl>
+          )}
+
+          {isAuthenticated === true && (
+            <TextField
+              autoFocus
+              className={classes.reviewWrapper}
+              onChange={onChangeReviewTitle}
+              label="Title"
+              placeholder="Write your review title here..."
+            />
           )}
 
           {isAuthenticated === true && (
@@ -87,6 +118,8 @@ export const CreateReviewDialog = (): JSX.Element => {
               maxRows={5}
               className={classes.reviewWrapper}
               onChange={onChangeReview}
+              label="Review"
+              placeholder="Write your review here..."
             />
           )}
         </DialogContent>
@@ -98,7 +131,7 @@ export const CreateReviewDialog = (): JSX.Element => {
               variant="contained"
               color="secondary"
               autoFocus
-              disabled={review ? false : true}
+              disabled={review_text ? false : true}
             >
               Send review
             </Button>

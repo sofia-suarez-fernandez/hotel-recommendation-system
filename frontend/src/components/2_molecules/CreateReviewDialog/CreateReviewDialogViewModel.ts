@@ -11,8 +11,9 @@ export const useCreateReviewDialogViewModel = () => {
     setOpen(true);
   };
 
-  const [rating, setRating] = useState<number | null>(null);
-  const [review, setReview] = useState<string | undefined>(undefined);
+  const [rating, setRating] = useState<number | null>(1);
+  const [review_text, setReviewText] = useState<string | undefined>(undefined);
+  const [review_title, setReviewTitle] = useState<string | undefined>(undefined);
 
   const handleClose = () => {
     setOpen(false);
@@ -25,7 +26,7 @@ export const useCreateReviewDialogViewModel = () => {
   const userId = useSelector((state: RootState) => state.user.user?.id);
 
   const handleSubmit = () => {
-    createReview(Number(userId), hotelId, rating, review, review);
+    createReview(Number(userId), hotelId, rating, review_title, review_text);
     handleClose();
   };
 
@@ -38,9 +39,14 @@ export const useCreateReviewDialogViewModel = () => {
     setRating(rating);
   };
 
+  const onChangeReviewTitle = (e) => {
+    const review_title = e.target.value;
+    setReviewTitle(review_title);
+  }
+
   const onChangeReview = (e) => {
-    const review = e.target.value;
-    setReview(review);
+    const review_text = e.target.value;
+    setReviewText(review_text);
   };
 
   return {
@@ -49,8 +55,11 @@ export const useCreateReviewDialogViewModel = () => {
     handleClose,
     handleSubmit,
     onChangeRating,
+    onChangeReviewTitle,
     onChangeReview,
     isAuthenticated,
-    review,
+    review_title,
+    review_text,
+    rating,
   };
 };

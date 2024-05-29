@@ -7,6 +7,7 @@ const useUpdateReview = (
   newSentiment,
   newRating,
   newReview,
+  newReviewTitle,
   createdAt,
   included
 ) => {
@@ -22,11 +23,12 @@ const useUpdateReview = (
     },
     data: {
       id: reviewId,
-      hotel: hotelId,
-      user: userAccountId,
-      rating: newRating,
+      hotel_name_id: hotelId,
+      user_account_id: userAccountId,
+      rate: newRating,
       sentiment: newSentiment,
-      review: newReview,
+      review_title: newReviewTitle,
+      review_text: newReview,
       created_at: createdAt,
       updated_at: currentDate,
       included: included,

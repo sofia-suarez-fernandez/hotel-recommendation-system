@@ -2,7 +2,7 @@ import { Avatar, Box, Divider, Grid, Typography } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
-import { CustomRating } from "../CustomRating/CustomRating";
+// import { CustomRating } from "../CustomRating/CustomRating";
 import { DeleteReviewDialog } from "../DeleteReviewDialog/DeleteReviewDialog";
 import { UpdateReviewDialog } from "../UpdateReviewDialog/UpdateReviewDialog";
 import { ReviewProps } from "./ReviewInterfaces";
