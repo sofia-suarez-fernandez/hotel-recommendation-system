@@ -48,6 +48,9 @@ export const ReviewUser = ({ review }: ReviewUserProps): JSX.Element => {
         </Grid>
       </Grid>
       <Grid container item xs={12}>
+        <Typography className={classes.hotelName}>{review.review_title}</Typography>
+      </Grid>
+      <Grid container item xs={12}>
         <Typography className={classes.review}>{review.review_text}</Typography>
       </Grid>
     </Grid>
