@@ -15,7 +15,7 @@ class Hotel(models.Model):
     hotel_description = models.CharField(max_length=4000, default=CHAR_DEFAULT)
     hotel_url = models.CharField(max_length=250, default=CHAR_DEFAULT)
     hotel_image = models.CharField(max_length=4000, default=CHAR_DEFAULT)
-    prince_range = models.CharField(max_length=250, default=CHAR_DEFAULT)
+    price_range = models.CharField(max_length=250, default=CHAR_DEFAULT)
     street_address = models.CharField(max_length=250, default=CHAR_DEFAULT)
     locality = models.CharField(max_length=250, default=CHAR_DEFAULT)
     country = models.CharField(max_length=250, default=CHAR_DEFAULT)

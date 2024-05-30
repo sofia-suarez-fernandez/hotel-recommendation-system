@@ -5,6 +5,7 @@ export const useHotelCardStyles = makeStyles()((theme) => ({
     borderRadius: theme.shape.borderRadius,
     boxShadow: theme.shadows[2],
     width: "100%",
+    height: "185px",
     display: "flex",
     [theme.breakpoints.only("xs")]: {
       flexDirection: "column",
@@ -13,6 +14,7 @@ export const useHotelCardStyles = makeStyles()((theme) => ({
   cardActionArea: {
     textDecoration: "none",
     display: "flex",
+    alignItems: "flex-start",
     flexDirection: "row",
     [theme.breakpoints.only("xs")]: {
       flexDirection: "column",
@@ -53,7 +55,7 @@ export const useHotelCardStyles = makeStyles()((theme) => ({
   },
   hotelNumber: {
     fontWeight: "bold",
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(0.4),
     [theme.breakpoints.only("xs")]: {
       paddingTop: theme.spacing(1),
       paddingLeft: theme.spacing(1),
@@ -122,7 +124,6 @@ export const useHotelCardStyles = makeStyles()((theme) => ({
       textAlign: "left",
       lineHeight: 1,
     },
-    color: theme.palette.secondary.main,
   },
   titleAndCity: {
     display: "flex",
@@ -137,6 +138,7 @@ export const useHotelCardStyles = makeStyles()((theme) => ({
   ratingText: {
     fontWeight: "bold",
     marginBottom: 0,
+    marginRight: theme.spacing(0.5),
     color: theme.palette.secondary.main,
   },
   button: {
@@ -161,5 +163,16 @@ export const useHotelCardStyles = makeStyles()((theme) => ({
   },
   icon: {
     height: 18,
+    width: "fit-content",
+    marginRight: theme.spacing(0.2),
+  },
+  infoIcon: {
+    height: 14,
+    width: "fit-content",
+    marginBottom: theme.spacing(0.2),
+  },
+  priceRange: {
+    textAlign: "right",
+    marginBottom: theme.spacing(0.2),
   }
 }));

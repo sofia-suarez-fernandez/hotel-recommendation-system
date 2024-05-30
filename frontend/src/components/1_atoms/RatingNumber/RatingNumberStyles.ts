@@ -9,7 +9,7 @@ export const useRatingNumberStyles = makeStyles()((theme) => ({
     paddingRight: theme.spacing(0.5),
     paddingTop: theme.spacing(0.2),
     paddingBottom: theme.spacing(0.2),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.dark,
     borderRadius: theme.shape.borderRadius,
   },
   rating: {

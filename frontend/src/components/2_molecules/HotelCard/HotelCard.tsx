@@ -1,3 +1,4 @@
+import InfoOutlined from "@mui/icons-material/InfoOutlined";
 import {
   Box,
   Button,
@@ -6,12 +7,12 @@ import {
   CardActions,
   CardContent,
   Grid,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import useHotelSlug from "../../../hooks/useHotelSlug";
-// import useRupeeToEuros from "../../../hooks/useRupeeToEuros";
 import { RatingNumber } from "../../1_atoms/RatingNumber/RatingNumber";
 import { HotelCardProps } from "./HotelCardInterfaces";
 import { useHotelCardStyles } from "./HotelCardStyles";
@@ -30,22 +31,21 @@ export const HotelCard = ({
 
   const imageURL = hotel.hotel_image;
 
-  // const priceEuros = useRupeeToEuros(hotel.price);
   const priceRange = hotel.price_range?.replace(/[^$]/g, "") ?? "";
 
   let ratingText = "";
   if (hotel && hotel.rating_value !== undefined) {
     const ratingValueBase10 = hotel.rating_value * 2;
     if (ratingValueBase10 >= 9) {
-      ratingText = "Fantástico";
+      ratingText = "Fantastic";
     } else if (ratingValueBase10 >= 8) {
-      ratingText = "Fabuloso";
+      ratingText = "Fabulous";
     } else if (ratingValueBase10 >= 7) {
-      ratingText = "Bien";
+      ratingText = "Good";
     } else if (ratingValueBase10 >= 6) {
-      ratingText = "Agradable";
+      ratingText = "Pleasant";
     } else {
-      ratingText = "Regular";
+      ratingText = "Average";
     }
   }
 
@@ -87,13 +87,6 @@ export const HotelCard = ({
                 </Typography>
               )}
             </Box>
-
-            {hotel.price_range && (
-              <Typography variant="body2">
-                {/* From <b>{priceEuros}€</b> */}
-                <b>{priceRange}</b>
-              </Typography>
-            )}
           </Grid>
         </CardContent>
       </CardActionArea>
@@ -101,7 +94,9 @@ export const HotelCard = ({
       <CardActions className={classes.reviewsWrapper}>
         <Box className={classes.reviewsInfoWrapper}>
           <Box display="flex" alignItems="center">
-            <Typography sx={{ mr: 1 }} className={classes.ratingText}>{ratingText}</Typography>
+            <Typography variant="h6" className={classes.ratingText}>
+              {ratingText}
+            </Typography>
             <RatingNumber rating={hotel.rating_value} />
           </Box>
 
@@ -112,14 +107,23 @@ export const HotelCard = ({
           )}
         </Box>
 
-        <Button
-          variant="contained"
-          color="secondary"
-          href={urlHotelReviews}
-          className={classes.button}
-        >
-          <Typography style={{ color: "white" }}>See reviews</Typography>
-        </Button>
+        <Box>
+          {hotel.price_range && (
+            <Tooltip title="Based on Average Nightly Rates for a Standard Room from our Partners.">
+              <Typography variant="h4" className={classes.priceRange}>
+                <b>{priceRange}</b> <InfoOutlined className={classes.infoIcon} />
+              </Typography>
+            </Tooltip>
+          )}
+          <Button
+            variant="contained"
+            color="secondary"
+            href={urlHotelReviews}
+            className={classes.button}
+          >
+            <Typography style={{ color: "white" }}>See reviews</Typography>
+          </Button>
+        </Box>
       </CardActions>
     </Card>
   );
