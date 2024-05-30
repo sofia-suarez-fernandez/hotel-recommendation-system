@@ -51,4 +51,13 @@ export const useUpdateReviewDialogStyles = makeStyles()((theme) => ({
       width: "auto",
     },
   },
+  alert: {
+    width: theme.spacing(25),
+    [theme.breakpoints.only("xs")]: {
+      width: "auto",
+    },
+  },
+  singInLink: {
+    color: theme.palette.error.dark,
+  },
 }));

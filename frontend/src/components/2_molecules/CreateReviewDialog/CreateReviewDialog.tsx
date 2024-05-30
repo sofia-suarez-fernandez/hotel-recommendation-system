@@ -1,6 +1,8 @@
 import CloseIcon from "@mui/icons-material/Close";
+import RateReview from "@mui/icons-material/RateReview";
 import {
   Alert,
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -69,9 +71,12 @@ export const CreateReviewDialog = (): JSX.Element => {
         </DialogTitle>
 
         <DialogContent className={classes.dialogContent}>
-          <Typography variant="h2" className={classes.title}>
-            Write your review
-          </Typography>
+          <Box display="flex" alignItems="center">
+            <RateReview sx={{ mr: 1 }} />
+            <Typography variant="h2" className={classes.title}>
+              Write your review
+            </Typography>
+          </Box>
 
           {isAuthenticated === false && (
             <Alert severity="error" className={classes.alert}>

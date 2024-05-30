@@ -21,6 +21,19 @@ export const Review = ({ review }: ReviewProps): JSX.Element => {
     (state: RootState) => state.user.user?.username
   );
 
+  let ratingText = '';
+  if (review.rate >= 9) {
+    ratingText = 'Fantástico';
+  } else if (review.rate >= 8) {
+    ratingText = 'Fabuloso';
+  } else if (review.rate >= 7) {
+    ratingText = 'Bien';
+  } else if (review.rate >= 6) {
+    ratingText = 'Agradable';
+  } else {
+    ratingText = 'Regular';
+  }
+
   return (
     <>
       <Grid container className={classes.wrapper}>

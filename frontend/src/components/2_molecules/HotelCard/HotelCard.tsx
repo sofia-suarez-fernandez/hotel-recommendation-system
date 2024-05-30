@@ -28,14 +28,26 @@ export const HotelCard = ({
   const urlHotel = `/hotel/${hotelSlug}`;
   const urlHotelReviews = `/hotel/${hotelSlug}#reviews`;
 
-  // const imagesArray =
-  //   hotel.images &&
-  //   hotel.images !== null &&
-  //   hotel.images.replace("{", "").replace("}", "").split(",");
   const imageURL = hotel.hotel_image;
 
   // const priceEuros = useRupeeToEuros(hotel.price);
   const priceRange = hotel.price_range?.replace(/[^$]/g, "") ?? "";
+
+  let ratingText = "";
+  if (hotel && hotel.rating_value !== undefined) {
+    const ratingValueBase10 = hotel.rating_value * 2;
+    if (ratingValueBase10 >= 9) {
+      ratingText = "Fantástico";
+    } else if (ratingValueBase10 >= 8) {
+      ratingText = "Fabuloso";
+    } else if (ratingValueBase10 >= 7) {
+      ratingText = "Bien";
+    } else if (ratingValueBase10 >= 6) {
+      ratingText = "Agradable";
+    } else {
+      ratingText = "Regular";
+    }
+  }
 
   return (
     <Card className={classes.card}>
@@ -88,7 +100,10 @@ export const HotelCard = ({
 
       <CardActions className={classes.reviewsWrapper}>
         <Box className={classes.reviewsInfoWrapper}>
-          <RatingNumber rating={hotel.rating_value} />
+          <Box display="flex" alignItems="center">
+            <Typography sx={{ mr: 1 }} className={classes.ratingText}>{ratingText}</Typography>
+            <RatingNumber rating={hotel.rating_value} />
+          </Box>
 
           {hotel.review_count && (
             <Typography variant="body2" className={classes.numberOfReviews}>

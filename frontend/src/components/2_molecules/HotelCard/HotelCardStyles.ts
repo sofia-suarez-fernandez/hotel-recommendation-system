@@ -122,6 +122,7 @@ export const useHotelCardStyles = makeStyles()((theme) => ({
       textAlign: "left",
       lineHeight: 1,
     },
+    color: theme.palette.secondary.main,
   },
   titleAndCity: {
     display: "flex",
@@ -132,6 +133,11 @@ export const useHotelCardStyles = makeStyles()((theme) => ({
     fontWeight: "bold",
     marginBottom: 0,
     color: theme.palette.text.primary,
+  },
+  ratingText: {
+    fontWeight: "bold",
+    marginBottom: 0,
+    color: theme.palette.secondary.main,
   },
   button: {
     width: "fit-content",

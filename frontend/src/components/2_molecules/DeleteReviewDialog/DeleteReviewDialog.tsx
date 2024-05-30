@@ -1,5 +1,7 @@
 import CloseIcon from "@mui/icons-material/Close";
+import Delete from "@mui/icons-material/Delete";
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -17,19 +19,21 @@ export const DeleteReviewDialog = ({
 }: DeleteReviewDialogProps): JSX.Element => {
   const { classes } = useDeleteReviewDialogStyles();
 
-  const { open, handleOpen, handleClose, handleSubmit } =
+  const { open, handleOpen, handleClose, handleSubmit, isAuthenticated } =
     useDeleteReviewDialogViewModel({ reviewId });
 
   return (
     <>
-      <Button
-        variant="outlined"
-        color="error"
-        onClick={handleOpen}
-        className={classes.buttonWrapper}
-      >
-        <Typography>Remove</Typography>
-      </Button>
+      {isAuthenticated === true && (
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={handleOpen}
+          className={classes.buttonWrapper}
+        >
+          <Typography>Remove</Typography>
+        </Button>
+      )}
 
       <Dialog
         open={open}
@@ -54,13 +58,16 @@ export const DeleteReviewDialog = ({
         </DialogTitle>
 
         <DialogContent className={classes.dialogContent}>
-          <Typography variant="h2" className={classes.title}>
-            Remove review
-          </Typography>
+          <Box display="flex" alignItems="center">
+            <Delete sx={{ mr: 1 }} />
+            <Typography variant="h2" className={classes.title}>
+              Remove review
+            </Typography>
+          </Box>
 
           <Typography>
-            Do you really want to remove this review? This process cannot be
-            undone.
+            Are you sure you want to remove this review? Please note that this
+            action is irreversible.
           </Typography>
         </DialogContent>
 

@@ -1,11 +1,15 @@
 import CloseIcon from "@mui/icons-material/Close";
+import ModeEdit from "@mui/icons-material/ModeEdit";
 import {
+  Alert,
+  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   IconButton,
+  Link,
   TextField,
   Typography,
   Select,
@@ -36,14 +40,16 @@ export const UpdateReviewDialog = ({
 
   return (
     <>
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={handleOpen}
-        className={classes.buttonWrapper}
-      >
-        <Typography>Modify</Typography>
-      </Button>
+      {isAuthenticated === true && (
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={handleOpen}
+          className={classes.buttonWrapper}
+        >
+          <Typography>Modify</Typography>
+        </Button>
+      )}
 
       <Dialog
         open={open}
@@ -68,60 +74,78 @@ export const UpdateReviewDialog = ({
         </DialogTitle>
 
         <DialogContent className={classes.dialogContent}>
-          <Typography variant="h2" className={classes.title}>
-            Modify your review
-          </Typography>
+          <Box display="flex" alignItems="center">
+            <ModeEdit sx={{ mr: 1 }} />
+            <Typography variant="h2" className={classes.title}>
+              Modify your review
+            </Typography>
+          </Box>
 
-          {/* <CustomRating
-            onChange={onChangeRating}
-            defaultValue={review.rate}
-          /> */}
-          <FormControl>
-            <InputLabel id="rating-label">Rating</InputLabel>
-            <Select
-              labelId="rating-label"
-              value={newRating}
-              onChange={onChangeRating}
-              label="Rating"
-            >
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-            </Select>
-          </FormControl>
+          {isAuthenticated === false && (
+            <Alert severity="error" className={classes.alert}>
+              You have to{" "}
+              <Link href="/sign_in" className={classes.singInLink}>
+                sign in
+              </Link>{" "}
+              first
+            </Alert>
+          )}
 
-          <TextField
-            autoFocus
-            className={classes.reviewWrapper}
-            onChange={onChangeReviewTitle}
-            label="Title"
-            placeholder="Update your review title here..."
-            defaultValue={review.review_title}
-          />
+          {isAuthenticated === true && (
+            // <CustomRating onChange={onChangeRating} defaultValue={review.rate}/>
+            <FormControl>
+              <InputLabel id="rating-label">Rating</InputLabel>
+              <Select
+                labelId="rating-label"
+                value={newRating}
+                onChange={onChangeRating}
+                label="Rating"
+              >
+                <MenuItem value={1}>1</MenuItem>
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={3}>3</MenuItem>
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+              </Select>
+            </FormControl>
+          )}
 
-          <TextField
-            multiline
-            maxRows={5}
-            className={classes.reviewWrapper}
-            onChange={onChangeReview}
-            defaultValue={review.review_text}
-            label="Review"
-            placeholder="Update your review here..."
-          />
+          {isAuthenticated === true && (
+            <TextField
+              autoFocus
+              className={classes.reviewWrapper}
+              onChange={onChangeReviewTitle}
+              label="Title"
+              placeholder="Update your review title here..."
+              defaultValue={review.review_title}
+            />
+          )}
+
+          {isAuthenticated === true && (
+            <TextField
+              multiline
+              maxRows={5}
+              className={classes.reviewWrapper}
+              onChange={onChangeReview}
+              defaultValue={review.review_text}
+              label="Review"
+              placeholder="Update your review here..."
+            />
+          )}
         </DialogContent>
 
-        <DialogActions className={classes.dialogActions}>
-          <Button
-            onClick={handleSubmit}
-            variant="contained"
-            color="primary"
-            autoFocus
-          >
-            Modify review
-          </Button>
-        </DialogActions>
+        {isAuthenticated === true && (
+          <DialogActions className={classes.dialogActions}>
+            <Button
+              onClick={handleSubmit}
+              variant="contained"
+              color="primary"
+              autoFocus
+            >
+              Modify review
+            </Button>
+          </DialogActions>
+        )}
       </Dialog>
     </>
   );
