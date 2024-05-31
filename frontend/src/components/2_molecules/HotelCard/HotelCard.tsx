@@ -92,6 +92,8 @@ export const HotelCard = ({
                     component="a"
                     href={`https://www.google.com/maps?q=@${hotelSlug}`}
                     className={classes.showOnMap}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >Show on map</Typography>
                 </Box>
               )}
