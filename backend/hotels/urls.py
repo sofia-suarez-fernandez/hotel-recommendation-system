@@ -12,6 +12,7 @@ from .views import (
     ReviewDetail,
     ReviewsList,
     UserReviewsList,
+    HotelAmenitiesList,
 )
 
 app_name = "hotels_api"
@@ -29,6 +30,8 @@ urlpatterns = [
     path("reviews/<int:pk>/", ReviewDetail.as_view(), name="reviewDetail"),
     path("reviews/create/", CreateReview.as_view(), name="createReview"),
     path("reviews/", ReviewsList.as_view(), name="reviewsList"),
+    # Amenities
+    path("hotels/<str:id>/amenities/", HotelAmenitiesList.as_view(), name="hotelAmenitiesList"),
     # Recommendations
     path(
         "recommendations/<str:locality>/",

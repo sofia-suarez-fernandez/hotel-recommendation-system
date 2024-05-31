@@ -1,7 +1,7 @@
 """Serializers for hotels app"""
 
 from rest_framework import serializers
-from .models import City, Hotel, Review
+from .models import City, Hotel, Review, Amenity
 from .serializers_fields import NumReviewsField, RatingAvgField
 
 
@@ -32,4 +32,12 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta class"""
         model = Review
+        fields = "__all__"
+
+class AmenitiesSerializer(serializers.ModelSerializer):
+    """Amenities serializer"""
+
+    class Meta:
+        """Meta class"""
+        model = Amenity
         fields = "__all__"

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useHotelById from "../../../hooks/services/hotel/useHotelById";
 import useReviewsByHotelId from "../../../hooks/services/review/useReviewsByHotelId";
+import useAmenitiesByHotelId from "../../../hooks/services/hotel/useAmenitiesByHotelId";
 import { Section } from "../../1_atoms/Section/Section";
 import { HotelHero } from "../../3_organisms/sections/HotelHero/HotelHero";
 import { HotelReviewsSection } from "../../3_organisms/sections/HotelReviewsSection/HotelReviewsSection";
@@ -15,6 +16,7 @@ export const HotelReviews = (): JSX.Element => {
   const { response: hotel } = useHotelById(hotelId);
   const { response: reviews, loading: reviewsLoading } =
     useReviewsByHotelId(hotelId);
+  const {response: amenities} = useAmenitiesByHotelId(hotelId);
 
   var heroElement = document.getElementById("hero");
   var heroPosition = heroElement?.getBoundingClientRect();
@@ -36,7 +38,7 @@ export const HotelReviews = (): JSX.Element => {
       <Section isHeroSection>
         {hotel && (
           <div id="hero">
-            <HotelHero hotel={hotel} />
+            <HotelHero hotel={hotel} amenities={amenities} />
           </div>
         )}
       </Section>

@@ -22,7 +22,7 @@ import { HotelHeroProps } from "./HotelHeroInterfaces";
 import { useHotelHeroStyles } from "./HotelHeroStyles";
 import useHotelSlug from "../../../../hooks/useHotelSlug";
 
-export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
+export const HotelHero = ({ hotel, amenities }: HotelHeroProps): JSX.Element => {
   const { classes } = useHotelHeroStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
@@ -184,13 +184,13 @@ export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
       </Accordion>
 
       {/* -------------------------------- AMENITIES -------------------------------- */}
-      {/* <Accordion>
+      <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography variant="body1">Facilities</Typography>
+          <Typography variant="body1">Amenities</Typography>
         </AccordionSummary>
 
         <AccordionDetails className={classes.accordionDetails}>
@@ -204,7 +204,7 @@ export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
             })}
           </Grid>
         </AccordionDetails>
-      </Accordion> */}
+      </Accordion>
 
       {/* -------------------------------- MAP -------------------------------- */}
       {/* <Accordion className={classes.accordionMap}>

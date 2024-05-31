@@ -5,8 +5,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import generics  # , permissions
 from django.db.models import Q
 from recommender.online.popularity_recommender import PopularityBasedRecs
-from .models import City, Hotel, Review
-from .serializers import CitySerializer, HotelSerializer, ReviewSerializer
+from .models import City, Hotel, Review, Amenity
+from .serializers import CitySerializer, HotelSerializer, ReviewSerializer, AmenitiesSerializer
 
 from recommender.online.neighborhood_based_recommender import NeighborhoodBasedRecs
 
@@ -68,9 +68,9 @@ class HotelReviewsList(generics.ListAPIView):
     def get_queryset(self):
         id = self.kwargs["id"].replace("-", " ").lower()
         try:
-            reviews = Review.objects.filter(hotel_name_id__hotel_name__iexact=id).order_by(
-                "-created_at"
-            )
+            reviews = Review.objects.filter(
+                hotel_name_id__hotel_name__iexact=id
+            ).order_by("-created_at")
             return reviews
         except ObjectDoesNotExist:
             raise Http404
@@ -88,6 +88,23 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+
+
+# Amenities
+class HotelAmenitiesList(generics.ListAPIView):
+    """Class representing a HotelAmenitiesList object. Lists all amenities of a hotel."""
+
+    serializer_class = AmenitiesSerializer
+
+    def get_queryset(self):
+        id = self.kwargs["id"].replace("-", " ").lower()
+        try:
+            amenities = Amenity.objects.filter(
+                hotel_name_id__hotel_name__iexact=id
+            )
+            return amenities
+        except ObjectDoesNotExist:
+            raise Http404
 
 
 # Recommender

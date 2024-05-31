@@ -72,6 +72,8 @@ class Amenity(models.Model):
     dry_cleaning = models.BooleanField()
     laundry_service = models.BooleanField()
 
+    objects = models.Manager()
+
 
 class City(models.Model):
     """Class representing a City object."""
