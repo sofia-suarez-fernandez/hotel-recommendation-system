@@ -79,12 +79,21 @@ export const HotelCard = ({
               </Typography>
 
               {hotel.locality && hotel.country && (
-                <Typography variant="body2" className={classes.hotelCity}>
-                  <LocationOn className={classes.icon} />
-                  {hotel.locality}
-                  {", "}
-                  {hotel.country}
-                </Typography>
+                <Box>
+                  <Typography variant="body2" className={classes.hotelCity}>
+                    <LocationOn className={classes.icon} />
+                    {hotel.locality}
+                    {", "}
+                    {hotel.country}
+                  </Typography>
+
+                  <Typography
+                    variant="subtitle1"
+                    component="a"
+                    href={`https://www.google.com/maps?q=@${hotelSlug}`}
+                    className={classes.showOnMap}
+                  >Show on map</Typography>
+                </Box>
               )}
             </Box>
           </Grid>
@@ -111,7 +120,8 @@ export const HotelCard = ({
           {hotel.price_range && (
             <Tooltip title="Based on Average Nightly Rates for a Standard Room from our Partners.">
               <Typography variant="h4" className={classes.priceRange}>
-                <b>{priceRange}</b> <InfoOutlined className={classes.infoIcon} />
+                <b>{priceRange}</b>{" "}
+                <InfoOutlined className={classes.infoIcon} />
               </Typography>
             </Tooltip>
           )}

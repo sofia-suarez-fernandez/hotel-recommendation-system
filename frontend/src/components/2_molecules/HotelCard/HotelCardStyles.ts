@@ -174,5 +174,14 @@ export const useHotelCardStyles = makeStyles()((theme) => ({
   priceRange: {
     textAlign: "right",
     marginBottom: theme.spacing(0.2),
-  }
+  },
+  showOnMap: {
+    color: theme.palette.secondary.main,
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "underline",
+    },
+    marginTop: theme.spacing(1),
+    marginLeft: theme.spacing(1.3),
+  },
 }));
