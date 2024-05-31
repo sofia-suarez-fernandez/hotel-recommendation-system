@@ -9,7 +9,9 @@ export const useHotelHeroStyles = makeStyles()((theme) => ({
   ratingTitleWrapper: {
     display: "flex",
     flexDirection: "row",
-    alignItems: "flex-start",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
     columnGap: theme.spacing(0.75),
     paddingBottom: theme.spacing(1),
   },
@@ -27,6 +29,9 @@ export const useHotelHeroStyles = makeStyles()((theme) => ({
   },
   accordionDetails: {
     paddingTop: 0,
+  },
+  accordionSummary: {
+    fontWeight: "bold",
   },
   accordionMap: {
     width: "100%",
@@ -49,4 +54,16 @@ export const useHotelHeroStyles = makeStyles()((theme) => ({
     marginLeft: theme.spacing(0.5),
     fontWeight: "bold",
   },
+  ratingText: {
+    fontWeight: "bold",
+    marginBottom: 0,
+    marginRight: theme.spacing(0.5),
+    color: theme.palette.secondary.main,
+  },
+  ratingTextWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    columnGap: theme.spacing(0.3),
+  }
 }));
