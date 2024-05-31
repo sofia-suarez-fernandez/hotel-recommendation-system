@@ -21,6 +21,9 @@ export const useFooterStyles = makeStyles()((theme) => ({
       "& a": {
         color: theme.palette.text.primary,
         textDecoration: "none",
+        "&:hover": {
+          textDecoration: "underline",
+        },
       }
     }
   },
