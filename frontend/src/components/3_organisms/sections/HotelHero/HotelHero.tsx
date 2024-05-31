@@ -9,6 +9,9 @@ import {
   Grid,
   ImageList,
   ImageListItem,
+  List,
+  ListItem,
+  ListItemText,
   Typography,
   useMediaQuery,
   useTheme,
@@ -82,21 +85,6 @@ export const HotelHero = ({
       ratingText = "Average";
     }
   }
-
-  const amenitiesList = amenities;
-
-  const amenitiesArray = (amenitiesList) => {
-    const amenitiesArray = amenitiesList
-      .replace("[", "")
-      .replace("]", "")
-      .split(", ");
-
-    const amenitiesArrayCleaned = amenitiesArray.map((value) =>
-      value.slice(1, -1)
-    );
-
-    return amenitiesArrayCleaned;
-  };
 
   // const { isLoaded } = useLoadScript({
   //   googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY || "",
@@ -197,7 +185,7 @@ export const HotelHero = ({
         </AccordionSummary>
 
         <AccordionDetails className={classes.accordionDetails}>
-          <Grid container columnSpacing={1}>
+          {/* <Grid container columnSpacing={1}>
             {amenitiesArray(amenitiesList).map((amenity, index) => {
               return (
                 <Grid item xs={12} sm={6} md={4} key={index}>
@@ -205,7 +193,19 @@ export const HotelHero = ({
                 </Grid>
               );
             })}
-          </Grid>
+          </Grid> */}
+          <List>
+            {Object.entries(amenities).map(([key, value]) => {
+              if (value) {
+                return (
+                  <ListItem key={key}>
+                    <ListItemText primary={key} />
+                  </ListItem>
+                );
+              }
+              return null;
+            })}
+          </List>
         </AccordionDetails>
       </Accordion>
 
