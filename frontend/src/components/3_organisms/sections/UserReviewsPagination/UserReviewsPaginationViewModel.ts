@@ -18,6 +18,7 @@ export const useUserReviewsPaginationViewModel = ({
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % reviews.length;
     setItemOffset(newOffset);
+    window.scrollTo({ top: 350, behavior: "smooth" });
   };
 
   return { currentReviews, handlePageClick, pageCount };

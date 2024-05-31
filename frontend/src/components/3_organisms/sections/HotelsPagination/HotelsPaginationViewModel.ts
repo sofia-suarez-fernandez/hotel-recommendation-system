@@ -18,6 +18,7 @@ export const usePaginationViewModel = ({
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % hotels.length;
     setItemOffset(newOffset);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return { currentHotels, handlePageClick, pageCount, itemOffset };
