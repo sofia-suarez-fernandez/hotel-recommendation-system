@@ -1,10 +1,10 @@
-// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import axios from 'axios';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import axios from "axios";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import {
-  // Accordion,
-  // AccordionDetails,
-  // AccordionSummary,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   Grid,
   ImageList,
@@ -13,23 +13,22 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { /*GoogleMap, MarkerF,*/ useLoadScript } from "@react-google-maps/api";
+// import { /*GoogleMap, MarkerF,*/ useLoadScript } from "@react-google-maps/api";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 // import { Loading } from "../../../1_atoms/Loading";
 import { RatingNumber } from "../../../1_atoms/RatingNumber/RatingNumber";
 import { HotelHeroProps } from "./HotelHeroInterfaces";
 import { useHotelHeroStyles } from "./HotelHeroStyles";
+import useHotelSlug from "../../../../hooks/useHotelSlug";
 
 export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
   const { classes } = useHotelHeroStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
 
-  // const imagesArray =
-  //   hotel?.images &&
-  //   hotel.images !== null &&
-  //   hotel.images.replace("{", "").replace("}", "").split(",");
+  const hotelSlug = useHotelSlug(hotel?.hotel_name ?? "");
+
   const image = hotel?.hotel_image;
 
   const hotelImages = [
@@ -63,6 +62,8 @@ export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
   const address = hotel?.street_address ? hotel.street_address : "";
   const city = hotel?.locality ? hotel.locality : "";
   const country = hotel?.country ? hotel.country : "";
+  const description = hotel?.hotel_description ? hotel.hotel_description : "";
+
   // const facilities = hotel?.facilities;
 
   // const facilitiesArray = (facilities) => {
@@ -78,9 +79,9 @@ export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
   //   return facilitiesArrayCleaned;
   // };
 
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY || "",
-  });
+  // const { isLoaded } = useLoadScript({
+  //   googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY || "",
+  // });
 
   return (
     <Grid container className={classes.wrapper}>
@@ -96,7 +97,18 @@ export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
         <LocationOnIcon fontSize="small" className={classes.locationIcon} />
 
         <Typography variant="body1">
-          {address}, <b>{city}</b>, <b>{country}</b>
+          {address}, {city}, {country}
+        </Typography>
+
+        <Typography
+          variant="body1"
+          component="a"
+          href={`https://www.google.com/maps?q=@${hotelSlug}`}
+          className={classes.showOnMap}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Show on map
         </Typography>
       </Box>
 
@@ -133,6 +145,17 @@ export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
         ))}
       </ImageList>
 
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography variant="body1">Description</Typography>
+        </AccordionSummary>
+      </Accordion>
+
+      {/* -------------------------------- AMENITIES -------------------------------- */}
       {/* <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -155,6 +178,7 @@ export const HotelHero = ({ hotel }: HotelHeroProps): JSX.Element => {
         </AccordionDetails>
       </Accordion> */}
 
+      {/* -------------------------------- MAP -------------------------------- */}
       {/* <Accordion className={classes.accordionMap}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}

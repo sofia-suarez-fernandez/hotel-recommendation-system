@@ -3,6 +3,7 @@ import { makeStyles } from "tss-react/mui";
 export const useHotelReviewsSectionStyles = makeStyles()((theme) => ({
   wrapper: {
     padding: theme.spacing(2),
+    borderRadius: theme.shape.borderRadius,
   },
   innerWrapper: {
     flexDirection: "row",

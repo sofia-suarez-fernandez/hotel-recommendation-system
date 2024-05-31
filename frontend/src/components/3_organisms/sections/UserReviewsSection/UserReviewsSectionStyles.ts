@@ -3,6 +3,7 @@ import { makeStyles } from "tss-react/mui";
 export const useUserReviewsSectionStyles = makeStyles()((theme) => ({
   wrapper: {
     padding: theme.spacing(2),
+    borderRadius: theme.shape.borderRadius,
   },
   title: {
     margin: 0,

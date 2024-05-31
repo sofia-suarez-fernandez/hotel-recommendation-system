@@ -15,10 +15,12 @@ export const useHotelHeroStyles = makeStyles()((theme) => ({
   },
   title: {
     marginBottom: 0,
+    color: theme.palette.text.primary,
   },
   location: {
     display: "flex",
     alignItems: "flex-start",
+    color: theme.palette.text.primary,
   },
   locationIcon: {
     marginRight: theme.spacing(0.5),
@@ -40,5 +42,11 @@ export const useHotelHeroStyles = makeStyles()((theme) => ({
   image: {
     backgroundPosition: "center",
     objectFit: "cover",
+    borderRadius: theme.shape.borderRadius,
+  },
+  showOnMap: {
+    color: theme.palette.secondary.main,
+    marginLeft: theme.spacing(0.5),
+    fontWeight: "bold",
   },
 }));
