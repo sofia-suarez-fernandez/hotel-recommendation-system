@@ -22,7 +22,10 @@ import { HotelHeroProps } from "./HotelHeroInterfaces";
 import { useHotelHeroStyles } from "./HotelHeroStyles";
 import useHotelSlug from "../../../../hooks/useHotelSlug";
 
-export const HotelHero = ({ hotel, amenities }: HotelHeroProps): JSX.Element => {
+export const HotelHero = ({
+  hotel,
+  amenities,
+}: HotelHeroProps): JSX.Element => {
   const { classes } = useHotelHeroStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
@@ -80,20 +83,20 @@ export const HotelHero = ({ hotel, amenities }: HotelHeroProps): JSX.Element => 
     }
   }
 
-  // const facilities = hotel?.facilities;
+  const amenitiesList = amenities;
 
-  // const facilitiesArray = (facilities) => {
-  //   const facilitiesArray = facilities
-  //     .replace("[", "")
-  //     .replace("]", "")
-  //     .split(", ");
+  const amenitiesArray = (amenitiesList) => {
+    const amenitiesArray = amenitiesList
+      .replace("[", "")
+      .replace("]", "")
+      .split(", ");
 
-  //   const facilitiesArrayCleaned = facilitiesArray.map((value) =>
-  //     value.slice(1, -1)
-  //   );
+    const amenitiesArrayCleaned = amenitiesArray.map((value) =>
+      value.slice(1, -1)
+    );
 
-  //   return facilitiesArrayCleaned;
-  // };
+    return amenitiesArrayCleaned;
+  };
 
   // const { isLoaded } = useLoadScript({
   //   googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY || "",
@@ -195,10 +198,10 @@ export const HotelHero = ({ hotel, amenities }: HotelHeroProps): JSX.Element => 
 
         <AccordionDetails className={classes.accordionDetails}>
           <Grid container columnSpacing={1}>
-            {facilitiesArray(facilities).map((facility, index) => {
+            {amenitiesArray(amenitiesList).map((amenity, index) => {
               return (
                 <Grid item xs={12} sm={6} md={4} key={index}>
-                  <Typography variant="body2">{facility}</Typography>
+                  <Typography variant="body2">{amenity}</Typography>
                 </Grid>
               );
             })}
