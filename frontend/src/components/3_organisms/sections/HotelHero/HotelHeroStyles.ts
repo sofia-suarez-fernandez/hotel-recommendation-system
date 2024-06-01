@@ -93,5 +93,13 @@ export const useHotelHeroStyles = makeStyles()((theme) => ({
     flexDirection: "row",
     justifyContent: "flex-start",
     width: "100%",
+    marginBottom: theme.spacing(2),
+  },
+  menuItem: {
+    marginRight: theme.spacing(1),
+    "&:hover": {
+      cursor: "pointer",
+      textDecoration: "underline",
+    },
   },
 }));

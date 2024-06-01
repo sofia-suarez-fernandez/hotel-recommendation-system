@@ -103,7 +103,9 @@ export const HotelHero = ({
           offset={-70}
           duration={500}
         >
-          Description
+          <Typography variant="body1" className={classes.menuItem}>
+            Description
+          </Typography>
         </Link>
         <Link
           activeClass="active"
@@ -113,7 +115,9 @@ export const HotelHero = ({
           offset={-70}
           duration={500}
         >
-          Amenities
+          <Typography variant="body1" className={classes.menuItem}>
+            Amenities
+          </Typography>
         </Link>
         <Link
           activeClass="active"
@@ -123,7 +127,9 @@ export const HotelHero = ({
           offset={-70}
           duration={500}
         >
-          Reviews
+          <Typography variant="body1" className={classes.menuItem}>
+            Reviews
+          </Typography>
         </Link>
       </Grid>
 
