@@ -5,6 +5,7 @@ export const useSignInStyles = makeStyles()((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    paddingTop: theme.spacing(3),
   },
   leftColumn: {
     display: "flex",
@@ -20,6 +21,7 @@ export const useSignInStyles = makeStyles()((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+    height: "100vh",
     flex: 1,
   }
 }));
