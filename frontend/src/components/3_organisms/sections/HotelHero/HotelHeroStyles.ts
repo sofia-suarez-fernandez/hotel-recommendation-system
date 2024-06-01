@@ -87,5 +87,11 @@ export const useHotelHeroStyles = makeStyles()((theme) => ({
   priceInfoWrapper: {
     display: "flex",
     flexDirection: "row",
-  }
+  },
+  menu: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    width: "100%",
+  },
 }));

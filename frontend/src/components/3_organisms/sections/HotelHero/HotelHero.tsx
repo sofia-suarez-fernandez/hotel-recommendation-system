@@ -94,7 +94,7 @@ export const HotelHero = ({
 
   return (
     <Grid container className={classes.wrapper}>
-      <Grid>
+      <Grid className={classes.menu}>
         <Link
           activeClass="active"
           to="description"
