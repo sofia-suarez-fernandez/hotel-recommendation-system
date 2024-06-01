@@ -21,7 +21,16 @@ export const useHotelHeroStyles = makeStyles()((theme) => ({
   },
   location: {
     display: "flex",
-    alignItems: "flex-start",
+    flexDirection: "row",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "space-between",
+    color: theme.palette.text.primary,
+  },
+  locationName: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
     color: theme.palette.text.primary,
   },
   locationIcon: {
@@ -65,5 +74,18 @@ export const useHotelHeroStyles = makeStyles()((theme) => ({
     flexDirection: "row",
     alignItems: "center",
     columnGap: theme.spacing(0.3),
+  },
+  priceRange: {
+    textAlign: "right",
+    marginBottom: theme.spacing(0.2),
+  },
+  infoIcon: {
+    height: 14,
+    width: "fit-content",
+    marginBottom: theme.spacing(0.2),
+  },
+  priceInfoWrapper: {
+    display: "flex",
+    flexDirection: "row",
   }
 }));

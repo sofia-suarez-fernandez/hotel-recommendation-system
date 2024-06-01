@@ -1,6 +1,7 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import axios from "axios";
+// import axios from "axios";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import InfoOutlined from "@mui/icons-material/InfoOutlined";
 import {
   Accordion,
   AccordionDetails,
@@ -9,9 +10,7 @@ import {
   Grid,
   ImageList,
   ImageListItem,
-  List,
-  ListItem,
-  ListItemText,
+  Tooltip,
   Typography,
   useMediaQuery,
   useTheme,
@@ -69,6 +68,8 @@ export const HotelHero = ({
   const city = hotel?.locality ? hotel.locality : "";
   const country = hotel?.country ? hotel.country : "";
   const description = hotel?.hotel_description ? hotel.hotel_description : "";
+  const amenitiesList = amenities ? amenities : {};
+  const priceRange = hotel?.price_range?.replace(/[^$]/g, "") ?? "";
 
   let ratingText = "";
   if (hotel && hotel.rating_value !== undefined) {
@@ -93,8 +94,6 @@ export const HotelHero = ({
   return (
     <Grid container className={classes.wrapper}>
       <Box className={classes.ratingTitleWrapper}>
-        {/* <RatingNumber rating={hotel?.rating_value} /> */}
-
         <Typography variant="h1" className={classes.title}>
           {hotel?.hotel_name}
         </Typography>
@@ -107,22 +106,35 @@ export const HotelHero = ({
       </Box>
 
       <Box className={classes.location}>
-        <LocationOnIcon fontSize="small" className={classes.locationIcon} />
+        <Box className={classes.locationName}>
+          <LocationOnIcon fontSize="small" className={classes.locationIcon} />
 
-        <Typography variant="body1">
-          {address}, {city}, {country}
-        </Typography>
+          <Typography variant="body1">
+            {address}, {city}, {country}
+          </Typography>
 
-        <Typography
-          variant="body1"
-          component="a"
-          href={`https://www.google.com/maps?q=@${hotelSlug}`}
-          className={classes.showOnMap}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Show on map
-        </Typography>
+          <Typography
+            variant="body1"
+            component="a"
+            href={`https://www.google.com/maps?q=@${hotelSlug}`}
+            className={classes.showOnMap}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Show on map
+          </Typography>
+        </Box>
+
+        {priceRange && (
+          <Box className={classes.priceInfoWrapper}>
+            <Tooltip title="Based on Average Nightly Rates for a Standard Room from our Partners.">
+              <Typography variant="h4" className={classes.priceRange}>
+                <b>{priceRange}</b>{" "}
+                <InfoOutlined className={classes.infoIcon} />
+              </Typography>
+            </Tooltip>
+          </Box>
+        )}
       </Box>
 
       <ImageList
@@ -174,40 +186,40 @@ export const HotelHero = ({
         </AccordionDetails>
       </Accordion>
 
-      {/* -------------------------------- AMENITIES -------------------------------- */}
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography variant="body1">Amenities</Typography>
-        </AccordionSummary>
+      <Box mb={1}></Box>
 
-        <AccordionDetails className={classes.accordionDetails}>
-          {/* <Grid container columnSpacing={1}>
-            {amenitiesArray(amenitiesList).map((amenity, index) => {
-              return (
-                <Grid item xs={12} sm={6} md={4} key={index}>
-                  <Typography variant="body2">{amenity}</Typography>
-                </Grid>
-              );
-            })}
-          </Grid> */}
-          <List>
-            {Object.entries(amenities).map(([key, value]) => {
-              if (value) {
-                return (
-                  <ListItem key={key}>
-                    <ListItemText primary={key} />
-                  </ListItem>
-                );
-              }
-              return null;
-            })}
-          </List>
-        </AccordionDetails>
-      </Accordion>
+      {amenitiesList && Object.keys(amenitiesList).length > 0 && (
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography variant="body1" className={classes.accordionSummary}>
+              Amenities
+            </Typography>
+          </AccordionSummary>
+
+          <AccordionDetails className={classes.accordionDetails}>
+            <Grid container columnSpacing={1}>
+              {Object.entries(amenitiesList[0]).map(([key, value]) => {
+                if (value === true) {
+                  let formattedKey = key.replace(/_/g, " ");
+                  formattedKey =
+                    key.replace(/_/g, " ").charAt(0).toUpperCase() +
+                    formattedKey.slice(1);
+                  return (
+                    <Grid item xs={12} sm={6} md={4} key={key}>
+                      <Typography variant="body2">{formattedKey}</Typography>
+                    </Grid>
+                  );
+                }
+                return null;
+              })}
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
+      )}
 
       {/* -------------------------------- MAP -------------------------------- */}
       {/* <Accordion className={classes.accordionMap}>
