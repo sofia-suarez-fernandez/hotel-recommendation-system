@@ -15,6 +15,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { Link, Element } from "react-scroll";
 // import { /*GoogleMap, MarkerF,*/ useLoadScript } from "@react-google-maps/api";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
@@ -93,6 +94,39 @@ export const HotelHero = ({
 
   return (
     <Grid container className={classes.wrapper}>
+      <Grid>
+        <Link
+          activeClass="active"
+          to="description"
+          spy={true}
+          smooth={true}
+          offset={-70}
+          duration={500}
+        >
+          Description
+        </Link>
+        <Link
+          activeClass="active"
+          to="amenities"
+          spy={true}
+          smooth={true}
+          offset={-70}
+          duration={500}
+        >
+          Amenities
+        </Link>
+        <Link
+          activeClass="active"
+          to="reviews"
+          spy={true}
+          smooth={true}
+          offset={-70}
+          duration={500}
+        >
+          Reviews
+        </Link>
+      </Grid>
+
       <Box className={classes.ratingTitleWrapper}>
         <Typography variant="h1" className={classes.title}>
           {hotel?.hotel_name}
@@ -170,25 +204,7 @@ export const HotelHero = ({
         ))}
       </ImageList>
 
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography variant="body1" className={classes.accordionSummary}>
-            Description
-          </Typography>
-        </AccordionSummary>
-
-        <AccordionDetails className={classes.accordionDetails}>
-          <Typography variant="body1">{description}</Typography>
-        </AccordionDetails>
-      </Accordion>
-
-      <Box mb={1}></Box>
-
-      {amenitiesList && Object.keys(amenitiesList).length > 0 && (
+      <Element name="description">
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -196,29 +212,51 @@ export const HotelHero = ({
             id="panel1a-header"
           >
             <Typography variant="body1" className={classes.accordionSummary}>
-              Amenities
+              Description
             </Typography>
           </AccordionSummary>
 
           <AccordionDetails className={classes.accordionDetails}>
-            <Grid container columnSpacing={1}>
-              {Object.entries(amenitiesList[0]).map(([key, value]) => {
-                if (value === true) {
-                  let formattedKey = key.replace(/_/g, " ");
-                  formattedKey =
-                    key.replace(/_/g, " ").charAt(0).toUpperCase() +
-                    formattedKey.slice(1);
-                  return (
-                    <Grid item xs={12} sm={6} md={4} key={key}>
-                      <Typography variant="body2">{formattedKey}</Typography>
-                    </Grid>
-                  );
-                }
-                return null;
-              })}
-            </Grid>
+            <Typography variant="body1">{description}</Typography>
           </AccordionDetails>
         </Accordion>
+      </Element>
+
+      <Box mb={1}></Box>
+
+      {amenitiesList && Object.keys(amenitiesList).length > 0 && (
+        <Element name="amenities">
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography variant="body1" className={classes.accordionSummary}>
+                Amenities
+              </Typography>
+            </AccordionSummary>
+
+            <AccordionDetails className={classes.accordionDetails}>
+              <Grid container columnSpacing={1}>
+                {Object.entries(amenitiesList[0]).map(([key, value]) => {
+                  if (value === true) {
+                    let formattedKey = key.replace(/_/g, " ");
+                    formattedKey =
+                      key.replace(/_/g, " ").charAt(0).toUpperCase() +
+                      formattedKey.slice(1);
+                    return (
+                      <Grid item xs={12} sm={6} md={4} key={key}>
+                        <Typography variant="body2">{formattedKey}</Typography>
+                      </Grid>
+                    );
+                  }
+                  return null;
+                })}
+              </Grid>
+            </AccordionDetails>
+          </Accordion>
+        </Element>
       )}
 
       {/* -------------------------------- MAP -------------------------------- */}

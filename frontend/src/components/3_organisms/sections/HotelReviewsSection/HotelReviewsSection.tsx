@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Element } from "react-scroll";
 import { Review } from "../../../../interfaces/review";
 import { Loading } from "../../../1_atoms/Loading";
 import { CreateReviewDialog } from "../../../2_molecules/CreateReviewDialog/CreateReviewDialog";
@@ -50,48 +51,52 @@ export const HotelReviewsSection = ({
 
   return (
     <Paper elevation={0} className={classes.wrapper}>
-      <Grid container>
-        <Grid item container className={classes.innerWrapper}>
-          <Box className={classes.titleWrapper}>
-            <Typography variant="h2" className={classes.title}>
-              Reviews
-            </Typography>
+      <Element name="reviews">
+        <Grid container>
+          <Grid item container className={classes.innerWrapper}>
+            <Box className={classes.titleWrapper}>
+              <Typography variant="h2" className={classes.title}>
+                Reviews
+              </Typography>
 
-            {reviews && (
-              <Typography variant="body2">{reviews?.length} reviews</Typography>
-            )}
-          </Box>
+              {reviews && (
+                <Typography variant="body2">
+                  {reviews?.length} reviews
+                </Typography>
+              )}
+            </Box>
 
-          <Box className={classes.buttonSelectWrapper}>
-            <FormControl className={classes.formControl}>
-              <InputLabel>Sort by</InputLabel>
-              <Select
-                value={selectedSort}
-                label="Sort by"
-                defaultValue={1}
-                onChange={handleChangeSort}
-                className={classes.select}
-              >
-                <MenuItem value={1}>Most recent first</MenuItem>
-                <MenuItem value={2}>Top-rated first</MenuItem>
-                <MenuItem value={3}>Lowest rated first</MenuItem>
-              </Select>
-            </FormControl>
+            <Box className={classes.buttonSelectWrapper}>
+              <FormControl className={classes.formControl}>
+                <InputLabel>Sort by</InputLabel>
+                <Select
+                  value={selectedSort}
+                  label="Sort by"
+                  defaultValue={1}
+                  onChange={handleChangeSort}
+                  className={classes.select}
+                >
+                  <MenuItem value={1}>Most recent first</MenuItem>
+                  <MenuItem value={2}>Top-rated first</MenuItem>
+                  <MenuItem value={3}>Lowest rated first</MenuItem>
+                </Select>
+              </FormControl>
 
-            <CreateReviewDialog />
-          </Box>
+              <CreateReviewDialog />
+            </Box>
+          </Grid>
+
+          <Divider variant="middle" className={classes.divider} />
+
+          {loading ? (
+            <Loading />
+          ) : reviews && reviews.length > 0 && sortedReviews ? (
+            <HotelReviewsPagination reviews={sortedReviews} />
+          ) : (
+            <Typography>There are no reviews yet. Be the first one!</Typography>
+          )}
         </Grid>
-
-        <Divider variant="middle" className={classes.divider} />
-
-        {loading ? (
-          <Loading />
-        ) : reviews && reviews.length > 0 && sortedReviews ? (
-          <HotelReviewsPagination reviews={sortedReviews} />
-        ) : (
-          <Typography>There are no reviews yet. Be the first one!</Typography>
-        )}
-      </Grid>
+      </Element>
     </Paper>
   );
 };
