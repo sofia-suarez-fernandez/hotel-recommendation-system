@@ -1,4 +1,5 @@
 import { makeStyles } from "tss-react/mui";
+import { headerHeight, menuHeight } from "../../../../helpers/constants";
 
 export const useHotelHeroStyles = makeStyles()((theme) => ({
   wrapper: {
@@ -91,15 +92,36 @@ export const useHotelHeroStyles = makeStyles()((theme) => ({
   menu: {
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "flex-start",
     width: "100%",
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(1),
+    zIndex: theme.zIndex.appBar - 1,
+    height: `${menuHeight}px`,
+    backgroundColor: theme.palette.background.paper,
   },
   menuItem: {
-    marginRight: theme.spacing(1),
     "&:hover": {
       cursor: "pointer",
       textDecoration: "underline",
+      color: theme.palette.secondary.main,
+    },
+    "&:active": {
+      color: theme.palette.primary.main,
+    },
+    color: theme.palette.text.primary,
+  },
+  link: {
+    marginRight: theme.spacing(1),
+    marginLeft: theme.spacing(1),
+    "&:first-child": {
+      marginLeft: 0,
+    },
+    "&:last-child": {
+      marginRight: 0,
     },
   },
+  divider: {
+    height: '2rem',
+  }
 }));

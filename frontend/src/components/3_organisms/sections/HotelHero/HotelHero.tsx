@@ -7,6 +7,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  Divider,
   Grid,
   ImageList,
   ImageListItem,
@@ -102,11 +103,13 @@ export const HotelHero = ({
           smooth={true}
           offset={-70}
           duration={500}
+          className={classes.link}
         >
           <Typography variant="body1" className={classes.menuItem}>
             Description
           </Typography>
         </Link>
+        <Divider orientation="vertical" className={classes.divider} />
         <Link
           activeClass="active"
           to="amenities"
@@ -114,11 +117,13 @@ export const HotelHero = ({
           smooth={true}
           offset={-70}
           duration={500}
+          className={classes.link}
         >
           <Typography variant="body1" className={classes.menuItem}>
             Amenities
           </Typography>
         </Link>
+        <Divider orientation="vertical" className={classes.divider} />
         <Link
           activeClass="active"
           to="reviews"
@@ -126,6 +131,7 @@ export const HotelHero = ({
           smooth={true}
           offset={-70}
           duration={500}
+          className={classes.link}
         >
           <Typography variant="body1" className={classes.menuItem}>
             Reviews
