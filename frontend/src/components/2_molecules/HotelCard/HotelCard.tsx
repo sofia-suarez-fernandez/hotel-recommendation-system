@@ -7,6 +7,7 @@ import {
   CardActions,
   CardContent,
   Grid,
+  Link,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -87,14 +88,20 @@ export const HotelCard = ({
                     {hotel.country}
                   </Typography>
 
-                  <Typography
-                    variant="subtitle1"
-                    component="a"
-                    href={`https://www.google.com/maps?q=@${hotelSlug}`}
+                  <Box
+                    onClick={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      window.open(
+                        `https://www.google.com/maps?q=@${hotelSlug}`,
+                        "_blank"
+                      );
+                    }}
                     className={classes.showOnMap}
-                    target="_blank"
                     rel="noopener noreferrer"
-                  >Show on map</Typography>
+                  >
+                    <Typography variant="subtitle1">Show on map</Typography>
+                  </Box>
                 </Box>
               )}
             </Box>
