@@ -12,7 +12,7 @@ export const useSignUpStyles = makeStyles()((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: theme.palette.primary.light,
-    height: "100vh",
+    height: "150vh",
     flex: 1,
   },
   rightColumn: {

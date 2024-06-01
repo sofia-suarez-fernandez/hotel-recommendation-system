@@ -2,6 +2,8 @@ import { makeStyles } from "tss-react/mui";
 
 export const useSignUpFormStyles = makeStyles()((theme) => ({
   wrapper: {
+    paddingTop: theme.spacing(6),
+    paddingBottom: theme.spacing(2),
     width: "50%",
     [theme.breakpoints.down("md")]: {
       width: "75%",
