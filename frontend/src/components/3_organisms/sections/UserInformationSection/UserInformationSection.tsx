@@ -1,5 +1,4 @@
-import { Avatar, Divider, Grid, Paper, Typography } from "@mui/material";
-import clsx from "clsx";
+import { Avatar, Divider, Box, Grid, Paper, Typography } from "@mui/material";
 import { Section } from "../../../1_atoms/Section/Section";
 import { UserInformationSectionProps } from "./UserInformationSectionInterfaces";
 import { useUserInformationSectionStyles } from "./UserInformationSectionStyles";
@@ -10,6 +9,7 @@ export const UserInformationSection = ({
   firstName,
   lastName,
   username,
+  email,
 }: UserInformationSectionProps): JSX.Element => {
   const { classes } = useUserInformationSectionStyles();
   const theme = useTheme();
@@ -37,29 +37,33 @@ export const UserInformationSection = ({
               <Avatar className={classes.avatar}>{firstName?.charAt(0)}</Avatar>
             </Grid>
           )}
-          <Grid item xs={11}>
-            <Grid
-              container
-              className={clsx(
-                classes.personalInfoField,
-                classes.usernameWrapper
+          <Grid item xs={11} className={classes.info}>
+            <Box>
+              <Grid container className={classes.personalInfoField}>
+                <Typography variant="body2">Username:</Typography>
+                <Typography className={classes.fields}>{username}</Typography>
+              </Grid>
+              {email && (
+                <Grid container className={classes.personalInfoField}>
+                  <Typography variant="body2">Email: </Typography>
+                  <Typography className={classes.fields}>{email}</Typography>
+                </Grid>
               )}
-            >
-              <Typography variant="body2">Username:</Typography>
-              <Typography className={classes.username}>{username}</Typography>
-            </Grid>
-            {firstName && (
-              <Grid container className={classes.personalInfoField}>
-                <Typography variant="body2">First name: </Typography>{" "}
-                <Typography>{firstName}</Typography>
-              </Grid>
-            )}
-            {lastName && (
-              <Grid container className={classes.personalInfoField}>
-                <Typography variant="body2">Last name: </Typography>
-                <Typography>{lastName}</Typography>
-              </Grid>
-            )}
+            </Box>
+            <Box>
+              {firstName && (
+                <Grid container className={classes.personalInfoField}>
+                  <Typography variant="body2">First name: </Typography>{" "}
+                  <Typography className={classes.fields}>{firstName}</Typography>
+                </Grid>
+              )}
+              {lastName && (
+                <Grid container className={classes.personalInfoField}>
+                  <Typography variant="body2">Last name: </Typography>
+                  <Typography className={classes.fields}>{lastName}</Typography>
+                </Grid>
+              )}
+            </Box>
           </Grid>
         </Grid>
       </Paper>

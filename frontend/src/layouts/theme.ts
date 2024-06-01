@@ -6,32 +6,32 @@ import {
 
 const darkGrey = "#353535";
 const white = "#FFFFFF";
-const red = "#d32f2f";
-const darkRed = "#5f2120";
 
-// new
-const pink = "#F770A8";
-const lightPink = "#EDB3E1";
-const darkPink = "#B55F96";
-const purple = "#9650B9";
-const darkPurple = "#35215E";
+// olive oil
+const oliveGreen = "#3c694c";
+const terracotta = "#b74936";
+const oliveGreenLight = "#669966";
+const oliveGreenDark = "#274C33";
+const terracottaLight = "#DD7F50";
+const terracottaDark = "#8B3928";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: pink,
-      dark: darkPink,
+      main: oliveGreen,
+      dark: oliveGreenDark,
+      light: oliveGreenLight,
     },
     secondary: {
-      main: purple,
-      dark: darkPurple,
-      light: lightPink,
+      main: terracotta,
+      dark: terracottaDark,
+      light: terracottaLight,
     },
     grey: {
       900: darkGrey,
     },
     text: {
-      primary: darkPurple,
+      primary: oliveGreenDark,
       secondary: white,
     },
     background: {
@@ -39,13 +39,12 @@ const theme = createTheme({
       paper: white,
     },
     error: {
-      main: red,
-      dark: darkRed,
+      main: terracotta,
+      dark: terracottaDark,
     },
   },
   typography: {
-    // fontFamily: "Helvetica, Franklin Gothic Medium, Arial, sans-serif",
-    fontFamily: "Poppins, sans-serif",
+    fontFamily: "Trebuchet MS, sans-serif",
     fontWeightLight: 300,
     fontWeightRegular: 500,
     fontWeightBold: 700,

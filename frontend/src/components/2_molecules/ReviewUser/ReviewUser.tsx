@@ -41,14 +41,14 @@ export const ReviewUser = ({ review }: ReviewUserProps): JSX.Element => {
             <DateRange />
           </Grid>
           <Grid item xs={11}>
-            <Typography variant="body2">
+            <Typography variant="body2" className={classes.date}>
               {updatedAt === null ? createdAt : updatedAt}
             </Typography>
           </Grid>
         </Grid>
       </Grid>
       <Grid container item xs={12}>
-        <Typography className={classes.hotelName}>{review.review_title}</Typography>
+        <Typography fontWeight="fontWeightBold" className={classes.review}>{review.review_title}</Typography>
       </Grid>
       <Grid container item xs={12}>
         <Typography className={classes.review}>{review.review_text}</Typography>

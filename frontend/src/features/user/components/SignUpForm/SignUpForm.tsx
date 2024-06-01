@@ -45,7 +45,7 @@ export const SignUpForm = (): JSX.Element => {
 
   return (
     <Box component="form" className={classes.wrapper} noValidate>
-      <Typography variant="h1" align="center">
+      <Typography variant="h1" align="center" className={classes.title}>
         Sign Up
       </Typography>
       <Grid container>

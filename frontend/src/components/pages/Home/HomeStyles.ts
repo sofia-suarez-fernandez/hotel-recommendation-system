@@ -8,6 +8,7 @@ export const useHomeStyles = makeStyles()((theme) => ({
   },
   title: {
     marginBottom: 0,
+    color: theme.palette.text.primary,
   },
   listSubHeader: {
     color: theme.palette.grey[400],

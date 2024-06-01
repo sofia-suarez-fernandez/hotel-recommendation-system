@@ -66,7 +66,7 @@ export const UserReviewsSection = ({
                 My reviews
               </Typography>
 
-              <Typography variant="body2">{reviews?.length} reviews</Typography>
+              <Typography variant="body2" className={classes.subtitle}>{reviews?.length} reviews</Typography>
             </Grid>
           </Grid>
 

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { getHotelById } from "../../../services/hotels";
 import {
   getAccountUserById,
-  // getTwitterUserById,
 } from "../../../services/users";
 import { ReviewUserViewModel } from "./ReviewUserInterfaces";
 
@@ -32,17 +31,12 @@ export const useReviewUserViewModel = ({ review }: ReviewUserViewModel) => {
         setUserAccountUsername(userAccount.username);
         setUserTwitterUsername(null);
       });
-    // review.user_twitter !== null &&
-    //   getTwitterUserById(review.user_twitter).then((userTwitter) => {
-    //     setUserAccountUsername(null);
-    //     setUserTwitterUsername(userTwitter.username);
-    //   });
     getHotelById(review.hotel_name_id).then((hotel) => {
       setHotelName(hotel.hotel_name);
-      const hotelSlug = hotel.hotel_name.replace(/ /g, "-"); //+ "-" + hotel.id;
+      const hotelSlug = hotel.hotel_name.replace(/ /g, "-");
       setHotelLink("/hotel/" + hotelSlug);
     });
-  }, [hotelName, review.hotel_name_id, review.user_account_id, /*review.user_twitter*/]);
+  }, [hotelName, review.hotel_name_id, review.user_account_id]);
 
   const avatarLetter = username && username.charAt(0);
 

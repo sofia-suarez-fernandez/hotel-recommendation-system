@@ -27,7 +27,7 @@ urlpatterns = [
         "hotels/<str:id>/reviews/", HotelReviewsList.as_view(), name="hotelReviewsList" # str:id is the hotel's primary key (hotel_name)
     ),
     path("users/<int:id>/reviews/", UserReviewsList.as_view(), name="userReviewsList"),
-    path("reviews/<int:pk>/", ReviewDetail.as_view(), name="reviewDetail"),
+    path("reviews/<int:id>/", ReviewDetail.as_view(), name="reviewDetail"),
     path("reviews/create/", CreateReview.as_view(), name="createReview"),
     path("reviews/", ReviewsList.as_view(), name="reviewsList"),
     # Amenities

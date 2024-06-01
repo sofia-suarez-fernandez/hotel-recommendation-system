@@ -72,12 +72,12 @@ export const Home = (): JSX.Element => {
     ()  => popularHotels, [popularHotels]
   );
 
-  const countries =
-    loading === false &&
-    Array.isArray(response) &&
-    response
-      .map((item) => item?.country)
-      .filter((value, index, self) => self.indexOf(value) === index);
+  // const countries =
+  //   loading === false &&
+  //   Array.isArray(response) &&
+  //   response
+  //     .map((item) => item?.country)
+  //     .filter((value, index, self) => self.indexOf(value) === index);
 
   return (
     <Layout isGreyBackground>
@@ -115,13 +115,10 @@ export const Home = (): JSX.Element => {
                   response.map((data) => {
                     return (
                       <MenuItem
-                        // key={data.city}
                         key={data.locality}
-                        // value={data.city}
                         value={data.locality}
                         style={{ paddingLeft: "2rem" }}
                       >
-                        {/* {data.city} */}
                         {data.locality}
                       </MenuItem>
                     );

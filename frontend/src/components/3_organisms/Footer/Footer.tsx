@@ -4,24 +4,6 @@ import { useFooterStyles } from "./FooterStyles";
 export const Footer = (): JSX.Element => {
   const { classes } = useFooterStyles();
 
-  // return (
-  //   <Grid container className={classes.wrapper}>
-  //     <Container>
-  //       <Typography textAlign="center" variant="subtitle1" component="p">
-  //         viaggIO Recommendation System
-  //       </Typography>
-  //       <Typography
-  //         textAlign="center"
-  //         variant="subtitle1"
-  //         fontStyle="italic"
-  //         component="p"
-  //       >
-  //         Sofía Suárez Fernández ©
-  //       </Typography>
-  //     </Container>
-  //   </Grid>
-  // );
-
   return (
     <Grid container className={classes.wrapper}>
       <Container>

@@ -15,6 +15,7 @@ export const Profile = (): JSX.Element => {
     (state: RootState) => state.user.user?.last_name
   );
   const username = useSelector((state: RootState) => state.user.user?.username);
+  const email = useSelector((state: RootState) => state.user.user?.email);
 
   const userId = useSelector((state: RootState) => state.user.user?.id);
   const [reviews, setReviews] = useState<TypeReview[]>([]);
@@ -32,6 +33,7 @@ export const Profile = (): JSX.Element => {
         firstName={firstName}
         lastName={lastName}
         username={username}
+        email={email}
       />
 
       <UserReviewsSection reviews={reviews} />

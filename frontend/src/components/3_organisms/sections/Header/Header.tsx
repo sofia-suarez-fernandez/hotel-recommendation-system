@@ -27,10 +27,10 @@ export const Header = (): JSX.Element => {
   const navigate = useNavigate();
 
   const isAuthenticated = useSelector(
-    (state: RootState) => state.user.isAuthenticated
+    (state: RootState) => (state.user as { isAuthenticated: boolean }).isAuthenticated
   );
 
-  const isAdmin = useSelector((state: RootState) => state.user.user?.is_staff);
+  const isAdmin = useSelector((state: RootState) => (state.user as { user: { is_staff: boolean } }).user?.is_staff);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 

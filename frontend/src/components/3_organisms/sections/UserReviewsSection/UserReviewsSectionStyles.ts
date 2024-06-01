@@ -8,6 +8,9 @@ export const useUserReviewsSectionStyles = makeStyles()((theme) => ({
   title: {
     margin: 0,
   },
+  subtitle: {
+    color: theme.palette.primary.light,
+  },
   divider: {
     width: "100%",
     margin: theme.spacing(1.5, 0, 1.5, 0),

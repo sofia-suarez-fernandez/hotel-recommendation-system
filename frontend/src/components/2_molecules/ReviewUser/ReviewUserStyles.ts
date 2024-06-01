@@ -25,8 +25,15 @@ export const useReviewUserStyles = makeStyles()((theme) => ({
   },
   hotelName: {
     fontWeight: theme.typography.fontWeightBold,
-    color: theme.palette.text.primary,
+    color: theme.palette.primary.light,
     textDecoration: "none",
+    "&:hover": {
+      textDecoration: "underline",
+    },
+  },
+  date: {
+    fontWeight: theme.typography.fontWeightBold,
+    color: theme.palette.primary.light,
   },
   dateNameWrapper: {
     display: "flex",

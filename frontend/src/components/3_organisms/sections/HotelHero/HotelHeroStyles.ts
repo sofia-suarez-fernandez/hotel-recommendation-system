@@ -1,5 +1,5 @@
 import { makeStyles } from "tss-react/mui";
-import { headerHeight, menuHeight } from "../../../../helpers/constants";
+import { menuHeight } from "../../../../helpers/constants";
 
 export const useHotelHeroStyles = makeStyles()((theme) => ({
   wrapper: {

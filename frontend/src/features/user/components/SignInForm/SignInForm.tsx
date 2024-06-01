@@ -38,7 +38,7 @@ export const SignInForm = (): JSX.Element => {
       className={classes.wrapper}
       noValidate
     >
-      <Typography variant="h1" align="center">
+      <Typography variant="h1" align="center" className={classes.title}>
         Sign In
       </Typography>
       <TextField

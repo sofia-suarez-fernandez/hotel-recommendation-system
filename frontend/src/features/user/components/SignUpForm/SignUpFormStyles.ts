@@ -12,6 +12,9 @@ export const useSignUpFormStyles = makeStyles()((theme) => ({
       width: "100%",
     },
   },
+  title: {
+    color: theme.palette.text.primary,
+  },
   alert: {
     marginBottom: theme.spacing(1),
     marginTop: theme.spacing(-1),
