@@ -5,7 +5,7 @@ export const useFaqStyles = makeStyles()((theme) => ({
         maxWidth: "800px",
         margin: "0 auto",
         padding: "20px",
-        height: "100vh",
+        minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
