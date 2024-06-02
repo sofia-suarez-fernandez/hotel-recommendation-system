@@ -26,7 +26,7 @@ const useUpdateReview = (
       hotel_name_id: hotelId,
       user_account_id: userAccountId,
       rate: newRating,
-      sentiment: newSentiment,
+      sentiment: Number(newSentiment),
       review_title: newReviewTitle,
       review_text: newReview,
       created_at: createdAt,

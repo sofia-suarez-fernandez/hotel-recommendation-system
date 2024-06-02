@@ -26,8 +26,8 @@ export const useUpdateReviewDialogViewModel = ({
     review.id,
     review.hotel_name_id,
     review.user_account_id,
-    newRating,
-    newRating,
+    Number(newRating),
+    Number(newRating),
     newReview,
     newReviewTitle,
     review.created_at,
@@ -49,7 +49,7 @@ export const useUpdateReviewDialogViewModel = ({
 
   const onChangeRating = (e) => {
     const newRating = e.target.value;
-    setNewRating(newRating);
+    setNewRating(Number(newRating));
   };
 
   const onChangeReview = (e) => {
