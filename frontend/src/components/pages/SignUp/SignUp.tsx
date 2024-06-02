@@ -1,3 +1,4 @@
+import ExploreIcon from '@mui/icons-material/Explore';
 import { Grid, Typography } from "@mui/material";
 import { SignUpForm } from "../../../features/user/components/SignUpForm/SignUpForm";
 import Layout from "../../4_templates/Layout/Layout";
@@ -10,11 +11,12 @@ export const SignUp = (): JSX.Element => {
     <Layout>
       <Grid container className={classes.wrapper} spacing={2}>
         <Grid item xs={4} className={classes.leftColumn}>
-          <img
+          {/* <img
             src={require("../../../static/images/key-room.png")}
             alt="Icon"
             style={{ width: "62px", height: "62px", alignItems: "left" }}
-          />
+          /> */}
+          <ExploreIcon className={classes.icon} />
           <br />
           <Typography variant="h1" textAlign="left">
             Discover the world's <br /> best hotels in viaggIO

@@ -1,3 +1,4 @@
+import ExploreIcon from '@mui/icons-material/Explore';
 import { Grid, Typography } from "@mui/material";
 import { SignInForm } from "../../../features/user/components/SignInForm/SignInForm";
 import Layout from "../../4_templates/Layout/Layout";
@@ -10,13 +11,9 @@ export const SignIn = (): JSX.Element => {
     <Layout>
       <Grid container className={classes.wrapper} spacing={2}>
         <Grid item xs={4} className={classes.leftColumn}>
-          <img
-            src={require("../../../static/images/key-room.png")}
-            alt="Icon"
-            style={{ width: "62px", height: "62px", alignItems: "left" }}
-          />
+          <ExploreIcon className={classes.icon} />
           <br />
-          <Typography variant="h1" textAlign="left">
+          <Typography variant="h1" textAlign="center" mb={0.5}>
             Welcome back <br /> to viaggIO
           </Typography>
           <Typography variant="body1" textAlign="center">
