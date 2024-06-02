@@ -25,7 +25,7 @@ export const useSectionStyles = makeStyles<{
       paddingTop:
         paddingTop === false
           ? 0
-          : `calc(${headerHeight}px + ${theme.spacing(2)})`,
+          : `calc(${headerHeight}px + ${theme.spacing(isHeroSection ? 1 : 2)})`,
       marginBottom: marginBottom === false ? 0 : theme.spacing(2),
       paddingBottom: paddingBottom === false ? 0 : theme.spacing(2),
     },

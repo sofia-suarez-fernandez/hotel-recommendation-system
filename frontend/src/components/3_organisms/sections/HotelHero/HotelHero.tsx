@@ -152,12 +152,14 @@ export const HotelHero = ({
       </Box>
 
       <Box className={classes.location}>
-        <Box className={classes.locationName}>
-          <LocationOnIcon fontSize="small" className={classes.locationIcon} />
+        <Box className={classes.locationNameWrapper}>
+          <Box className={classes.locationName}>
+            <LocationOnIcon fontSize="small" className={classes.locationIcon} />
 
-          <Typography variant="body1">
-            {address}, {city}, {country}
-          </Typography>
+            <Typography variant="body1">
+              {address}, {city}, {country}
+            </Typography>
+          </Box>
 
           <Typography
             variant="body1"

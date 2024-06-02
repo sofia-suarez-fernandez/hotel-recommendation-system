@@ -15,6 +15,9 @@ export const useHotelHeroStyles = makeStyles()((theme) => ({
     width: "100%",
     columnGap: theme.spacing(0.75),
     paddingBottom: theme.spacing(1),
+    [theme.breakpoints.only("xs")]: {
+      alignItems: "flex-start",
+    }
   },
   title: {
     marginBottom: 0,
@@ -28,11 +31,19 @@ export const useHotelHeroStyles = makeStyles()((theme) => ({
     justifyContent: "space-between",
     color: theme.palette.text.primary,
   },
-  locationName: {
+  locationNameWrapper: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     color: theme.palette.text.primary,
+    [theme.breakpoints.only("xs")]: {
+      flexDirection: "column",
+      alignItems: "flex-start",
+    }
+  },
+  locationName: {
+    flexDirection: "row",
+    display: "flex",
   },
   locationIcon: {
     marginRight: theme.spacing(0.5),
@@ -63,12 +74,18 @@ export const useHotelHeroStyles = makeStyles()((theme) => ({
     color: theme.palette.secondary.main,
     marginLeft: theme.spacing(0.5),
     fontWeight: "bold",
+    [theme.breakpoints.only("xs")]: {
+      marginLeft: 0,
+    }
   },
   ratingText: {
     fontWeight: "bold",
     marginBottom: 0,
     marginRight: theme.spacing(0.5),
     color: theme.palette.secondary.main,
+    [theme.breakpoints.only("xs")]: {
+      display: "none",
+    }
   },
   ratingTextWrapper: {
     display: "flex",

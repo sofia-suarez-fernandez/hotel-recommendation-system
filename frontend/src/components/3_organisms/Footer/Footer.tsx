@@ -1,8 +1,14 @@
 import { Container, Grid, Typography } from "@mui/material";
 import { useFooterStyles } from "./FooterStyles";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../app/store";
+
 
 export const Footer = (): JSX.Element => {
   const { classes } = useFooterStyles();
+  const isAuthenticated = useSelector(
+    (state: RootState) => (state.user as { isAuthenticated: boolean }).isAuthenticated
+  );
 
   return (
     <Grid container className={classes.wrapper}>
@@ -16,8 +22,8 @@ export const Footer = (): JSX.Element => {
             <Typography variant="h6">Discover</Typography>
             <ul className={classes.list}>
               <li>
-                <Typography variant="body1" component="a" href="/map">
-                  Map
+                <Typography variant="body1" component="a" href={isAuthenticated ? "/profile" : "/sign_in"}>
+                  My account
                 </Typography>
               </li>
               <li>

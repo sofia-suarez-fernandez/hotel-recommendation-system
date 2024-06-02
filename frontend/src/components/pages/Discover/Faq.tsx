@@ -45,7 +45,7 @@ const FAQ = () => {
             <Typography variant="body1" className={classes.respuesta}>
               {pregunta.respuesta}
             </Typography>
-            <Divider className={classes.separador}></Divider>
+            {index !== preguntas.length - 1 && <Divider className={classes.separador}></Divider>}
           </Grid>
         ))}
       </Grid>
