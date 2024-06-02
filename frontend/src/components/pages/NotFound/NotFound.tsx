@@ -14,6 +14,7 @@ export const NotFound = (): JSX.Element => {
           style={{
             width: "250px",
             height: "250px",
+            filter: "grayscale(100%)",
           }}
         />
         <Box className={classes.textContainer}>
