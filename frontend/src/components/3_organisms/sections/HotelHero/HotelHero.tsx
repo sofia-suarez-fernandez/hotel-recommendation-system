@@ -27,8 +27,7 @@ import useHotelSlug from "../../../../hooks/useHotelSlug";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useEffect, useState } from "react";
 import "leaflet/dist/leaflet.css";
-import L from 'leaflet';
-
+import L from "leaflet";
 
 export const HotelHero = ({
   hotel,
@@ -81,17 +80,17 @@ export const HotelHero = ({
   const [viewport, setViewport] = useState({
     latitude: 0,
     longitude: 0,
-    zoom: 4,
+    zoom: 5,
     address: fullAddress,
   });
 
   let CustomIcon = L.icon({
-    iconUrl: '/images/marker-icon-2x.png',
+    iconUrl: "/images/marker-icon-2x.png",
     iconSize: [25, 30],
     iconAnchor: [12, 30],
     popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-});
+    shadowSize: [41, 41],
+  });
 
   useEffect(() => {
     if (address) {
@@ -336,10 +335,7 @@ export const HotelHero = ({
             </Typography>
           </AccordionSummary>
 
-          <AccordionDetails
-            className={classes.accordionDetails}
-            style={{ height: "100vh", width: "65vw" }}
-          >
+          <AccordionDetails className={classes.accordionDetailsMap}>
             {viewport ? (
               <MapContainer
                 style={{ height: "400px", width: "100%" }}
@@ -354,7 +350,10 @@ export const HotelHero = ({
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
                 {viewport && viewport.latitude && viewport.longitude && (
-                  <Marker position={[viewport.latitude, viewport.longitude]} icon={CustomIcon}>
+                  <Marker
+                    position={[viewport.latitude, viewport.longitude]}
+                    icon={CustomIcon}
+                  >
                     <Popup>
                       <Typography variant="body2">{address}</Typography>
                     </Popup>

@@ -51,6 +51,15 @@ export const useHotelHeroStyles = makeStyles()((theme) => ({
   accordionDetails: {
     paddingTop: 0,
   },
+  accordionDetailsMap: {
+    paddingTop: 0,
+    width: "65vw",
+    height: "100vh",
+    [theme.breakpoints.only("xs")]: {
+      width: "77vw",
+      height: "fit-content",
+    }
+  },
   accordionSummary: {
     fontWeight: "bold",
   },
