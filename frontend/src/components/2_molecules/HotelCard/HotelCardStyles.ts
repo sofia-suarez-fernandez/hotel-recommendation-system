@@ -9,6 +9,7 @@ export const useHotelCardStyles = makeStyles()((theme) => ({
     display: "flex",
     [theme.breakpoints.only("xs")]: {
       flexDirection: "column",
+      height: "auto",
     },
   },
   cardActionArea: {
@@ -140,6 +141,9 @@ export const useHotelCardStyles = makeStyles()((theme) => ({
     marginBottom: 0,
     marginRight: theme.spacing(0.5),
     color: theme.palette.secondary.main,
+    [theme.breakpoints.only("xs")]: {
+      display: "none",
+    },
   },
   button: {
     width: "fit-content",
