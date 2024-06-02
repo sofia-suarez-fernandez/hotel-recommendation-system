@@ -36,6 +36,7 @@ export const useReviewStyles = makeStyles()((theme) => ({
   },
   review: {
     wordBreak: "break-word",
+    color: theme.palette.primary.light,
   },
   buttonsWrapper: {
     display: "flex",

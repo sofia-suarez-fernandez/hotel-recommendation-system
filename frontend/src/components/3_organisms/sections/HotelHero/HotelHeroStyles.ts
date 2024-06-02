@@ -50,6 +50,7 @@ export const useHotelHeroStyles = makeStyles()((theme) => ({
   },
   accordionDetails: {
     paddingTop: 0,
+    color: theme.palette.primary.light,
   },
   accordionDetailsMap: {
     paddingTop: 0,
