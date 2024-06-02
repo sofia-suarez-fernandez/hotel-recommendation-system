@@ -11,11 +11,6 @@ export const SignUp = (): JSX.Element => {
     <Layout>
       <Grid container className={classes.wrapper} spacing={2}>
         <Grid item xs={4} className={classes.leftColumn}>
-          {/* <img
-            src={require("../../../static/images/key-room.png")}
-            alt="Icon"
-            style={{ width: "62px", height: "62px", alignItems: "left" }}
-          /> */}
           <ExploreIcon className={classes.icon} />
           <br />
           <Typography variant="h1" textAlign="left">
