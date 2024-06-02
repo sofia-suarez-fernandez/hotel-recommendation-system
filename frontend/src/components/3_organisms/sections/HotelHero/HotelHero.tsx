@@ -1,5 +1,4 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-// import axios from "axios";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import InfoOutlined from "@mui/icons-material/InfoOutlined";
 import {
@@ -17,14 +16,19 @@ import {
   useTheme,
 } from "@mui/material";
 import { Link, Element } from "react-scroll";
-// import { /*GoogleMap, MarkerF,*/ useLoadScript } from "@react-google-maps/api";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-// import { Loading } from "../../../1_atoms/Loading";
+import { Loading } from "../../../1_atoms/Loading";
 import { RatingNumber } from "../../../1_atoms/RatingNumber/RatingNumber";
 import { HotelHeroProps } from "./HotelHeroInterfaces";
 import { useHotelHeroStyles } from "./HotelHeroStyles";
 import useHotelSlug from "../../../../hooks/useHotelSlug";
+// leaflet map
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { useEffect, useState } from "react";
+import "leaflet/dist/leaflet.css";
+import L from 'leaflet';
+
 
 export const HotelHero = ({
   hotel,
@@ -72,6 +76,41 @@ export const HotelHero = ({
   const description = hotel?.hotel_description ? hotel.hotel_description : "";
   const amenitiesList = amenities ? amenities : {};
   const priceRange = hotel?.price_range?.replace(/[^$]/g, "") ?? "";
+  const fullAddress = address + ", " + city + ", " + country;
+
+  const [viewport, setViewport] = useState({
+    latitude: 0,
+    longitude: 0,
+    zoom: 4,
+    address: fullAddress,
+  });
+
+  let CustomIcon = L.icon({
+    iconUrl: '/images/marker-icon-2x.png',
+    iconSize: [25, 30],
+    iconAnchor: [12, 30],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+  useEffect(() => {
+    if (address) {
+      fetch(
+        `https://nominatim.openstreetmap.org/search?q=${address}&format=json&limit=1`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.length > 0) {
+            setViewport(() => ({
+              latitude: data[0].lat,
+              longitude: data[0].lon,
+              zoom: 13,
+              address: fullAddress,
+            }));
+          }
+        });
+    }
+  }, [address, fullAddress]);
 
   let ratingText = "";
   if (hotel && hotel.rating_value !== undefined) {
@@ -88,10 +127,6 @@ export const HotelHero = ({
       ratingText = "Average";
     }
   }
-
-  // const { isLoaded } = useLoadScript({
-  //   googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY || "",
-  // });
 
   return (
     <Grid container className={classes.wrapper}>
@@ -135,6 +170,20 @@ export const HotelHero = ({
         >
           <Typography variant="body1" className={classes.menuItem}>
             Reviews
+          </Typography>
+        </Link>
+        <Divider orientation="vertical" className={classes.divider} />
+        <Link
+          activeClass="active"
+          to="map"
+          spy={true}
+          smooth={true}
+          offset={-70}
+          duration={500}
+          className={classes.link}
+        >
+          <Typography variant="body1" className={classes.menuItem}>
+            Map
           </Typography>
         </Link>
       </Grid>
@@ -273,35 +322,51 @@ export const HotelHero = ({
         </Element>
       )}
 
-      {/* -------------------------------- MAP -------------------------------- */}
-      {/* <Accordion className={classes.accordionMap}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography variant="body1">Location</Typography>
-        </AccordionSummary>
+      <Box mb={1}></Box>
 
-        <AccordionDetails>
-          {!isLoaded ? (
-            <Loading />
-          ) : (
-            hotel?.latitude &&
-            hotel.longitude && (
-              <GoogleMap
-                zoom={13}
-                center={{ lat: hotel?.latitude, lng: hotel?.longitude }}
-                mapContainerClassName={classes.map}
+      <Element name="map">
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography variant="body1" className={classes.accordionSummary}>
+              Map
+            </Typography>
+          </AccordionSummary>
+
+          <AccordionDetails
+            className={classes.accordionDetails}
+            style={{ height: "100vh", width: "65vw" }}
+          >
+            {viewport ? (
+              <MapContainer
+                style={{ height: "400px", width: "100%" }}
+                center={[viewport.latitude, viewport.longitude]}
+                zoom={viewport.zoom}
+                attributionControl={true}
+                zoomControl={true}
+                scrollWheelZoom={true}
               >
-                <MarkerF
-                  position={{ lat: hotel?.latitude, lng: hotel?.longitude }}
+                <TileLayer
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
-              </GoogleMap>
-            )
-          )}
-        </AccordionDetails>
-      </Accordion> */}
+                {viewport && viewport.latitude && viewport.longitude && (
+                  <Marker position={[viewport.latitude, viewport.longitude]} icon={CustomIcon}>
+                    <Popup>
+                      <Typography variant="body2">{address}</Typography>
+                    </Popup>
+                  </Marker>
+                )}
+              </MapContainer>
+            ) : (
+              <Loading></Loading>
+            )}
+          </AccordionDetails>
+        </Accordion>
+      </Element>
     </Grid>
   );
 };
