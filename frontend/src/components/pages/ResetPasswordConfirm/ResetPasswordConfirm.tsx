@@ -10,7 +10,7 @@ export const ResetPasswordConfirm = (): JSX.Element => {
     <Layout>
       <Section>
         <Typography variant="h1" textAlign="center">
-          Confirm the password
+          Enter new password
         </Typography>
 
         <Grid container className={classes.wrapper}>

@@ -33,7 +33,7 @@ export const ResetPasswordForm = (): JSX.Element => {
         required
         fullWidth
         id="email"
-        label="e-mail"
+        label="Email"
         name="email"
         autoComplete="email"
         autoFocus
@@ -44,7 +44,7 @@ export const ResetPasswordForm = (): JSX.Element => {
         emailError === null &&
         notEmailError === null && (
           <Alert severity="success" className={classes.alert}>
-            A confirmation url was sent to your email
+            A confirmation link was sent to your email
           </Alert>
         )}
 
