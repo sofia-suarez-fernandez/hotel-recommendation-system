@@ -16,7 +16,7 @@ export const Footer = (): JSX.Element => {
         <Grid container spacing={2}>
           {/* Top row */}
           <Grid item xs={4}>
-            <Typography variant="h4">viaggIO</Typography>
+            <Typography variant="h4" className={classes.home} component="a" href="/">viaggIO</Typography>
           </Grid>
           <Grid item xs={4}>
             <Typography variant="h6">Discover</Typography>

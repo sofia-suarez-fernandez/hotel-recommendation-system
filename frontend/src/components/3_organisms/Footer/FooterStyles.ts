@@ -27,4 +27,11 @@ export const useFooterStyles = makeStyles()((theme) => ({
       }
     }
   },
+  home: {
+    color: theme.palette.text.primary,
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "underline",
+    }
+  }
 }));
