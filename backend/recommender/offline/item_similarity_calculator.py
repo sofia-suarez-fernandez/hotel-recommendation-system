@@ -9,8 +9,9 @@ import pandas as pd
 import psycopg2
 from scipy.sparse import coo_matrix
 from sklearn.metrics.pairwise import cosine_similarity
+from hotels.models import Review, Similarity
 
-from backend.hotels.models import Review, Similarity
+# from ../../../../models import Review, Similarity
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django.setup()

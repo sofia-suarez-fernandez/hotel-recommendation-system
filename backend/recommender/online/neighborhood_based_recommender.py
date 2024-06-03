@@ -24,13 +24,6 @@ class NeighborhoodBasedRecs:
                 .filter(included=True)
                 .order_by("-sentiment")[:100]
             )
-        # else:
-        #     active_user_reviews = (
-        #         Review.objects.filter(Q(user_twitter__id=user_id))
-        #         .filter(sentiment__isnull=False)
-        #         .filter(included=True)
-        #         .order_by("-sentiment")[:100]
-        #     )
 
         return self.recommend_hotels_by_ratings(
             num,
