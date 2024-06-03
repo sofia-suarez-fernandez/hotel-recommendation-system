@@ -11,11 +11,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
 import useCountryCity from "../../../hooks/services/hotel/useCityNames";
 import { Hotel } from "../../../interfaces/hotel";
-// import {
-//   getPopularHotels,
-//   getRecommendedHotelsByUserId,
-// } from "../../../services/recommendations";
-import { getPopularHotels } from "../../../services/recommendations";
+import {
+  getPopularHotels,
+  getRecommendedHotelsByUserId,
+} from "../../../services/recommendations";
+// import { getPopularHotels } from "../../../services/recommendations";
 import { Section } from "../../1_atoms/Section/Section";
 import { HotelsPagination } from "../../3_organisms/sections/HotelsPagination/HotelsPagination";
 import Layout from "../../4_templates/Layout/Layout";
@@ -29,7 +29,7 @@ export const Home = (): JSX.Element => {
   const isAdmin = useSelector((state: RootState) => state.user.user?.is_staff);
   const user = useSelector((state: RootState) => state.user.user);
 
-  // const [recommendedHotels, setRecommendedHotels] = useState<Hotel[]>([]);
+  const [recommendedHotels, setRecommendedHotels] = useState<Hotel[]>([]);
   const [popularHotels, setPopularHotels] = useState<Hotel[]>([]);
 
   const { response, loading } = useCountryCity();
@@ -43,34 +43,34 @@ export const Home = (): JSX.Element => {
   useEffect(() => {}, [userId, isAdmin]);
 
   // Recommended hotels
-  useEffect(() => {
-    getPopularHotels(selectedCity)
-      .then((hotels) => {
-        setPopularHotels(hotels);
-      })
-      .catch((error) => {
-        console.error("Error fetching popular hotels: ", error);
-      });
-  }, [selectedCity]);
   // useEffect(() => {
-  //   getPopularHotels(selectedCity).then((hotels) => {
-  //     setPopularHotels(hotels);
-  //   });
-  //   userId &&
-  //     getRecommendedHotelsByUserId(selectedCity, userId).then((hotels) => {
-  //       setRecommendedHotels(hotels);
+  //   getPopularHotels(selectedCity)
+  //     .then((hotels) => {
+  //       setPopularHotels(hotels);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching popular hotels: ", error);
   //     });
-  // }, [selectedCity , userId]);
+  // }, [selectedCity]);
+  useEffect(() => {
+    getPopularHotels(selectedCity).then((hotels) => {
+      setPopularHotels(hotels);
+    });
+    userId &&
+      getRecommendedHotelsByUserId(selectedCity, userId).then((hotels) => {
+        setRecommendedHotels(hotels);
+      });
+  }, [selectedCity , userId]);
 
   // Popular or recommended hotels
-  // const hotels: Hotel[] | undefined = useMemo(
-  //   () => (recommendedHotels.length < 1 ? popularHotels : recommendedHotels),
-  //   [popularHotels, recommendedHotels]
-  // );
-
   const hotels: Hotel[] | undefined = useMemo(
-    ()  => popularHotels, [popularHotels]
+    () => (recommendedHotels.length < 1 ? popularHotels : recommendedHotels),
+    [popularHotels, recommendedHotels]
   );
+
+  // const hotels: Hotel[] | undefined = useMemo(
+  //   ()  => popularHotels, [popularHotels]
+  // );
 
   // const countries =
   //   loading === false &&

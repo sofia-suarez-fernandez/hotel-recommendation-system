@@ -124,22 +124,24 @@ class CollaborativeFilteringRecList(generics.ListAPIView):
         print("Recommendations:", num)
 
         # Collaborative filtering recommender
-        cf_hotels = NeighborhoodBasedRecs().recommend_hotels(
-            user_id=user,
-            num=num,
-            current_city=current_city,
-            min_sim=min_sim,
-            max_candidates=max_candidates,
-            neighborhood_size=neighborhood_size,
-        )
-        cf_hotels_ids = [hotel[0] for hotel in cf_hotels]
-        recommended_hotels_ids = cf_hotels_ids
-        num_cf_hotels = len(recommended_hotels_ids)
-        print("Recommendations from collaborative filtering:", num_cf_hotels)
-        print("Hotels ids from collaborative filtering: ", recommended_hotels_ids)
+        # cf_hotels = NeighborhoodBasedRecs().recommend_hotels(
+        #     user_id=user,
+        #     num=num,
+        #     current_city=current_city,
+        #     min_sim=min_sim,
+        #     max_candidates=max_candidates,
+        #     neighborhood_size=neighborhood_size,
+        # )
+        # cf_hotels_ids = [hotel[0] for hotel in cf_hotels]
+        # recommended_hotels_ids = cf_hotels_ids
+        # num_cf_hotels = len(recommended_hotels_ids)
+        # print("Recommendations from collaborative filtering:", num_cf_hotels)
+        # print("Hotels ids from collaborative filtering: ", recommended_hotels_ids)
 
         # Popularity recommender
-        num_popular_hotels = num - num_cf_hotels
+        recommended_hotels_ids = []
+        num_popular_hotels = num #- num_cf_hotels
+        print(num_popular_hotels)
         if num_popular_hotels != 0:
             popular_hotels = PopularityBasedRecs().popular_hotels_for_user(
                 user_id=user, num=num_popular_hotels, current_city=current_city

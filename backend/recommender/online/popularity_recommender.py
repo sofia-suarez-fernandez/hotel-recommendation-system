@@ -22,14 +22,14 @@ class PopularityBasedRecs:
             if current_city != "Everywhere":
                 popular_hotels = (
                     Hotel.objects.filter(locality=current_city)
-                    .exclude(hotel_name_id__in=user_hotels_ids_reviewed)
+                    .exclude(hotel_name__in=user_hotels_ids_reviewed)
                     .order_by("-review_count")
                     .values("hotel_name")[:num]
                 )
             else:
                 popular_hotels = (
                     Hotel.objects.all()
-                    .exclude(hotel_name_id__in=user_hotels_ids_reviewed)
+                    .exclude(hotel_name__in=user_hotels_ids_reviewed)
                     .order_by("-review_count")
                     .values("hotel_name")[:num]
                 )
