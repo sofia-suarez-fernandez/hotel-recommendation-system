@@ -137,12 +137,6 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
       description: "User that wrote a review in the web application",
       width: 130,
     },
-    // {
-    //   field: "user_twitter",
-    //   headerName: "User Twitter ID",
-    //   description: "User that made a twit",
-    //   width: 220,
-    // },
     {
       field: "actions",
       headerName: "Actions",
@@ -170,7 +164,6 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
           columns: {
             columnVisibilityModel: {
               included: true,
-              // id: false,
               sentiment: true,
               rate: true,
               review_text: true,
@@ -178,7 +171,6 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
               updated_at: false,
               hotel_name: false,
               user_account: false,
-              // user_twitter: false,
               actions: true,
             },
           },
