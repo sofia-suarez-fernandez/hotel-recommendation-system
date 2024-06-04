@@ -1,5 +1,4 @@
 """Calculate the item similarity matrix"""
-
 import logging
 import os
 from datetime import datetime
@@ -9,12 +8,12 @@ import pandas as pd
 import psycopg2
 from scipy.sparse import coo_matrix
 from sklearn.metrics.pairwise import cosine_similarity
-from hotels.models import Review, Similarity
 
-# from ../../../../models import Review, Similarity
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.core.settings")
 django.setup()
+
+from backend.hotels.models import Similarity, Review
+
 
 
 logging.basicConfig(
