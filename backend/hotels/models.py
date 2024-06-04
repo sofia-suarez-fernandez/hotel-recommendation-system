@@ -2,7 +2,7 @@
 
 import decimal
 from django.db import models
-from backend.users.models import UserAccount
+from users.models import UserAccount
 
 
 class Hotel(models.Model):
