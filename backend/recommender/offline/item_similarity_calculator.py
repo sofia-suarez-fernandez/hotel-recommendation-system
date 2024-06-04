@@ -9,10 +9,10 @@ import psycopg2
 from scipy.sparse import coo_matrix
 from sklearn.metrics.pairwise import cosine_similarity
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.core.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django.setup()
 
-from backend.hotels.models import Similarity, Review
+from hotels.models import Similarity, Review
 
 
 
@@ -51,7 +51,7 @@ class ItemSimilarityMatrixBuilder(object):
         logger.debug("Creating ratings matrix")
 
         reviews["sentiment"] = reviews["sentiment"].astype(float)
-        reviews["user_account_id"] = reviews["user__account_id"].astype("category")
+        reviews["user_account_id"] = reviews["user_account_id"].astype("category")
         reviews["hotel_name_id"] = reviews["hotel_name_id"].astype("category")
 
         coo = coo_matrix(
@@ -194,9 +194,9 @@ def load_all_reviews(min_reviews=1):
     #     ~df_review["user_id"].isin(num_reviews_by_user[num_reviews_by_user < 2].index)
     # ]
 
-    user_count = df_review[["user_account_id", "hotel_name_id"]].groupby("user_id").count()
+    user_count = df_review[["user_account_id", "hotel_name_id"]].groupby("user_account_id").count()
     user_count = user_count.reset_index()
-    user_ids = user_count[user_count["hotel_name_id"] > min_reviews]["user_id"]
+    user_ids = user_count[user_count["hotel_name_id"] > min_reviews]["user_account_id"]
     df_review = df_review[df_review["user_account_id"].isin(user_ids)]
     df_review["sentiment"] = df_review["sentiment"].astype(float)
 
