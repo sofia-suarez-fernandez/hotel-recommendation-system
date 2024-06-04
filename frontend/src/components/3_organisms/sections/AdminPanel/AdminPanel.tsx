@@ -18,13 +18,14 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
 
       setTimeout(() => {
         const rowParams = api.getRowParams(id);
+        console.log(rowParams.row);
         updateReview(
           rowParams.row.id,
-          rowParams.row.hotel,
-          rowParams.row.user_account,
-          rowParams.row.rating,
+          rowParams.row.hotel_name_id,
+          rowParams.row.user_account_id,
+          rowParams.row.rate,
           rowParams.row.sentiment,
-          rowParams.row.review,
+          rowParams.row.review_text,
           rowParams.row.created_at,
           rowParams.row.included
         );
@@ -114,27 +115,33 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
       headerName: "Review Text",
       description: "Review in the web application",
       hideable: false,
-      width: 500,
+      width: 400,
     },
     {
       field: "created_at",
       headerName: "Created At",
+      description: "Time the review was created in the web application",
       width: 200,
     },
     {
       field: "updated_at",
       headerName: "Updated At",
+      description: "Last time the review was updated in the web application",
       width: 200,
     },
     {
-      field: "hotel_name",
+      field: "hotel_name_id",
       headerName: "Hotel Name",
-      width: 100,
+      description: "Hotel that was reviewed in the web application",
+      hideable: false,
+      width: 200,
     },
     {
-      field: "user_account",
+      field: "user_account_id",
       headerName: "User Account ID",
       description: "User that wrote a review in the web application",
+      hideable: false,
+      renderCell: (params) => params.value ? params.value.toString() : "Anonymous",
       width: 130,
     },
     {
@@ -169,8 +176,8 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
               review_text: true,
               created_at: false,
               updated_at: false,
-              hotel_name: false,
-              user_account: false,
+              hotel_name_id: true,
+              user_account_id: true,
               actions: true,
             },
           },

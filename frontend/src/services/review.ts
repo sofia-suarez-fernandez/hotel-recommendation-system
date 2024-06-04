@@ -22,11 +22,11 @@ export const updateReview = (
 
   const body = {
     id: reviewId,
-    hotel: hotelId,
-    user: userAccountId,
-    rating: rating,
+    hotel_name_id: hotelId,
+    user_account_it: userAccountId,
+    rate: rating,
     sentiment: sentiment,
-    review: review,
+    review_text: review,
     created_at: createdAt,
     updated_at: currentDate,
     included: included,
