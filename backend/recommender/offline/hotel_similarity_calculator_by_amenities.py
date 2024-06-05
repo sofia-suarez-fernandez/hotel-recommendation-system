@@ -69,7 +69,7 @@ class HotelSimilarityByAmenitiesMatrixBuilder(object):
         logger.debug("Calculating overlaps between the items")
         overlap = (coo @ coo.T) >= self.min_overlap
 
-        number_of_overlaps = (overlap >= self.min_overlap).count_nonzero()
+        number_of_overlaps = overlap.count_nonzero()
 
         print("Number of overlaps: ", number_of_overlaps)
 
@@ -163,14 +163,14 @@ def main():
     logger.info("Calculation of item similarity")
 
     all_amenities = load_all_amenities()
-    HotelSimilarityByAmenitiesMatrixBuilder(7, 0.2).build(all_amenities)
+    HotelSimilarityByAmenitiesMatrixBuilder(1, 0.6).build(all_amenities)
 
 
 def load_all_amenities():
     """Load all amenities"""
     columns = ["parking", "wifi", "pool", "gym", "bar", "pets_allowed", "pool_towels", "coffee_shop", "restaurant", "breakfast", "welcome_drink", "happy_hour", "airport_transportation", "car_hire", "taxi_service", "business_center", "meeting_rooms", "security", "baggage_storage", "concierge", "gift_shop", "non_smoking", "outdoor_fireplace", "shops", "sun_loungers", "atm", "doorperson", "first_aid_kit", "umbrella", "check_in_24h", "front_desk_24h", "private_check_in_out", "dry_cleaning", "laundry_service", "hotel_name_id"]
 
-    amenities_data = Amenity.objects.all(*columns)
+    amenities_data = Amenity.objects.all().values(*columns)
     logger.info(len(amenities_data))
 
     df_amenity = pd.DataFrame.from_records(amenities_data, columns=columns)
