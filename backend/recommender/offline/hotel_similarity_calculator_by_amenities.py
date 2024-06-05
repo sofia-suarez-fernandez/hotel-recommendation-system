@@ -5,6 +5,7 @@ import os
 from datetime import datetime
 
 import django
+import numpy as np
 import pandas as pd
 import psycopg2
 from scipy.sparse import coo_matrix
@@ -25,13 +26,10 @@ logger = logging.getLogger("Item similarity calculator")
 def normalize(x):
     """Normalize the data"""
     x = x.astype(float)
-    x_sum = x.sum()
-    x_num = x.astype(bool).sum()
-    x_mean = x_sum / x_num
-
-    if x_num == 1 or x.std() == 0:
-        return 0.0
-    return (x - x_mean) / (x.max() - x.min())
+    norm = np.linalg.norm(x)
+    if norm == 0: 
+        return x
+    return x / norm
 
 
 class HotelSimilarityByAmenitiesMatrixBuilder(object):
@@ -55,34 +53,57 @@ class HotelSimilarityByAmenitiesMatrixBuilder(object):
 
         # Convert amenities to a sparse matrix
         amenities.set_index("hotel_name_id", inplace=True)
-        coo = coo_matrix(amenities.values)
+        normalized_amenities = amenities.apply(normalize, axis=1)
+        coo = coo_matrix(normalized_amenities.values)
+        # print(coo) ok
 
         # Calculate similarity matrix, sparse matrix
-        sim = cosine_similarity(coo, dense_output=False)
+        coo = coo.transpose()
+
+
+        overlap_matrix= coo.dot(coo.T)
+        overlap_matrix = overlap_matrix >= self.min_overlap
+        number_of_overlaps = overlap_matrix.count_nonzero()
+        logger.info("Number of overlaps: %s", number_of_overlaps)
+
+        cor = cosine_similarity(coo, dense_output=False)
+        # Apply min_sim threshold
+        cor = cor.multiply(cor >= self.min_sim) 
+
+        # Calculate overlap matrix
+        overlap_matrix = coo.dot(coo.T)
+
+        # Apply min_overlap threshold
+        cor = cor.multiply(overlap_matrix >= self.min_overlap)
+
+        # FROM ------------
+        # sim = cosine_similarity(coo, dense_output=False)
+        # print(sim) ok
 
         # Apply min_sim threshold
-        sim = sim * (sim >= self.min_sim)
+        # sim = sim * (sim >= self.min_sim)
 
          # Apply min_overlap threshold
         # @ multiplies matrices element-wise
         # coo.T is the transpose of coo
-        logger.debug("Calculating overlaps between the items")
-        overlap = (coo @ coo.T) >= self.min_overlap
+        # logger.debug("Calculating overlaps between the items")
+        # overlap = (coo @ coo.T) >= self.min_overlap
 
-        number_of_overlaps = overlap.count_nonzero()
+        # number_of_overlaps = overlap.count_nonzero()
 
-        print("Number of overlaps: ", number_of_overlaps)
+        # print("Number of overlaps: ", number_of_overlaps)
 
-        logger.debug(
-            "Overlap matrix leaves %s out of %s with %s",
-            number_of_overlaps,
-            overlap.count_nonzero(),
-            self.min_overlap,
-        )
+        # logger.debug(
+        #     "Overlap matrix leaves %s out of %s with %s",
+        #     number_of_overlaps,
+        #     overlap.count_nonzero(),
+        #     self.min_overlap,
+        # )
 
         # Apply both thresholds
         # Set to 0 any value in the similarity matrix where the number of amenities shared between two hotels is less than min_overlap.
-        sim = sim.multiply(overlap)
+        # sim = sim.multiply(overlap)
+        # TOO -------------------
 
         # Create a dictionary of hotel names
         hotels = dict(enumerate(amenities.index.unique()))
@@ -90,16 +111,17 @@ class HotelSimilarityByAmenitiesMatrixBuilder(object):
             "Correlation is finished, done in %s seconds", datetime.now() - start_time
         )
 
+        print(cor)
         if save:
             start_time = datetime.now()
             logger.debug("save starting")
-            self._save_with_django(sim, hotels)
+            self._save_with_django(cor, hotels)
 
             logger.debug(
                 "save finished, done in %s seconds", datetime.now() - start_time
             )
 
-        return sim, hotels
+        return cor, hotels
 
     @staticmethod
     def _get_conn():
@@ -130,12 +152,13 @@ class HotelSimilarityByAmenitiesMatrixBuilder(object):
         # coo.count_nonzero() does NOT exclude the items (0,0), (1,1), (2,2)...
         logger.debug("%s similarities to save", coo.count_nonzero())
 
+        print(coo)
         xs, ys = coo.nonzero()
         for x, y in zip(xs, ys):
             if x == y:
                 continue
 
-            sim = csr[x, y]
+            sim = round(csr[x, y], 7)
 
             if len(sims) == 500000:
                 Similarity.objects.bulk_create(sims)
@@ -163,7 +186,7 @@ def main():
     logger.info("Calculation of item similarity")
 
     all_amenities = load_all_amenities()
-    HotelSimilarityByAmenitiesMatrixBuilder(1, 0.6).build(all_amenities)
+    HotelSimilarityByAmenitiesMatrixBuilder(1, 0.5).build(all_amenities)
 
 
 def load_all_amenities():
