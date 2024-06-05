@@ -34,7 +34,7 @@ def normalize(x):
     return (x - x_mean) / (x.max() - x.min())
 
 
-class ItemSimilarityMatrixBuilder(object):
+class HotelSimilarityByAmenitiesMatrixBuilder(object):
     """Build the item similarity matrix"""
 
     def __init__(self, min_overlap, min_sim):
@@ -57,90 +57,49 @@ class ItemSimilarityMatrixBuilder(object):
         amenities.set_index("hotel_name_id", inplace=True)
         coo = coo_matrix(amenities.values)
 
-        # Calculate similarity matrix
-        sim = cosine_similarity(coo)
+        # Calculate similarity matrix, sparse matrix
+        sim = cosine_similarity(coo, dense_output=False)
 
         # Apply min_sim threshold
         sim = sim * (sim >= self.min_sim)
+
+         # Apply min_overlap threshold
         # @ multiplies matrices element-wise
         # coo.T is the transpose of coo
-        # Apply min_overlap threshold
+        logger.debug("Calculating overlaps between the items")
         overlap = (coo @ coo.T) >= self.min_overlap
 
-        # Apply both thresholds
-        # Set to 0 any value in the similarity matrix where the number of amenities shared between two hotels is less than min_overlap.
-        sim = sim * overlap
-
-        return sim
-
-
-
-        logger.debug("Calculating similarities ... using %s ratings", len(reviews))
-        start_time = datetime.now()
-
-        logger.debug("Creating ratings matrix")
-
-        reviews["sentiment"] = reviews["sentiment"].astype(float)
-        reviews["user_account_id"] = reviews["user_account_id"].astype("category")
-        reviews["hotel_name_id"] = reviews["hotel_name_id"].astype("category")
-
-        coo = coo_matrix(
-            (
-                reviews["sentiment"],
-                (
-                    reviews["hotel_name_id"].cat.codes.copy(),
-                    reviews["user_account_id"].cat.codes.copy(),
-                ),
-            )
-        )
-
-        logger.debug("Calculating overlaps between the items")
-        overlap_matrix = (
-            coo.astype(bool).astype(int).dot(coo.transpose().astype(bool).astype(int))
-        )
-
-        number_of_overlaps = (overlap_matrix >= self.min_overlap).count_nonzero()
+        number_of_overlaps = (overlap >= self.min_overlap).count_nonzero()
 
         print("Number of overlaps: ", number_of_overlaps)
 
         logger.debug(
             "Overlap matrix leaves %s out of %s with %s",
             number_of_overlaps,
-            overlap_matrix.count_nonzero(),
+            overlap.count_nonzero(),
             self.min_overlap,
         )
 
-        logger.debug(
-            "Rating matrix (size %sx%s) finished, in %s seconds",
-            coo.shape[0],
-            coo.shape[1],
-            datetime.now() - start_time,
-        )
+        # Apply both thresholds
+        # Set to 0 any value in the similarity matrix where the number of amenities shared between two hotels is less than min_overlap.
+        sim = sim.multiply(overlap)
 
-        sparsity_level = 1 - (reviews.shape[0] / (coo.shape[0] * coo.shape[1]))
-        logger.debug("Sparsity level is %s", sparsity_level)
-
-        start_time = datetime.now()
-
-        cor = cosine_similarity(coo, dense_output=False)
-
-        cor = cor.multiply(cor >= self.min_sim)
-        cor = cor.multiply(overlap_matrix >= self.min_overlap)
-
-        hotels = dict(enumerate(reviews["hotel_name_id"].cat.categories))
+        # Create a dictionary of hotel names
+        hotels = dict(enumerate(amenities.index.unique()))
         logger.debug(
             "Correlation is finished, done in %s seconds", datetime.now() - start_time
         )
+
         if save:
             start_time = datetime.now()
             logger.debug("save starting")
-            self._save_with_django(cor, hotels)
+            self._save_with_django(sim, hotels)
 
             logger.debug(
                 "save finished, done in %s seconds", datetime.now() - start_time
             )
 
-        return cor, hotels
+        return sim, hotels
 
     @staticmethod
     def _get_conn():
@@ -149,7 +108,6 @@ class ItemSimilarityMatrixBuilder(object):
             host="localhost",
             database="hotelsrecommendersystem",
             user="postgres",
-            # password="myPa$$w0rd",
             password="Gorrion2000!",
         )
         return conn
@@ -205,7 +163,7 @@ def main():
     logger.info("Calculation of item similarity")
 
     all_amenities = load_all_amenities()
-    ItemSimilarityMatrixBuilder(4, 0.2).build(all_amenities)
+    HotelSimilarityByAmenitiesMatrixBuilder(7, 0.2).build(all_amenities)
 
 
 def load_all_amenities():
