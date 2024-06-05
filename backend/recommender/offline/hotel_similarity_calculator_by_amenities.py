@@ -13,7 +13,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django.setup()
 
-from hotels.models import Similarity, Review
+from hotels.models import Similarity, Amenity
 
 
 logging.basicConfig(
@@ -41,10 +41,40 @@ class ItemSimilarityMatrixBuilder(object):
         """Initialize the class"""
         self.min_overlap = min_overlap
         self.min_sim = min_sim
-        self.db = "django.db.backends.postgresql"
+        # self.db = "django.db.backends.postgresql_psycopg2"
+        self.db="django.db.backends.postgresql"
 
-    def build(self, reviews, save=True):
+    def build(self, amenities, save=True):
         """Build the item similarity matrix"""
+
+        logger.debug("Calculating similarities ... using %s amenities", len(amenities))
+        
+        start_time = datetime.now()
+
+        logger.debug("Creating ratings matrix")
+
+        # Convert amenities to a sparse matrix
+        amenities.set_index("hotel_name_id", inplace=True)
+        coo = coo_matrix(amenities.values)
+
+        # Calculate similarity matrix
+        sim = cosine_similarity(coo)
+
+        # Apply min_sim threshold
+        sim = sim * (sim >= self.min_sim)
+        # @ multiplies matrices element-wise
+        # coo.T is the transpose of coo
+        # Apply min_overlap threshold
+        overlap = (coo @ coo.T) >= self.min_overlap
+
+        # Apply both thresholds
+        # Set to 0 any value in the similarity matrix where the number of amenities shared between two hotels is less than min_overlap.
+        sim = sim * overlap
+
+        return sim
+
+
+
         logger.debug("Calculating similarities ... using %s ratings", len(reviews))
         start_time = datetime.now()
 
@@ -174,39 +204,25 @@ def main():
     """Main function to calculate the item similarity matrix"""
     logger.info("Calculation of item similarity")
 
-    all_reviews = load_all_reviews()
-    ItemSimilarityMatrixBuilder(4, 0.2).build(all_reviews)
+    all_amenities = load_all_amenities()
+    ItemSimilarityMatrixBuilder(4, 0.2).build(all_amenities)
 
 
-def load_all_reviews(min_reviews=1):
-    """Load all reviews"""
-    columns = ["user_account_id", "hotel_name_id", "sentiment"]
+def load_all_amenities():
+    """Load all amenities"""
+    columns = ["parking", "wifi", "pool", "gym", "bar", "pets_allowed", "pool_towels", "coffee_shop", "restaurant", "breakfast", "welcome_drink", "happy_hour", "airport_transportation", "car_hire", "taxi_service", "business_center", "meeting_rooms", "security", "baggage_storage", "concierge", "gift_shop", "non_smoking", "outdoor_fireplace", "shops", "sun_loungers", "atm", "doorperson", "first_aid_kit", "umbrella", "check_in_24h", "front_desk_24h", "private_check_in_out", "dry_cleaning", "laundry_service", "hotel_name_id"]
 
-    reviews_data = Review.objects.all().values(*columns)
+    amenities_data = Amenity.objects.all(*columns)
+    logger.info(len(amenities_data))
 
-    logger.info("Number of reviews: %s", len(reviews_data))
-
-    df_review = pd.DataFrame.from_records(reviews_data, columns=columns)
-
-
-    if df_review.empty:
+    df_amenity = pd.DataFrame.from_records(amenities_data, columns=columns)
+    if df_amenity.empty:
         logger.error("DataFrame is empty after loading data from database.")
         return None
     else:
-        logger.info("DataFrame loaded successfully. Number of rows: %s", len(df_review))
+        logger.info("DataFrame loaded successfully. Number of rows: %s", len(df_amenity))
 
-    user_count = (
-        df_review[["user_account_id", "hotel_name_id"]]
-        .groupby("user_account_id")
-        .count()
-    )
-    user_count = user_count.reset_index()
-    user_ids = user_count[user_count["hotel_name_id"] > min_reviews]["user_account_id"]
-    df_review = df_review[df_review["user_account_id"].isin(user_ids)]
-    df_review["sentiment"] = df_review["sentiment"].astype(float)
-
-    return df_review
-
+    return df_amenity
 
 if __name__ == "__main__":
     main()
