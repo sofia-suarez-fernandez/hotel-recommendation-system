@@ -27,7 +27,7 @@ export const useUpdateReviewDialogViewModel = ({
     review.hotel_name_id,
     review.user_account_id,
     Number(newRating),
-    Number(newRating),
+    newRating === null ? null : newRating < 3 ? 1 : newRating === 3 ? 2 : 3, // sentiment
     newReview,
     newReviewTitle,
     review.created_at,
