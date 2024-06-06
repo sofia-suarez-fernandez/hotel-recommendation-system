@@ -43,15 +43,6 @@ export const Home = (): JSX.Element => {
   useEffect(() => {}, [userId, isAdmin]);
 
   // Recommended hotels
-  // useEffect(() => {
-  //   getPopularHotels(selectedCity)
-  //     .then((hotels) => {
-  //       setPopularHotels(hotels);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching popular hotels: ", error);
-  //     });
-  // }, [selectedCity]);
   useEffect(() => {
     getPopularHotels(selectedCity).then((hotels) => {
       setPopularHotels(hotels);

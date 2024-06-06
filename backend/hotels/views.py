@@ -8,7 +8,7 @@ from recommender.online.popularity_recommender import PopularityBasedRecs
 from .models import City, Hotel, Review, Amenity
 from .serializers import CitySerializer, HotelSerializer, ReviewSerializer, AmenitiesSerializer
 
-from recommender.online.neighborhood_based_recommender import NeighborhoodBasedRecs
+from recommender.online.neighborhood_based_hotel_recommender import NeighborhoodBasedRecs
 
 
 # Hotel
@@ -116,7 +116,7 @@ class CollaborativeFilteringRecList(generics.ListAPIView):
     def get_queryset(self):
         user = self.kwargs["user_account_id"]
         current_city = self.kwargs["locality"]
-        min_sim = 0.0
+        min_sim = 0.3
         max_candidates = 10
         neighborhood_size = 1
         num = 30
@@ -124,19 +124,19 @@ class CollaborativeFilteringRecList(generics.ListAPIView):
         print("Recommendations:", num)
 
         # Collaborative filtering recommender
-        # cf_hotels = NeighborhoodBasedRecs().recommend_hotels(
-        #     user_id=user,
-        #     num=num,
-        #     current_city=current_city,
-        #     min_sim=min_sim,
-        #     max_candidates=max_candidates,
-        #     neighborhood_size=neighborhood_size,
-        # )
-        # cf_hotels_ids = [hotel[0] for hotel in cf_hotels]
-        # recommended_hotels_ids = cf_hotels_ids
-        # num_cf_hotels = len(recommended_hotels_ids)
-        # print("Recommendations from collaborative filtering:", num_cf_hotels)
-        # print("Hotels ids from collaborative filtering: ", recommended_hotels_ids)
+        cf_hotels = NeighborhoodBasedRecs().recommend_hotels(
+            user_id=user,
+            num=num,
+            current_city=current_city,
+            min_sim=min_sim,
+            max_candidates=max_candidates,
+            neighborhood_size=neighborhood_size,
+        )
+        cf_hotels_ids = [hotel[0] for hotel in cf_hotels]
+        recommended_hotels_ids = cf_hotels_ids
+        num_cf_hotels = len(recommended_hotels_ids)
+        print("Recommendations from collaborative filtering:", num_cf_hotels)
+        print("Hotels ids from collaborative filtering: ", recommended_hotels_ids)
 
         # Popularity recommender
         recommended_hotels_ids = []

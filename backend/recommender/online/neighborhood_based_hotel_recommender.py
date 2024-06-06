@@ -48,7 +48,7 @@ class NeighborhoodBasedRecs:
 
         # map hotel_name_id to sentiment
         hotel_ids = {
-            hotel["hotel_name_id"]: hotel["sentiment"] for hotel in active_user_reviews
+            hotel["hotel_name_id_id"]: hotel["sentiment"] for hotel in active_user_reviews
         }
 
         # mean of the reviews' sentiments in hotel_ids (hotels reviewed by the user)
@@ -59,11 +59,11 @@ class NeighborhoodBasedRecs:
         # user is filtering by city
         if current_city != "Everywhere":
             hotels_in_current_city = Hotel.objects.filter(locality=current_city).values(
-                "hotel_name_id"
+                "hotel_name"
             )
 
             current_city_hotel_names = [
-                item["hotel_name_id"] for item in hotels_in_current_city
+                item["hotel_name"] for item in hotels_in_current_city
             ]
 
             # source is in the hotels reviewed by the user
