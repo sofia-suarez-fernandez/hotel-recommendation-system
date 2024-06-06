@@ -110,7 +110,7 @@ export const createReview = (
     user_account_id: userId,
     hotel_name_id: hotelId?.replace(/-/g, " "),
     rate: parseFloat(((rating ?? 0) / 3 * 5).toFixed(2)),
-    sentiment: rating === null ? null : Number(rating),
+    sentiment: rating === null ? null : (Number(rating) < 3 ? 1 : (Number(rating) === 3 ? 2 : 3)),
     review_title: review_title,
     review_text: review_text,
     tripdate: null,
