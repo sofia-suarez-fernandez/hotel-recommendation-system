@@ -24,7 +24,7 @@ import { HotelHeroProps } from "./HotelHeroInterfaces";
 import { useHotelHeroStyles } from "./HotelHeroStyles";
 import useHotelSlug from "../../../../hooks/useHotelSlug";
 // leaflet map
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { useEffect, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -101,9 +101,9 @@ export const HotelHero = ({
         .then((data) => {
           if (data.length > 0) {
             setViewport(() => ({
-              latitude: data[0].lat,
-              longitude: data[0].lon,
-              zoom: 13,
+              latitude: parseFloat(data[0].lat),
+              longitude: parseFloat(data[0].lon),
+              zoom: 11,
               address: fullAddress,
             }));
           }
@@ -336,7 +336,7 @@ export const HotelHero = ({
           </AccordionSummary>
 
           <AccordionDetails className={classes.accordionDetailsMap}>
-            {viewport ? (
+            {(viewport && viewport.latitude && viewport.longitude) ? (
               <MapContainer
                 style={{ height: "400px", width: "100%" }}
                 center={[viewport.latitude, viewport.longitude]}
