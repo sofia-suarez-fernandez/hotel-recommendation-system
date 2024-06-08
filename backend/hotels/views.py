@@ -121,9 +121,10 @@ class CollaborativeFilteringRecList(generics.ListAPIView):
         neighborhood_size = 1
         num = 30
 
-        print("Recommendations:", num)
+        print("Max number of recommendations: ", num)
 
         # Collaborative filtering recommender
+        recommended_hotels_ids = []
         cf_hotels = NeighborhoodBasedRecs().recommend_hotels(
             user_id=user,
             num=num,
@@ -135,11 +136,12 @@ class CollaborativeFilteringRecList(generics.ListAPIView):
         cf_hotels_ids = [hotel[0] for hotel in cf_hotels]
         recommended_hotels_ids = cf_hotels_ids
         num_cf_hotels = len(recommended_hotels_ids)
-        print("Recommendations from collaborative filtering:", num_cf_hotels)
-        print("Hotels ids from collaborative filtering: ", recommended_hotels_ids)
+        print("--- COLLABORATIVE FILTERING ---")
+        print("Number of recommendations from CF: ", num_cf_hotels)
+        print("Hotel names from CF: ", recommended_hotels_ids)
+        print()
 
         # Popularity recommender
-        recommended_hotels_ids = []
         num_popular_hotels = num - num_cf_hotels
         print(num_popular_hotels)
         if num_popular_hotels != 0:
@@ -148,12 +150,31 @@ class CollaborativeFilteringRecList(generics.ListAPIView):
             )
             popular_hotels_ids = [item["hotel_name"] for item in popular_hotels]
             num_popular_hotels = len(popular_hotels_ids)
-            print("Recommendations from popular hotels:", num_popular_hotels)
+
+            print("--- POPULARITY ---")
+            print("Number of recommendations from Popular hotels: ", num_popular_hotels)
+            print("Hotel names from Popular hotels: ", popular_hotels_ids)
+            print()
+
+            # Check for repeated hotels in both recommendation algorithms
+            print("--- REPEATED HOTELS ---")
+            print("Checking for repeated hotels in both recommendation algorithms...")
+            repeated = set(recommended_hotels_ids) & set(popular_hotels_ids)
+            print("Repeated hotels in both recommendation algorithms:", repeated)
+            print("Number of repeated hotels: ", len(repeated))
+            print()
+
+            # Add popular hotels to the list of recommendations
             recommended_hotels_ids.extend(popular_hotels_ids)
 
         recommended_hotels = Hotel.objects.filter(hotel_name__in=recommended_hotels_ids)
 
         # This sorting is needed since .filter() does not preserve the order
+        print("--- FINAL RECOMMENDATIONS ---")
+        print("Final number of recommendations: ", len(recommended_hotels))
+        print("Final hotel names: ", recommended_hotels_ids)
+        print()
+        
         return sorted(
             recommended_hotels, key=lambda x: recommended_hotels_ids.index(x.hotel_name)
         )
