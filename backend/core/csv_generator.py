@@ -14,4 +14,4 @@ hotels_data.to_csv('hotels_data_index.csv', index=False)
 # reviews
 reviews_data = pd.read_csv('reviews_data.csv')
 reviews_data['id'] = reviews_data.index
-reviews_data.to_csv('reviews_data_index_2.csv', index=False)
+reviews_data.to_csv('reviews_data_index.csv', index=False)
