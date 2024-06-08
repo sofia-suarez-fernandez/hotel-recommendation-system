@@ -12,11 +12,10 @@ import numpy as np
 import pandas as pd
 import psycopg2
 
-from hotels.models import Similarity
-
-
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django.setup()
+
+from hotels.models import Similarity
 
 
 logging.basicConfig(
@@ -46,7 +45,7 @@ class HotelSimilarityByAmenitiesMatrixBuilder(object):
         self.db = "django.db.backends.postgresql"
 
     def build(self, amenities, save=True):
-        logger.debug("Calculating similarities ... using %s amenities", len(amenities))
+        logger.debug("Calculating similarities ... using %s hotels", len(amenities))
 
         start_time = datetime.now()
 
@@ -211,7 +210,6 @@ class TestHotelSimilarityByAmenitiesMatrixBuilder(unittest.TestCase):
         self.amenities = pd.DataFrame(
             [
                 [
-                    0,
                     True,
                     True,
                     True,
@@ -249,7 +247,6 @@ class TestHotelSimilarityByAmenitiesMatrixBuilder(unittest.TestCase):
                     MARGARITVILLE,
                 ],
                 [
-                    1,
                     True,
                     True,
                     True,
@@ -287,7 +284,6 @@ class TestHotelSimilarityByAmenitiesMatrixBuilder(unittest.TestCase):
                     MOXY,
                 ],
                 [
-                    2,
                     True,
                     False,
                     True,
@@ -325,7 +321,6 @@ class TestHotelSimilarityByAmenitiesMatrixBuilder(unittest.TestCase):
                     POD51,
                 ],
                 [
-                    3,
                     True,
                     True,
                     True,
@@ -364,7 +359,6 @@ class TestHotelSimilarityByAmenitiesMatrixBuilder(unittest.TestCase):
                 ],
             ],
             columns=[
-                "id",
                 "parking",
                 "wifi",
                 "pool",
@@ -405,20 +399,27 @@ class TestHotelSimilarityByAmenitiesMatrixBuilder(unittest.TestCase):
 
     def test_simple_similarity(self):
         builder = HotelSimilarityByAmenitiesMatrixBuilder(1, 0.5)
-
-        no_items = len(set(self.amenities["hotel_name_id"]))
+        no_items = ((self.amenities.columns.size - 1))
+        logger.debug(no_items)
+        logger.debug(set(self.amenities.columns))
         cor, hotels = builder.build(amenities=self.amenities, save=False)
+        self.assertIsNotNone(cor, "Cor matrix is None")
+        self.assertIsNotNone(hotels, "Hotels dictionary is None")
+        logger.debug(hotels.values())
         df = pd.DataFrame(cor.toarray(), columns=hotels.values(), index=hotels.values())
-        self.assertIsNotNone(df)
+        logger.debug(df.shape[0])
+        logger.debug(df.shape[1])
+        logger.debug(df)
+        self.assertIsNotNone(df, "Dataframe is None")
         self.assertEqual(
             df.shape[0],
             no_items,
-            "Expected correlations matrix to have a row for each item",
+            "Expected correlations matrix to have a row for each amenity",
         )
         self.assertEqual(
             df.shape[1],
             no_items,
-            "Expected correlations matrix to have a column for each item",
+            "Expected correlations matrix to have a column for each amenity",
         )
 
         self.assertAlmostEqual(df[MARGARITVILLE][MOXY], 0.5284101)
