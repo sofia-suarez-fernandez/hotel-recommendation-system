@@ -140,7 +140,7 @@ class CollaborativeFilteringRecList(generics.ListAPIView):
 
         # Popularity recommender
         recommended_hotels_ids = []
-        num_popular_hotels = num #- num_cf_hotels
+        num_popular_hotels = num - num_cf_hotels
         print(num_popular_hotels)
         if num_popular_hotels != 0:
             popular_hotels = PopularityBasedRecs().popular_hotels_for_user(
