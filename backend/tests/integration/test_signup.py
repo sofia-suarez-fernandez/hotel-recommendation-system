@@ -24,12 +24,12 @@ class TestIntegration(unittest.TestCase):
         re_password_input = self.driver.find_element(By.ID, "re_password")
         sing_up_button = self.driver.find_element(By.ID, "sign-up")
 
-        first_name_input.send_keys("Lucía")
-        last_name_input.send_keys("Blanco")
-        username_input.send_keys("uo272830")
-        email_input.send_keys("uo272830@uniovi.es")
-        password_input.send_keys("^uMfvtWdfQJT6@")
-        re_password_input.send_keys("^uMfvtWdfQJT6@")
+        first_name_input.send_keys("Sofía")
+        last_name_input.send_keys("Suárez Fernández")
+        username_input.send_keys("sofiasuarezfdez")
+        email_input.send_keys("sofiasuarezfdez@outlook.com")
+        password_input.send_keys("n3T0m4t3")
+        re_password_input.send_keys("n3T0m4t3")
 
         sing_up_button.click()
 
@@ -45,11 +45,11 @@ class TestIntegration(unittest.TestCase):
         re_password_input = self.driver.find_element(By.ID, "re_password")
         sing_up_button = self.driver.find_element(By.ID, "sign-up")
 
-        first_name_input.send_keys("Lucía")
-        last_name_input.send_keys("Blanco")
-        username_input.send_keys("uo000000")
-        email_input.send_keys("uo0000000@uniovi.es")
-        password_input.send_keys("^uMfvtWdfQJT6@")
+        first_name_input.send_keys("Sofía")
+        last_name_input.send_keys("Suárez Fernández")
+        username_input.send_keys("UOXXXXXX")
+        email_input.send_keys("UOXXXXXX@uniovi.es")
+        password_input.send_keys("n3T0m4t3")
         re_password_input.send_keys("differentpassword")
 
         sing_up_button.click()
@@ -74,12 +74,12 @@ class TestIntegration(unittest.TestCase):
         re_password_input = self.driver.find_element(By.ID, "re_password")
         sing_up_button = self.driver.find_element(By.ID, "sign-up")
 
-        first_name_input.send_keys("Lucía")
-        last_name_input.send_keys("Blanco")
-        username_input.send_keys("admin")
-        email_input.send_keys("uo0000000@uniovi.es")
-        password_input.send_keys("^uMfvtWdfQJT6@")
-        re_password_input.send_keys("^uMfvtWdfQJT6@")
+        first_name_input.send_keys("Sofía")
+        last_name_input.send_keys("Suárez Fernández")
+        username_input.send_keys("UO270149")
+        email_input.send_keys("UOXXXXXX@uniovi.es")
+        password_input.send_keys("n3T0m4t3")
+        re_password_input.send_keys("n3T0m4t3")
 
         sing_up_button.click()
 
@@ -105,12 +105,12 @@ class TestIntegration(unittest.TestCase):
         re_password_input = self.driver.find_element(By.ID, "re_password")
         sing_up_button = self.driver.find_element(By.ID, "sign-up")
 
-        first_name_input.send_keys("Lucía")
-        last_name_input.send_keys("Blanco")
-        username_input.send_keys("uo000000")
-        email_input.send_keys("admin@admin.com")
-        password_input.send_keys("^uMfvtWdfQJT6@")
-        re_password_input.send_keys("^uMfvtWdfQJT6@")
+        first_name_input.send_keys("Sofía")
+        last_name_input.send_keys("Suárez Fernández")
+        username_input.send_keys("UOXXXXXX")
+        email_input.send_keys("UO270149@uniovi.es")
+        password_input.send_keys("n3T0m4t3")
+        re_password_input.send_keys("n3T0m4t3")
 
         sing_up_button.click()
 
@@ -134,12 +134,12 @@ class TestIntegration(unittest.TestCase):
         re_password_input = self.driver.find_element(By.ID, "re_password")
         sing_up_button = self.driver.find_element(By.ID, "sign-up")
 
-        first_name_input.send_keys("Lucía")
-        last_name_input.send_keys("Blanco")
-        username_input.send_keys("uo000000")
+        first_name_input.send_keys("Sofía")
+        last_name_input.send_keys("Suárez Fernández")
+        username_input.send_keys("UOXXXXXX")
         email_input.send_keys("")
-        password_input.send_keys("^uMfvtWdfQJT6@")
-        re_password_input.send_keys("^uMfvtWdfQJT6@")
+        password_input.send_keys("n3T0m4t3")
+        re_password_input.send_keys("n3T0m4t3")
 
         sing_up_button.click()
 
