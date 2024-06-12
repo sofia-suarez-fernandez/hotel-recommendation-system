@@ -99,7 +99,7 @@ export const HotelCard = ({
                     className={classes.showOnMap}
                     rel="noopener noreferrer"
                   >
-                    <Typography variant="subtitle1">Show on map</Typography>
+                    <Typography variant="body2">Show on map</Typography>
                   </Box>
                 </Box>
               )}
@@ -111,7 +111,7 @@ export const HotelCard = ({
       <CardActions className={classes.reviewsWrapper}>
         <Box className={classes.reviewsInfoWrapper}>
           <Box display="flex" alignItems="center">
-            <Typography variant="h6" className={classes.ratingText}>
+            <Typography className={classes.ratingText}>
               {ratingText}
             </Typography>
             <RatingNumber rating={hotel.rating_value} />
@@ -127,7 +127,7 @@ export const HotelCard = ({
         <Box>
           {hotel.price_range && (
             <Tooltip title="Based on Average Nightly Rates for a Standard Room from our Partners.">
-              <Typography variant="h4" className={classes.priceRange}>
+              <Typography className={classes.priceRange}>
                 <b>{priceRange}</b>{" "}
                 <InfoOutlined className={classes.infoIcon} />
               </Typography>

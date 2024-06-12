@@ -19,7 +19,7 @@ export const Footer = (): JSX.Element => {
             <Typography variant="h4" className={classes.home} component="a" href="/">viaggIO</Typography>
           </Grid>
           <Grid item xs={4}>
-            <Typography variant="h6">Discover</Typography>
+            <Typography className={classes.footerTitle}>Discover</Typography>
             <ul className={classes.list}>
               <li>
                 <Typography variant="body1" component="a" href={isAuthenticated ? "/profile" : "/sign_in"}>
@@ -34,7 +34,7 @@ export const Footer = (): JSX.Element => {
             </ul>
           </Grid>
           <Grid item xs={4}>
-            <Typography variant="h6">About Us</Typography>
+            <Typography className={classes.footerTitle}>About Us</Typography>
             <ul className={classes.list}>
               <li>
                 <Typography variant="body1" component="a" href="/author">
@@ -50,7 +50,7 @@ export const Footer = (): JSX.Element => {
           </Grid>
           {/* Bottom row */}
           <Grid item xs={12}>
-            <Typography variant="subtitle1" align="center">
+            <Typography variant="body1" align="center">
               © Sofía Suárez Fernández
             </Typography>
           </Grid>

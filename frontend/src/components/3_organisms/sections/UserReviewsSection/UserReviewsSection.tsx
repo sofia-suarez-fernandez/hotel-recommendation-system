@@ -72,10 +72,12 @@ export const UserReviewsSection = ({
 
           <Grid item xs={3}>
             <FormControl className={classes.formControl}>
-              <InputLabel>Order by</InputLabel>
+              <InputLabel id="order-by-label" className={classes.selectLabel}>Order by</InputLabel>
               <Select
+                labelId="order-by-label"
+                aria-label="Order by"
                 value={selectedSort}
-                label="Sort by"
+                label="Order by"
                 defaultValue={1}
                 onChange={handleChangeSort}
                 className={classes.select}

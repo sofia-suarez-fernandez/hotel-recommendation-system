@@ -192,7 +192,7 @@ export const HotelHero = ({
           {hotel?.hotel_name}
         </Typography>
         <Box className={classes.ratingTextWrapper}>
-          <Typography variant="h5" className={classes.ratingText}>
+          <Typography className={classes.ratingText}>
             {ratingText}
           </Typography>
           <RatingNumber rating={hotel?.rating_value} />
@@ -224,7 +224,7 @@ export const HotelHero = ({
         {priceRange && (
           <Box className={classes.priceInfoWrapper}>
             <Tooltip title="Based on Average Nightly Rates for a Standard Room from our Partners.">
-              <Typography variant="h4" className={classes.priceRange}>
+              <Typography className={classes.priceRange}>
                 <b>{priceRange}</b>{" "}
                 <InfoOutlined className={classes.infoIcon} />
               </Typography>
@@ -250,6 +250,7 @@ export const HotelHero = ({
                 {...srcset(item.img, 121, item.rows, item.cols)}
                 height="100%"
                 width="100%"
+                alt={item.title}
                 effect="blur"
                 className={classes.image}
               />
@@ -258,6 +259,7 @@ export const HotelHero = ({
                 src={require("../../../../static/images/no-image-found.jpeg")}
                 height="100%"
                 width="100%"
+                alt="Image Title"
                 effect="blur"
                 className={classes.image}
               />
@@ -291,8 +293,8 @@ export const HotelHero = ({
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
+              aria-controls="panel2a-content"
+              id="panel2a-header"
             >
               <Typography variant="body1" className={classes.accordionSummary}>
                 Amenities
@@ -327,8 +329,8 @@ export const HotelHero = ({
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
+            aria-controls="panel3a-content"
+            id="panel3a-header"
           >
             <Typography variant="body1" className={classes.accordionSummary}>
               Map

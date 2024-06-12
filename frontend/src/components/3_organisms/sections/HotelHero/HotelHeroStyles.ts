@@ -90,6 +90,7 @@ export const useHotelHeroStyles = makeStyles()((theme) => ({
   },
   ratingText: {
     fontWeight: "bold",
+    fontSize: "1.1rem",
     marginBottom: 0,
     marginRight: theme.spacing(0.5),
     color: theme.palette.secondary.main,
@@ -105,6 +106,8 @@ export const useHotelHeroStyles = makeStyles()((theme) => ({
   },
   priceRange: {
     textAlign: "right",
+    fontWeight: "bold",
+    fontSize: "1.2rem",
     marginBottom: theme.spacing(0.2),
   },
   infoIcon: {

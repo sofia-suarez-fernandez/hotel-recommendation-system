@@ -39,4 +39,7 @@ export const useUserReviewsSectionStyles = makeStyles()((theme) => ({
       paddingBottom: theme.spacing(0.5),
     },
   },
+  selectLabel: {
+    color: theme.palette.text.primary,
+  }
 }));

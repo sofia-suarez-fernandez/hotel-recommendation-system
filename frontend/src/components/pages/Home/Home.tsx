@@ -1,6 +1,7 @@
 import {
   FormControl,
   Grid,
+  InputLabel,
   ListSubheader,
   MenuItem,
   Select,
@@ -15,7 +16,6 @@ import {
   getPopularHotels,
   getRecommendedHotelsByUserId,
 } from "../../../services/recommendations";
-// import { getPopularHotels } from "../../../services/recommendations";
 import { Section } from "../../1_atoms/Section/Section";
 import { HotelsPagination } from "../../3_organisms/sections/HotelsPagination/HotelsPagination";
 import Layout from "../../4_templates/Layout/Layout";
@@ -59,17 +59,6 @@ export const Home = (): JSX.Element => {
     [popularHotels, recommendedHotels]
   );
 
-  // const hotels: Hotel[] | undefined = useMemo(
-  //   ()  => popularHotels, [popularHotels]
-  // );
-
-  // const countries =
-  //   loading === false &&
-  //   Array.isArray(response) &&
-  //   response
-  //     .map((item) => item?.country)
-  //     .filter((value, index, self) => self.indexOf(value) === index);
-
   return (
     <Layout isGreyBackground>
       {isAdmin === true ? (
@@ -88,12 +77,17 @@ export const Home = (): JSX.Element => {
             </Typography>
 
             <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel id="city-select-label" className={classes.selectLabel}>City</InputLabel>
               <Select
+                labelId="city-select-label"
                 value={selectedCity}
                 defaultValue="Everywhere"
                 id="grouped-select"
                 onChange={handleChangeCity}
                 className={classes.select}
+                aria-label="Select a city"
+                variant="outlined"
+                label="City"
               >
                 <MenuItem value="Everywhere">Everywhere</MenuItem>∑
                 {loading === false && (

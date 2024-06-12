@@ -11,6 +11,10 @@ export const useFooterStyles = makeStyles()((theme) => ({
     position: "sticky",
     top: "100%",
   },
+  footerTitle: {
+    fontWeight: "bold",
+    fontSize: "1rem",
+  },
   list: {
     listStyle: "none",
     padding: 0,

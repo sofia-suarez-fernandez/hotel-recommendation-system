@@ -138,6 +138,7 @@ export const useHotelCardStyles = makeStyles()((theme) => ({
   },
   ratingText: {
     fontWeight: "bold",
+    fontSize: "1rem",
     marginBottom: 0,
     marginRight: theme.spacing(0.5),
     color: theme.palette.secondary.main,
@@ -176,6 +177,8 @@ export const useHotelCardStyles = makeStyles()((theme) => ({
     marginBottom: theme.spacing(0.2),
   },
   priceRange: {
+    fontWeight: "bold",
+    fontSize: "1.2rem",
     textAlign: "right",
     marginBottom: theme.spacing(0.2),
   },

@@ -68,9 +68,11 @@ export const HotelReviewsSection = ({
 
             <Box className={classes.buttonSelectWrapper}>
               <FormControl className={classes.formControl}>
-                <InputLabel>Sort by</InputLabel>
+                <InputLabel id="sort-by-label" className={classes.selectLabel}>Sort by</InputLabel>
                 <Select
+                  labelId="sort-by-label"
                   value={selectedSort}
+                  aria-label="Sort reviews by"
                   label="Sort by"
                   defaultValue={1}
                   onChange={handleChangeSort}

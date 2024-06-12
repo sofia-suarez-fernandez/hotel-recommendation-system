@@ -44,6 +44,7 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
       <>
         <IconButton
           color="primary"
+          aria-label="Edit review"
           onClick={handleEditClick}
           disabled={apiRef.current.getRowMode(id) === "edit"}
         >
@@ -52,6 +53,7 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
 
         <IconButton
           color="primary"
+          aria-label="Save changes"
           onClick={handleSaveClick}
           disabled={apiRef.current.getRowMode(id) === "view"}
         >
@@ -60,6 +62,7 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
 
         <IconButton
           color="primary"
+          aria-label="Cancel changes"
           onClick={handleCancelClick}
           disabled={apiRef.current.getRowMode(id) === "view"}
         >
@@ -73,20 +76,24 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
     {
       field: "included",
       headerName: "Included",
+      headerAlign: "center",
+      headerClassName: classes.header,
       description:
         "Include (🟩) / Don't include (🟥) the review in the recommender system",
       hideable: false,
       valueOptions: [
-        { value: true, label: "🟩" },
-        { value: false, label: "🟥" },
+        { value: true, label: "Included 🟩" },
+        { value: false, label: "Not included 🟥" },
       ],
       type: "singleSelect",
       editable: true,
-      width: 70,
+      width: 100,
     },
     {
       field: "sentiment",
       headerName: "Sentiment",
+      headerAlign: "center",
+      headerClassName: classes.header,
       hideable: false,
       valueOptions: [
         { value: 1, label: "Negative" },
@@ -95,13 +102,15 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
       ],
       type: "singleSelect",
       editable: true,
-      width: 80,
+      width: 100,
     },
     {
       field: "rate",
       headerName: "Rate",
+      headerAlign: "center",
+      headerClassName: classes.header,
       hideable: false,
-      description: "From 0 to 5",
+      description: "From 1 to 5",
       editable: false,
       renderCell: (params) => params.value ? Number(params.value).toFixed(2) : "N/A",
       width: 70,
@@ -109,6 +118,8 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
     {
       field: "review_text",
       headerName: "Review Text",
+      headerAlign: "center",
+      headerClassName: classes.header,
       description: "Review in the web application",
       hideable: false,
       width: 350,
@@ -116,18 +127,24 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
     {
       field: "created_at",
       headerName: "Created At",
+      headerAlign: "center",
+      headerClassName: classes.header,
       description: "Time the review was created in the web application",
       width: 150,
     },
     {
       field: "updated_at",
       headerName: "Updated At",
+      headerAlign: "center",
+      headerClassName: classes.header,
       description: "Last time the review was updated in the web application",
       width: 150,
     },
     {
       field: "hotel_name_id",
       headerName: "Hotel Name",
+      headerAlign: "center",
+      headerClassName: classes.header,
       description: "Hotel that was reviewed in the web application",
       hideable: false,
       width: 150,
@@ -135,6 +152,8 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
     {
       field: "user_account_id",
       headerName: "UserAccount ID",
+      headerAlign: "center",
+      headerClassName: classes.header,
       description: "User that wrote a review in the web application",
       hideable: false,
       renderCell: (params) => params.value ? params.value.toString() : "Anonymous",
@@ -143,6 +162,9 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
     {
       field: "actions",
       headerName: "Actions",
+      headerAlign: "center",
+      headerClassName: classes.header,
+      description: "Edit, save or cancel changes",
       renderCell: RowMenuCell,
       sortable: false,
       filterable: false,
@@ -156,7 +178,7 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
   const apiRef = useGridApiRef();
 
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: "100%" }} aria-label="Table of Reviews">
       <DataGrid
         rows={rows}
         columns={columns}
@@ -185,6 +207,16 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
         apiRef={apiRef}
         editMode="row"
         className={classes.wrapper}
+        slotProps={{
+          // role: "grid",
+          row: { role: "row" },
+          noRowsOverlay: { role: "alert" },
+          noResultsOverlay: { role: "alert" },
+          cell: { role: "gridcell" },
+        }}
+        aria-label="Table of Reviews"
+        rowCount={rows.length}
+        
       />
     </div>
   );
