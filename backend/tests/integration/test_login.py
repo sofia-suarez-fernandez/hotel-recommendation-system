@@ -20,8 +20,8 @@ class TestIntegrationLogin(unittest.TestCase):
         password_input = self.driver.find_element(By.ID, "password")
         sing_in_button = self.driver.find_element(By.ID, "sign-in")
 
-        email_input.send_keys("admin@admin.com")
-        password_input.send_keys("admin")
+        email_input.send_keys("UO270149@uniovi.es")
+        password_input.send_keys("Gorrion2000!")
         sing_in_button.click()
 
         print("Login successful!")
@@ -32,7 +32,7 @@ class TestIntegrationLogin(unittest.TestCase):
         password_input = self.driver.find_element(By.ID, "password")
         sing_in_button = self.driver.find_element(By.ID, "sign-in")
 
-        email_input.send_keys("admin@admin.com")
+        email_input.send_keys("UO270149@uniovi.es")
         password_input.send_keys("noActiveAccount")
         sing_in_button.click()
 
