@@ -16,7 +16,7 @@ export const HotelReviews = (): JSX.Element => {
   const { response: hotel } = useHotelById(hotelId);
   const { response: reviews, loading: reviewsLoading } =
     useReviewsByHotelId(hotelId);
-  const {response: amenities} = useAmenitiesByHotelId(hotelId);
+  const { response: amenities } = useAmenitiesByHotelId(hotelId);
 
   var heroElement = document.getElementById("hero");
   var heroPosition = heroElement?.getBoundingClientRect();
@@ -33,21 +33,37 @@ export const HotelReviews = (): JSX.Element => {
     });
   }
 
+  const [loadedIndex, setLoadedIndex] = useState(0);
+
+  useEffect(() => {
+    if (loadedIndex < 2) {
+      const timer = setTimeout(() => {
+        setLoadedIndex(loadedIndex + 1);
+      }, 400);
+
+      return () => clearTimeout(timer);
+    }
+  }, [loadedIndex]);
+
   return (
     <Layout isGreyBackground>
-      <Section isHeroSection>
-        {hotel && (
-          <div id="hero">
-            <HotelHero hotel={hotel} amenities={amenities} />
-          </div>
-        )}
-      </Section>
+      {loadedIndex >= 0 && (
+        <Section isHeroSection>
+          {hotel && (
+            <div id="hero">
+              <HotelHero hotel={hotel} amenities={amenities} />
+            </div>
+          )}
+        </Section>
+      )}
 
-      <Section paddingTop={false} marginBottom={false}>
-        <div id="reviews">
-          <HotelReviewsSection reviews={reviews} loading={reviewsLoading} />
-        </div>
-      </Section>
+      {loadedIndex >= 1 && (
+        <Section paddingTop={false} marginBottom={false}>
+          <div id="reviews">
+            <HotelReviewsSection reviews={reviews} loading={reviewsLoading} />
+          </div>
+        </Section>
+      )}
     </Layout>
   );
 };

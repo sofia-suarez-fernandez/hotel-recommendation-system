@@ -58,6 +58,10 @@ export const HotelCard = ({
             height="100%"
             width="100%"
             effect="blur"
+            rel="preload"
+            debounce={300}
+            threshold={200}
+            placeholderSrc={require("../../../static/images/no-image-found.jpeg")}
             src={
               imageURL
                 ? imageURL
@@ -111,9 +115,7 @@ export const HotelCard = ({
       <CardActions className={classes.reviewsWrapper}>
         <Box className={classes.reviewsInfoWrapper}>
           <Box display="flex" alignItems="center">
-            <Typography className={classes.ratingText}>
-              {ratingText}
-            </Typography>
+            <Typography className={classes.ratingText}>{ratingText}</Typography>
             <RatingNumber rating={hotel.rating_value} />
           </Box>
 

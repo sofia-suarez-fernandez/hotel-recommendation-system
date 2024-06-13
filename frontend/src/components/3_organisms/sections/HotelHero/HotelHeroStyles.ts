@@ -74,6 +74,10 @@ export const useHotelHeroStyles = makeStyles()((theme) => ({
   },
   imageList: {
     overflow: "hidden",
+    height: "312px",
+    [theme.breakpoints.only("xs")]: {
+      height: "unset",
+    }
   },
   image: {
     backgroundPosition: "center",

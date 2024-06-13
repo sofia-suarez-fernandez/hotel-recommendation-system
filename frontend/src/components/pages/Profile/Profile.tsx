@@ -27,16 +27,30 @@ export const Profile = (): JSX.Element => {
       });
   }, [userId]);
 
+  const [loadedIndex, setLoadedIndex] = useState(0);
+
+  useEffect(() => {
+    if (loadedIndex < 2) {
+      const timer = setTimeout(() => {
+        setLoadedIndex(loadedIndex + 1);
+      }, 300);
+
+      return () => clearTimeout(timer);
+    }
+  }, [loadedIndex]);
+
   return (
     <Layout isGreyBackground>
-      <UserInformationSection
-        firstName={firstName}
-        lastName={lastName}
-        username={username}
-        email={email}
-      />
+      {loadedIndex >= 0 && (
+        <UserInformationSection
+          firstName={firstName}
+          lastName={lastName}
+          username={username}
+          email={email}
+        />
+      )}
 
-      <UserReviewsSection reviews={reviews} />
+      {loadedIndex >= 0 && <UserReviewsSection reviews={reviews} />}
     </Layout>
   );
 };
