@@ -11,7 +11,7 @@ export const useCreateReviewDialogViewModel = () => {
     setOpen(true);
   };
 
-  const [rating, setRating] = useState<number | null>(1);
+  const [rating, setRating] = useState<number | null>(null);
   const [review_text, setReviewText] = useState<string | undefined>(undefined);
   const [review_title, setReviewTitle] = useState<string | undefined>(undefined);
 
