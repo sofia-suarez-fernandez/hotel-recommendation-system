@@ -25,6 +25,7 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
           rowParams.row.user_account_id,
           rowParams.row.rate,
           rowParams.row.sentiment,
+          rowParams.row.review_title,
           rowParams.row.review_text,
           rowParams.row.created_at,
           rowParams.row.included
@@ -116,6 +117,15 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
       width: 70,
     },
     {
+      field: "review_title",
+      headerName: "Review Title",
+      headerAlign: "center",
+      headerClassName: classes.header,
+      description: "Review Titles in the web application",
+      hideable: false,
+      width: 350,
+    },
+    {
       field: "review_text",
       headerName: "Review Text",
       headerAlign: "center",
@@ -131,6 +141,7 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
       headerClassName: classes.header,
       description: "Time the review was created in the web application",
       width: 150,
+      hideable: true,
     },
     {
       field: "updated_at",
@@ -139,6 +150,7 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
       headerClassName: classes.header,
       description: "Last time the review was updated in the web application",
       width: 150,
+      hideable: true,
     },
     {
       field: "hotel_name_id",
@@ -155,7 +167,7 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
       headerAlign: "center",
       headerClassName: classes.header,
       description: "User that wrote a review in the web application",
-      hideable: false,
+      hideable: true,
       renderCell: (params) => params.value ? params.value.toString() : "Anonymous",
       width: 130,
     },

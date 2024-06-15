@@ -6,7 +6,8 @@ export const updateReview = (
   userAccountId,
   rating,
   sentiment,
-  review,
+  review_title,
+  review_text,
   createdAt,
   included
 ) => {
@@ -26,7 +27,8 @@ export const updateReview = (
     user_account_it: userAccountId,
     rate: rating,
     sentiment: sentiment,
-    review_text: review,
+    review_title: review_title,
+    review_text: review_text,
     created_at: createdAt,
     updated_at: currentDate,
     included: included,
@@ -106,11 +108,30 @@ export const createReview = (
     },
   };
 
+  // async function getSentiment(reviewText: string): Promise<string> {
+  //   const response = await fetch('http://localhost:8000/analyze', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({ review_text: reviewText }),
+  //   });
+  
+  //   if (!response.ok) {
+  //     throw new Error('Network response was not ok');
+  //   }
+  
+  //   const data = await response.json();
+  //   return data.sentiment;
+  // }
+
+  // const sentiment = review_text ? await analyze_sentiment(review_text) : null;
   const body = {
     user_account_id: userId,
     hotel_name_id: hotelId?.replace(/-/g, " "),
     rate: rating,
     sentiment: rating === null ? null : (Number(rating) < 3 ? 1 : (Number(rating) === 3 ? 2 : 3)),
+    // sentiment: getSentiment(review_text ?? ""),
     review_title: review_title,
     review_text: review_text,
     tripdate: null,
