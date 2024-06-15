@@ -33,6 +33,7 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
+    "react-scroll": "^1.9.0",
     "react-use": "^17.5.0",
     "react-virtuoso": "latest",
     "tss-react": "^4.6.0",
