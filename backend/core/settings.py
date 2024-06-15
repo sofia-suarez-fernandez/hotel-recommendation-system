@@ -90,7 +90,7 @@ WSGI_APPLICATION = "core.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "hotelsrecommendersystem",
+        "NAME": "hotelsrecommendersystem", #postgres
         "USER": "postgres",
         "PASSWORD": "Gorrion2000!",
         "HOST": "localhost",
