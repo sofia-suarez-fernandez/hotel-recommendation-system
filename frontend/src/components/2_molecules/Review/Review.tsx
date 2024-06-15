@@ -2,7 +2,6 @@ import { Avatar, Box, Divider, Grid, Typography } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
-// import { CustomRating } from "../CustomRating/CustomRating";
 import { DeleteReviewDialog } from "../DeleteReviewDialog/DeleteReviewDialog";
 import { UpdateReviewDialog } from "../UpdateReviewDialog/UpdateReviewDialog";
 import { ReviewProps } from "./ReviewInterfaces";
@@ -55,7 +54,6 @@ export const Review = ({ review }: ReviewProps): JSX.Element => {
           </Box>
 
           <RatingNumber rating={review.rate} />
-          {/* <CustomRating value={review.rate} readOnly={true} /> */}
         </Box>
 
         <Typography className={classes.typography}>{review.review_title}</Typography>

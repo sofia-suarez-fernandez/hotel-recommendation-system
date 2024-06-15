@@ -17,7 +17,6 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
-// import { CustomRating } from "../CustomRating/CustomRating";
 import { UpdateReviewDialogProps } from "./UpdateReviewDialogInterfaces";
 import { useUpdateReviewDialogStyles } from "./UpdateReviewDialogStyles";
 import { useUpdateReviewDialogViewModel } from "./UpdateReviewDialogViewModel";
@@ -92,7 +91,6 @@ export const UpdateReviewDialog = ({
           )}
 
           {isAuthenticated === true && (
-            // <CustomRating onChange={onChangeRating} defaultValue={review.rate}/>
             <FormControl>
               <InputLabel id="rating-label">Rating</InputLabel>
               <Select
@@ -128,7 +126,7 @@ export const UpdateReviewDialog = ({
               className={classes.reviewWrapper}
               onChange={onChangeReview}
               defaultValue={review.review_text}
-              label="Review"
+              label="Review *"
               placeholder="Update your review here..."
             />
           )}

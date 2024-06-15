@@ -17,7 +17,6 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
-// import { CustomRating } from "../CustomRating/CustomRating";
 import { useCreateReviewDialogStyles } from "./CreateReviewDialogStyles";
 import { useCreateReviewDialogViewModel } from "./CreateReviewDialogViewModel";
 
@@ -89,7 +88,6 @@ export const CreateReviewDialog = (): JSX.Element => {
           )}
 
           {isAuthenticated === true && (
-            // <CustomRating onChange={onChangeRating} defaultValue={0} />
             <FormControl>
               <InputLabel id="rating-label">Rating</InputLabel>
               <Select
@@ -123,7 +121,7 @@ export const CreateReviewDialog = (): JSX.Element => {
               maxRows={5}
               className={classes.reviewWrapper}
               onChange={onChangeReview}
-              label="Review"
+              label="Review *"
               placeholder="Write your review here..."
             />
           )}
