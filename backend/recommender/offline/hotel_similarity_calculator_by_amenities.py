@@ -27,7 +27,7 @@ def normalize(x):
     """Normalize the data"""
     x = x.astype(float)
     norm = np.linalg.norm(x)
-    if norm == 0: 
+    if norm == 0:
         return x
     return x / norm
 
@@ -39,38 +39,55 @@ class HotelSimilarityByAmenitiesMatrixBuilder(object):
         """Initialize the class"""
         self.min_overlap = min_overlap
         self.min_sim = min_sim
-        self.db="django.db.backends.postgresql"
+        self.db = "django.db.backends.postgresql"
 
     def build(self, amenities, save=True):
         """Build the item similarity matrix"""
 
         logger.debug("Calculating similarities ... using %s amenities", len(amenities))
-        
         start_time = datetime.now()
 
         logger.debug("Creating amenities matrix")
 
         # Convert amenities to a sparse matrix
         amenities.set_index("hotel_name_id", inplace=True)
-        normalized_amenities = amenities.apply(normalize, axis=1)
-        coo = coo_matrix(normalized_amenities.values)
-
-        # Calculate similarity matrix, sparse matrix
-        coo = coo.transpose()
+        
+        coo = coo_matrix(amenities.values)
 
         logger.debug("Calculating overlap matrix...")
-        overlap_matrix= coo.dot(coo.T)
-        overlap_matrix = overlap_matrix >= self.min_overlap
-        number_of_overlaps = overlap_matrix.count_nonzero()
-        logger.info("Number of overlaps: %s", number_of_overlaps)
+        overlap_matrix = (
+            coo.astype(bool).astype(int).dot(coo.transpose().astype(bool).astype(int))
+        )
+        
+        number_of_overlaps = (overlap_matrix >= self.min_overlap).count_nonzero()
+
+        print("Number of overlaps: ", number_of_overlaps)
+
+        logger.debug(
+            "Overlap matrix leaves %s out of %s with %s",
+            number_of_overlaps,
+            overlap_matrix.count_nonzero(),
+            self.min_overlap,
+        )
+
+        logger.debug(
+            "Amenities matrix (size %sx%s) finished, in %s seconds",
+            coo.shape[0],
+            coo.shape[1],
+            datetime.now() - start_time,
+        )
+
+        sparsity_level = 1 - (amenities.shape[0] / (coo.shape[0] * coo.shape[1]))
+        logger.debug("Sparsity level: %s", sparsity_level)
+
+        start_time = datetime.now()
 
         logger.info("Calculating cosine similarity...")
-        cor = cosine_similarity(coo, dense_output=False)
-        # Apply min_sim threshold
-        cor = cor.multiply(cor >= self.min_sim) 
 
-        # Calculate overlap matrix
-        overlap_matrix = coo.dot(coo.T)
+        cor = cosine_similarity(coo, dense_output=False)
+
+        # Apply min_sim threshold
+        cor = cor.multiply(cor >= self.min_sim)
 
         # Apply min_overlap threshold
         cor = cor.multiply(overlap_matrix >= self.min_overlap)
@@ -154,12 +171,48 @@ def main():
     logger.info("Calculation of item similarity")
 
     all_amenities = load_all_amenities()
-    HotelSimilarityByAmenitiesMatrixBuilder(1, 0.5).build(all_amenities)
+    HotelSimilarityByAmenitiesMatrixBuilder(0.5, 0.2).build(all_amenities)
 
 
 def load_all_amenities():
     """Load all amenities"""
-    columns = ["parking", "wifi", "pool", "gym", "bar", "pets_allowed", "pool_towels", "coffee_shop", "restaurant", "breakfast", "welcome_drink", "happy_hour", "airport_transportation", "car_hire", "taxi_service", "business_center", "meeting_rooms", "security", "baggage_storage", "concierge", "gift_shop", "non_smoking", "outdoor_fireplace", "shops", "sun_loungers", "atm", "doorperson", "first_aid_kit", "umbrella", "check_in_24h", "front_desk_24h", "private_check_in_out", "dry_cleaning", "laundry_service", "hotel_name_id"]
+    columns = [
+        "parking",
+        "wifi",
+        "pool",
+        "gym",
+        "bar",
+        "pets_allowed",
+        "pool_towels",
+        "coffee_shop",
+        "restaurant",
+        "breakfast",
+        "welcome_drink",
+        "happy_hour",
+        "airport_transportation",
+        "car_hire",
+        "taxi_service",
+        "business_center",
+        "meeting_rooms",
+        "security",
+        "baggage_storage",
+        "concierge",
+        "gift_shop",
+        "non_smoking",
+        "outdoor_fireplace",
+        "shops",
+        "sun_loungers",
+        "atm",
+        "doorperson",
+        "first_aid_kit",
+        "umbrella",
+        "check_in_24h",
+        "front_desk_24h",
+        "private_check_in_out",
+        "dry_cleaning",
+        "laundry_service",
+        "hotel_name_id",
+    ]
 
     amenities_data = Amenity.objects.all().values(*columns)
     logger.info(len(amenities_data))
@@ -169,9 +222,12 @@ def load_all_amenities():
         logger.error("DataFrame is empty after loading data from database.")
         return None
     else:
-        logger.info("DataFrame loaded successfully. Number of rows: %s", len(df_amenity))
+        logger.info(
+            "DataFrame loaded successfully. Number of rows: %s", len(df_amenity)
+        )
 
     return df_amenity
+
 
 if __name__ == "__main__":
     main()

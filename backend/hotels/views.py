@@ -116,7 +116,7 @@ class CollaborativeFilteringRecList(generics.ListAPIView):
     def get_queryset(self):
         user = self.kwargs["user_account_id"]
         current_city = self.kwargs["locality"]
-        min_sim = 0.3
+        min_sim = 0.5
         max_candidates = 10
         neighborhood_size = 1
         num = 30
