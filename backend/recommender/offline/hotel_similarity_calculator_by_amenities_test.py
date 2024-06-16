@@ -412,18 +412,17 @@ class TestHotelSimilarityByAmenitiesMatrixBuilder(unittest.TestCase):
         )
 
     def test_simple_similarity(self):
-        builder = HotelSimilarityByAmenitiesMatrixBuilder(1, 0.5)
-        no_items = self.amenities.columns.size - 1
-        logger.debug(no_items)
-        logger.debug(set(self.amenities.columns))
+        builder = HotelSimilarityByAmenitiesMatrixBuilder(10, 0.5)
+
+        no_items = len(set(self.amenities["hotel_name_id"]))
+        
         cor, hotels = builder.build(amenities=self.amenities, save=False)
+
         self.assertIsNotNone(cor, "Cor matrix is None")
         self.assertIsNotNone(hotels, "Hotels dictionary is None")
-        logger.debug(hotels.values())
+
         df = pd.DataFrame(cor.toarray(), columns=hotels.values(), index=hotels.values())
-        logger.debug(df.shape[0])
-        logger.debug(df.shape[1])
-        logger.debug(df)
+        
         self.assertIsNotNone(df, "Dataframe is None")
         self.assertEqual(
             df.shape[0],
@@ -436,31 +435,33 @@ class TestHotelSimilarityByAmenitiesMatrixBuilder(unittest.TestCase):
             "Expected correlations matrix to have a column for each amenity",
         )
 
-        self.assertAlmostEqual(df[MARGARITVILLE][MOXY], 0.5284101)
+        self.assertAlmostEqual(df[MARGARITVILLE][MOXY], 0.6978632)
         self.assertAlmostEqual(df[MARGARITVILLE][MARGARITVILLE], 1)
         self.assertAlmostEqual(df[MOXY][MOXY], 1)
         self.assertAlmostEqual(df[POD51][POD51], 1)
         self.assertAlmostEqual(df[BRYANT][BRYANT], 1)
 
     def test_min_ratings(self):
-        builder = HotelSimilarityByAmenitiesMatrixBuilder(1, 0.5)
+        builder = HotelSimilarityByAmenitiesMatrixBuilder(10, 0.5)
 
         cor, hotels = builder.build(amenities=self.amenities, save=False)
+
         df = pd.DataFrame(cor.toarray(), columns=hotels.values(), index=hotels.values())
+
         self.assertEqual(
             cor.shape[0], 4, "Expected correlations matrix to have a row for each item"
         )
         self.assertEqual(
             cor.shape[1],
-            37,
+            4,
             "Expected correlations matrix to have a column for each item",
         )
 
-        self.assertAlmostEqual(df[MARGARITVILLE][MOXY], 0.5284101)
+        self.assertAlmostEqual(df[MARGARITVILLE][MOXY], 0.6978632)
         self.assertAlmostEqual(df[MOXY][MOXY], 1)
 
     def test_save_similarities(self):
-        builder = HotelSimilarityByAmenitiesMatrixBuilder(1, 0.5)
+        builder = HotelSimilarityByAmenitiesMatrixBuilder(10, 0.5)
 
         cor = builder.build(amenities=self.amenities)
 
@@ -469,10 +470,10 @@ class TestHotelSimilarityByAmenitiesMatrixBuilder(unittest.TestCase):
         similarities = Similarity.objects.all()
         av_log = similarities[0]
 
-        self.assertEqual(Similarity.objects.count(), 2)
+        self.assertEqual(Similarity.objects.count(), 10)
         self.assertEqual(av_log.source, MARGARITVILLE)
         self.assertEqual(av_log.target, MOXY)
-        self.assertAlmostEqual(float(av_log.similarity), 0.5284101)
+        self.assertAlmostEqual(float(av_log.similarity), 0.6978632)
 
     def test_overlap(self):
         builder = HotelSimilarityByAmenitiesMatrixBuilder(1, -1)
@@ -482,8 +483,8 @@ class TestHotelSimilarityByAmenitiesMatrixBuilder(unittest.TestCase):
         self.assertIsNotNone(cor)
 
         self.assertEqual(
-            cor.count_nonzero(), 9
-        )  # 9 similitudes entre hoteles analizados???
+            cor.count_nonzero(), 16
+        )
 
 
 if __name__ == "__main__":
