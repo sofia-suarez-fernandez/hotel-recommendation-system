@@ -45,22 +45,33 @@ class HotelSimilarityByAmenitiesMatrixBuilder(object):
         self.db = "django.db.backends.postgresql"
 
     def build(self, amenities, save=True):
-        logger.debug("Calculating similarities ... using %s hotels", len(amenities))
+        """Build the item similarity matrix"""
 
+        logger.debug("Calculating similarities ... using %s hotels", len(amenities))
         start_time = datetime.now()
 
         logger.debug("Creating amenities matrix...")
+
+        # Convert amenities to a sparse matrix
         amenities.set_index("hotel_name_id", inplace=True)
-        normalized_amenities = amenities.apply(normalize, axis=1)
-        coo = coo_matrix(normalized_amenities.values)
+        
+        coo = coo_matrix(amenities.values)
 
-        coo = coo.transpose()
+        logger.debug("Calculating overlap matrix...")
+        overlap_matrix = (
+            coo.astype(bool).astype(int).dot(coo.transpose().astype(bool).astype(int))
+        )
 
-        logger.debug("Calculating overlaps between the items")
-        overlap_matrix = coo.dot(coo.T)
-        overlap_matrix = overlap_matrix >= self.min_overlap
-        number_of_overlaps = overlap_matrix.count_nonzero()
-        logger.debug("Number of overlaps: %s", number_of_overlaps)
+        number_of_overlaps = (overlap_matrix > self.min_overlap).count_nonzero()
+
+        print("Number of overlaps: ", number_of_overlaps)
+        
+        logger.debug(
+            "Overlap matrix leaves %s out of %s with %s",
+            number_of_overlaps,
+            overlap_matrix.count_nonzero(),
+            self.min_overlap,
+        )
 
         logger.debug(
             "Rating matrix (size %sx%s) finished, in %s seconds",
@@ -69,20 +80,23 @@ class HotelSimilarityByAmenitiesMatrixBuilder(object):
             datetime.now() - start_time,
         )
 
-        logger.debug("Calculating similarity matrix...")
-        cor = cosine_similarity(coo, dense_output=False)
-        # Apply min_sim threshold
-        cor = cor.multiply(cor >= self.min_sim)
+        sparsity_level = 1 - (amenities.shape[0] / (coo.shape[0] * coo.shape[1]))
+        logger.debug("Sparsity level: %s", sparsity_level)
 
-        # Calculate overlap matrix
-        overlap_matrix = coo.dot(coo.T)
+        start_time = datetime.now()
+
+        logger.debug("Calculating similarity matrix...")
+
+        cor = cosine_similarity(coo, dense_output=False)
+
+        # Apply min_sim threshold
+        cor = cor.multiply(cor > self.min_sim)
 
         # Apply min_overlap threshold
-        cor = cor.multiply(overlap_matrix >= self.min_overlap)
+        cor = cor.multiply(overlap_matrix > self.min_overlap)
 
         # Create a dictionary of hotel names
         hotels = dict(enumerate(amenities.index.unique()))
-
         logger.debug(
             "Correlation is finished, done in %s seconds", datetime.now() - start_time
         )
@@ -399,7 +413,7 @@ class TestHotelSimilarityByAmenitiesMatrixBuilder(unittest.TestCase):
 
     def test_simple_similarity(self):
         builder = HotelSimilarityByAmenitiesMatrixBuilder(1, 0.5)
-        no_items = ((self.amenities.columns.size - 1))
+        no_items = self.amenities.columns.size - 1
         logger.debug(no_items)
         logger.debug(set(self.amenities.columns))
         cor, hotels = builder.build(amenities=self.amenities, save=False)
@@ -467,7 +481,9 @@ class TestHotelSimilarityByAmenitiesMatrixBuilder(unittest.TestCase):
 
         self.assertIsNotNone(cor)
 
-        self.assertEqual(cor.count_nonzero(), 9) # 9 similitudes entre hoteles analizados???
+        self.assertEqual(
+            cor.count_nonzero(), 9
+        )  # 9 similitudes entre hoteles analizados???
 
 
 if __name__ == "__main__":

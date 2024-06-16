@@ -59,7 +59,7 @@ class HotelSimilarityByAmenitiesMatrixBuilder(object):
             coo.astype(bool).astype(int).dot(coo.transpose().astype(bool).astype(int))
         )
         
-        number_of_overlaps = (overlap_matrix >= self.min_overlap).count_nonzero()
+        number_of_overlaps = (overlap_matrix > self.min_overlap).count_nonzero()
 
         print("Number of overlaps: ", number_of_overlaps)
 
@@ -87,10 +87,10 @@ class HotelSimilarityByAmenitiesMatrixBuilder(object):
         cor = cosine_similarity(coo, dense_output=False)
 
         # Apply min_sim threshold
-        cor = cor.multiply(cor >= self.min_sim)
+        cor = cor.multiply(cor > self.min_sim)
 
         # Apply min_overlap threshold
-        cor = cor.multiply(overlap_matrix >= self.min_overlap)
+        cor = cor.multiply(overlap_matrix > self.min_overlap)
 
         # Create a dictionary of hotel names
         hotels = dict(enumerate(amenities.index.unique()))
@@ -171,7 +171,7 @@ def main():
     logger.info("Calculation of item similarity")
 
     all_amenities = load_all_amenities()
-    HotelSimilarityByAmenitiesMatrixBuilder(0.5, 0.2).build(all_amenities)
+    HotelSimilarityByAmenitiesMatrixBuilder(10, 0.2).build(all_amenities)
 
 
 def load_all_amenities():
