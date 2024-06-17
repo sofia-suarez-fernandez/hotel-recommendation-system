@@ -441,7 +441,7 @@ class TestHotelSimilarityByAmenitiesMatrixBuilder(unittest.TestCase):
         self.assertAlmostEqual(df[POD51][POD51], 1)
         self.assertAlmostEqual(df[BRYANT][BRYANT], 1)
 
-    def test_min_ratings(self):
+    def test_min_items(self):
         builder = HotelSimilarityByAmenitiesMatrixBuilder(10, 0.5)
 
         cor, hotels = builder.build(amenities=self.amenities, save=False)
