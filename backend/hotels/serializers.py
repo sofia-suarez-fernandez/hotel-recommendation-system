@@ -3,6 +3,7 @@
 from rest_framework import serializers
 from .models import City, Hotel, Review, Amenity
 from .serializers_fields import NumReviewsField, RatingAvgField
+from recommender.online.sentiment_analysis.sentiment_analysis import SentimentAnalysis
 
 
 class HotelSerializer(serializers.ModelSerializer):
@@ -28,6 +29,13 @@ class CitySerializer(serializers.ModelSerializer):
 
 class ReviewSerializer(serializers.ModelSerializer):
     """Review serializer"""
+
+    sentiment = serializers.SerializerMethodField()       
+    def get_sentiment(self, obj):
+        """Get sentiment of review"""
+        analyzer = SentimentAnalysis()
+        sentiment = analyzer.analyze_sentiment(obj.review_text)
+        return sentiment
 
     class Meta:
         """Meta class"""

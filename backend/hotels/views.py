@@ -9,7 +9,7 @@ from .models import City, Hotel, Review, Amenity
 from .serializers import CitySerializer, HotelSerializer, ReviewSerializer, AmenitiesSerializer
 
 from recommender.online.neighborhood_based_hotel_recommender import NeighborhoodBasedRecs
-
+from recommender.online.sentiment_analysis.sentiment_analysis import SentimentAnalysis
 
 # Hotel
 class HotelList(generics.ListAPIView):
@@ -81,6 +81,12 @@ class CreateReview(generics.CreateAPIView):
 
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+
+    def perform_create(self, serializer):
+        """Save the review to the database."""
+        analyzer = SentimentAnalysis()
+        sentiment = analyzer.analyze_sentiment(serializer.validated_data["review_text"])
+        serializer.save(sentiment=sentiment)
 
 
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):

@@ -38,4 +38,4 @@ class RatingAvgField(Field):
     def to_representation(self, hotel):
         """Return the average rating of a hotel"""
         rating_avg = hotel.rating_avg()
-        return rating_avg
+        return rating_avg   
