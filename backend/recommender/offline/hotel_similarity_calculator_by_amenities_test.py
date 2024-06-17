@@ -427,12 +427,12 @@ class TestHotelSimilarityByAmenitiesMatrixBuilder(unittest.TestCase):
         self.assertEqual(
             df.shape[0],
             no_items,
-            "Expected correlations matrix to have a row for each amenity",
+            "Expected correlations matrix to have a row for each item",
         )
         self.assertEqual(
             df.shape[1],
             no_items,
-            "Expected correlations matrix to have a column for each amenity",
+            "Expected correlations matrix to have a column for each item",
         )
 
         self.assertAlmostEqual(df[MARGARITVILLE][MOXY], 0.6978632)
