@@ -22,23 +22,18 @@ class SentimentAnalysis:
         with torch.no_grad():
             #  get model output
             outputs = model(**inputs)
+            prediction = outputs.logits.softmax(dim=-1)
+            sentiment_scores = {
+                "Positive": prediction[:, 1].item(),
+                "Neutral": prediction[:, 2].item(),
+                "Negative": prediction[:, 0].item(),
+            }
+            
+            dominant_sentiment = max(sentiment_scores, key=sentiment_scores.get)
+            sentiment_value = {
+                "Positive": 3,
+                "Neutral": 2,
+                "Negative": 1,
+            }[dominant_sentiment]
 
-        #  get predicted sentiment
-        prediction = outputs.logits.softmax(dim=-1)
-        # IN ANALYZER MODEL
-        # Label 0 = Negative
-        # Label 1 = Positive
-        # Label 2 = Neutral
-        sentiment = "Positive" if torch.argmax(prediction) == 1 else ("Neutral" if torch.argmax(prediction) == 2 else "Negative")
-        # our system:
-        # positive = 3
-        # neutral = 2
-        # negative = 1
-        if sentiment == "Positive":
-            return 3
-        elif sentiment == "Neutral":
-            return 2
-        else:
-            return 1
-
-        # return sentiment
+        return sentiment_value
