@@ -83,7 +83,7 @@ class CreateReview(generics.CreateAPIView):
     serializer_class = ReviewSerializer
 
     def perform_create(self, serializer):
-        """Save the review to the database."""
+        """Save the review to the database including sentiment."""
         analyzer = SentimentAnalysis()
         sentiment = analyzer.analyze_sentiment(serializer.validated_data["review_text"])
         serializer.save(sentiment=sentiment)
@@ -94,6 +94,12 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+
+    def perform_update(self, serializer):
+        """Update the review in the database including sentiment."""
+        analyzer = SentimentAnalysis()
+        sentiment = analyzer.analyze_sentiment(serializer.validated_data["review_text"])
+        serializer.save(sentiment=sentiment)
 
 
 # Amenities

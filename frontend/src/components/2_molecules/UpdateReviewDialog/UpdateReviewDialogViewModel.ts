@@ -26,12 +26,12 @@ export const useUpdateReviewDialogViewModel = ({
     review.id,
     review.hotel_name_id,
     review.user_account_id,
-    newRating === null ? null : newRating < 3 ? 1 : newRating === 3 ? 2 : 3, // sentiment
     Number(newRating),
     newReview,
     newReviewTitle,
     review.created_at,
-    review.included
+    review.included,
+    // sentiment (optional)
   );
 
   const handleSubmit = (e) => {

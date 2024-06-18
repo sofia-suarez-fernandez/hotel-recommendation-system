@@ -4,12 +4,12 @@ const useUpdateReview = (
   reviewId,
   hotelId,
   userAccountId,
-  newSentiment,
   newRating,
   newReview,
   newReviewTitle,
   createdAt,
-  included
+  included,
+  newSentiment?,
 ) => {
   const currentDate = new Date();
 
