@@ -44,4 +44,13 @@ export const useReviewStyles = makeStyles()((theme) => ({
     rowGap: theme.spacing(0.5),
     marginTop: theme.spacing(1.5),
   },
+  infoIcon: {
+    height: 14,
+    width: "fit-content",
+    marginBottom: theme.spacing(0.2),
+  },
+  rateInfoWrapper: {
+    display: "flex",
+    flexDirection: "row",
+  },
 }));

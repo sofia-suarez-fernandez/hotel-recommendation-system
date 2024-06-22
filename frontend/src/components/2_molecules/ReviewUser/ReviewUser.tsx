@@ -1,8 +1,8 @@
-import { Grid, Link, Typography } from "@mui/material";
+import { Box, Grid, Link, Tooltip, Typography } from "@mui/material";
 import { ReviewUserProps } from "./ReviewUserInterfaces";
 import { useReviewUserStyles } from "./ReviewUserStyles";
 import { useReviewUserViewModel } from "./ReviewUserViewModel";
-import { Hotel, DateRange } from "@mui/icons-material";
+import { Hotel, DateRange, InfoOutlined } from "@mui/icons-material";
 import { RatingNumber } from "../../1_atoms/RatingNumber/RatingNumber";
 
 export const ReviewUser = ({ review }: ReviewUserProps): JSX.Element => {
@@ -31,7 +31,17 @@ export const ReviewUser = ({ review }: ReviewUserProps): JSX.Element => {
             </Link>
           </Grid>
           <Grid item xs={2}>
-            <RatingNumber rating={review.rate} />
+            {/* <RatingNumber rating={review.rate} /> */}
+            {review && review.rate && review.created_by && (
+            <Box className={classes.rateInfoWrapper}>
+             <Tooltip title={review.created_by === 1 ? "Automated Rating: Derived from Sentiment Analysis" : "User Rating: Submitted by User"}>
+                <Typography>
+                  <RatingNumber rating={review.rate} />
+                  <InfoOutlined className={classes.infoIcon} />
+                </Typography>
+              </Tooltip>
+            </Box>
+          )}
           </Grid>
         </Grid>
         <Grid container spacing={1} alignItems="center">

@@ -42,4 +42,13 @@ export const useReviewUserStyles = makeStyles()((theme) => ({
   review: {
     wordBreak: "break-word",
   },
+  infoIcon: {
+    height: 14,
+    width: "fit-content",
+    marginBottom: theme.spacing(0.2),
+  },
+  rateInfoWrapper: {
+    display: "flex",
+    flexDirection: "row",
+  },
 }));

@@ -24,7 +24,7 @@ import { HotelHeroProps } from "./HotelHeroInterfaces";
 import { useHotelHeroStyles } from "./HotelHeroStyles";
 import useHotelSlug from "../../../../hooks/useHotelSlug";
 // leaflet map
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useEffect, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";

@@ -86,8 +86,14 @@ class CreateReview(generics.CreateAPIView):
         """Save the review to the database including sentiment."""
         analyzer = SentimentAnalysis()
         sentiment = analyzer.analyze_sentiment(serializer.validated_data["review_text"])
-        serializer.save(sentiment=sentiment)
 
+        if 'rate' not in serializer.validated_data or serializer.validated_data['rate'] is None:
+            sentiment_to_rate = {1: 1, 2: 3, 3: 5}
+            rate = sentiment_to_rate[sentiment]
+            created_by = 1
+            serializer.save(sentiment=sentiment, rate=rate, created_by=created_by)
+        else:
+            serializer.save(sentiment=sentiment, created_by=2)
 
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     """Class representing a ReviewDetail object. Retrieves, updates, or deletes a review."""
@@ -99,7 +105,14 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
         """Update the review in the database including sentiment."""
         analyzer = SentimentAnalysis()
         sentiment = analyzer.analyze_sentiment(serializer.validated_data["review_text"])
-        serializer.save(sentiment=sentiment)
+
+        if 'rate' not in serializer.validated_data or serializer.validated_data['rate'] is None:
+            sentiment_to_rate = {1: 1, 2: 3, 3: 5}
+            rate = sentiment_to_rate[sentiment]
+            created_by = 1
+            serializer.save(sentiment=sentiment, rate=rate, created_by=created_by)
+        else:
+            serializer.save(sentiment=sentiment, created_by=2)
 
 
 # Amenities

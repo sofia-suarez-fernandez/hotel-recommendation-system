@@ -28,6 +28,7 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
           rowParams.row.review_title,
           rowParams.row.review_text,
           rowParams.row.created_at,
+          rowParams.row.created_by,
           rowParams.row.included
         );
       }, 1000);
@@ -117,6 +118,21 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
       width: 70,
     },
     {
+      field: "created_by",
+      headerName: "Created By",
+      headerAlign: "center",
+      headerClassName: classes.header,
+      hideable: true,
+      description: "Who created the review: User or System based on Sentiment Analysis",
+      editable: false,
+      valueOptions: [
+        { value: 1, label: "System" },
+        { value: 2, label: "User" },
+      ],
+      type: "singleSelect",
+      width: 100,
+    },
+    {
       field: "review_title",
       headerName: "Review Title",
       headerAlign: "center",
@@ -203,6 +219,7 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
               included: true,
               sentiment: true,
               rate: true,
+              created_by: true,
               review_text: true,
               created_at: false,
               updated_at: false,
@@ -220,7 +237,6 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
         editMode="row"
         className={classes.wrapper}
         slotProps={{
-          // role: "grid",
           row: { role: "row" },
           noRowsOverlay: { role: "alert" },
           noResultsOverlay: { role: "alert" },
@@ -228,7 +244,6 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
         }}
         aria-label="Table of Reviews"
         rowCount={rows.length}
-        
       />
     </div>
   );

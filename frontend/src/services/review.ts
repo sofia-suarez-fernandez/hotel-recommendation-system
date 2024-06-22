@@ -9,6 +9,7 @@ export const updateReview = (
   review_title,
   review_text,
   createdAt,
+  createdBy,
   included
 ) => {
   const currentDate = new Date();
@@ -31,6 +32,7 @@ export const updateReview = (
     review_text: review_text,
     created_at: createdAt,
     updated_at: currentDate,
+    created_by: createdBy,
     included: included,
   };
 

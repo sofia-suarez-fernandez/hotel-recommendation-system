@@ -89,6 +89,7 @@ class Review(models.Model):
 
     RATING_CHOICES = ((1, "Negative"), (2, "Neutral"), (3, "Positive"))
     CHAR_DEFAULT = ""
+    CREATED_BY_CHOICES = ((1, "System"), (2, "User"))
 
     hotel_name_id = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     review_title = models.CharField(max_length=250, default=CHAR_DEFAULT, null=True)
@@ -102,6 +103,7 @@ class Review(models.Model):
     user_account_id = models.ForeignKey(
         UserAccount, on_delete=models.CASCADE, null=True, blank=True
     )
+    created_by = models.CharField(max_length=250, choices=CREATED_BY_CHOICES, default=1, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(null=True, blank=True)
     objects = models.Manager()
