@@ -7,7 +7,7 @@ import {
 export const useUserReviewsPaginationViewModel = ({
   reviews,
 }: UserReviewsPaginationProps): UserReviewsPaginationViewModel => {
-  const itemsPerPage = 10;
+  const itemsPerPage = 3;
 
   const [itemOffset, setItemOffset] = useState(0);
 
