@@ -57,6 +57,8 @@ const userSlice = createSlice({
       state.refresh = null;
       state.isAuthenticated = false;
       state.user = null;
+
+      window.location.reload();
     },
     authenticationSucceed: (state) => {
       state.isAuthenticated = true;
