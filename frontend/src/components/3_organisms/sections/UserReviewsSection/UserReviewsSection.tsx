@@ -66,13 +66,17 @@ export const UserReviewsSection = ({
                 My reviews
               </Typography>
 
-              <Typography variant="body2" className={classes.subtitle}>{reviews?.length} reviews</Typography>
+              <Typography variant="body2" className={classes.subtitle}>
+                {reviews?.length} reviews
+              </Typography>
             </Grid>
           </Grid>
 
           <Grid item xs={3}>
             <FormControl className={classes.formControl}>
-              <InputLabel id="order-by-label" className={classes.selectLabel}>Order by</InputLabel>
+              <InputLabel id="order-by-label" className={classes.selectLabel}>
+                Order by
+              </InputLabel>
               <Select
                 labelId="order-by-label"
                 aria-label="Order by"

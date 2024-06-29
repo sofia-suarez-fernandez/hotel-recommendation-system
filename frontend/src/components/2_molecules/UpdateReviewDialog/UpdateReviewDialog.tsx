@@ -99,6 +99,7 @@ export const UpdateReviewDialog = ({
                 onChange={onChangeRating}
                 label="Rating"
               >
+                <MenuItem value={""}>None</MenuItem>
                 <MenuItem value={1}>1</MenuItem>
                 <MenuItem value={2}>2</MenuItem>
                 <MenuItem value={3}>3</MenuItem>
@@ -110,7 +111,6 @@ export const UpdateReviewDialog = ({
 
           {isAuthenticated === true && (
             <TextField
-              autoFocus
               className={classes.reviewWrapper}
               onChange={onChangeReviewTitle}
               label="Title"
@@ -121,6 +121,7 @@ export const UpdateReviewDialog = ({
 
           {isAuthenticated === true && (
             <TextField
+              autoFocus
               multiline
               maxRows={5}
               className={classes.reviewWrapper}
