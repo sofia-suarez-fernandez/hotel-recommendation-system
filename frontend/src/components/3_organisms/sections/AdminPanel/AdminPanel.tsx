@@ -114,7 +114,8 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
       hideable: false,
       description: "From 1 to 5",
       editable: false,
-      renderCell: (params) => params.value ? Number(params.value).toFixed(2) : "N/A",
+      renderCell: (params) =>
+        params.value ? Number(params.value).toFixed(2) : "N/A",
       width: 70,
     },
     {
@@ -123,13 +124,10 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
       headerAlign: "center",
       headerClassName: classes.header,
       hideable: true,
-      description: "Who created the review: User or System based on Sentiment Analysis",
+      description:
+        "Who created the review: User or System based on Sentiment Analysis",
       editable: false,
-      valueOptions: [
-        { value: 1, label: "System" },
-        { value: 2, label: "User" },
-      ],
-      type: "singleSelect",
+      renderCell: (params) => (params.value === 1 ? "System" : "User"),
       width: 100,
     },
     {
@@ -184,7 +182,8 @@ export const AdminPanel = ({ reviews: rows }: AdminPanelProps): JSX.Element => {
       headerClassName: classes.header,
       description: "User that wrote a review in the web application",
       hideable: true,
-      renderCell: (params) => params.value ? params.value.toString() : "Anonymous",
+      renderCell: (params) =>
+        params.value ? params.value.toString() : "Anonymous",
       width: 130,
     },
     {
