@@ -6,7 +6,7 @@ ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
 CSRF_TRUSTED_ORIGINS = ['https://' + os.environ['WEBSITE_HOSTNAME']]
 DEBUG = False
 
-SECRET_KEY = os.environ['MY_SECRET_KEY']
+SECRET_KEY = os.getenv('MY_SECRET_KEY', 'default_secret_key')
 print(f"Using secret {SECRET_KEY}")
 
 MIDDLEWARE = [
