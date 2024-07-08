@@ -1,0 +1,17 @@
+{
+  "recommendations": [
+    "ms-python.black-formatter",
+    "streetsidesoftware.code-spell-checker",
+    "batisteo.vscode-django",
+    "dsznajder.es7-react-js-snippets",
+    "ecmel.vscode-html-css",
+    "visualstudioexptteam.vscodeintellicode",
+    "pkief.material-icon-theme",
+    "ms-python.python",
+    "ms-python.pylint",
+    "ms-python.vscode-pylance",
+    "esbenp.prettier-vscode",
+    "formulahendry.auto-rename-tag",
+    "dbaeumer.vscode-eslint",
+  ]
+}
